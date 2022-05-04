@@ -1,0 +1,275 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemehsmw}[2022/05/02 Beamer Vorlage der Hochschule Mittweida (Schildbach Stefan)] % https://zip.hs-mittweida.de/intranet/corporate_design.php
+% Please note: This template currently addresses only pdflatex (no active support for lualatex or xelatex)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Process theme options
+
+\makeatletter
+	% Sets the default faculty to hs (responsible for color model, default institute and default logo)
+	\def\default@faculty{} 							
+	\DeclareOption{hs}{\def\default@faculty{}}		% <empty>, hs, ext, inst
+	\DeclareOption{inw}{\def\default@faculty{-inw}}	% inw, mb
+	\DeclareOption{cb}{\def\default@faculty{-cb}}	% cb, mni
+	\DeclareOption{wi}{\def\default@faculty{-wi}}	% wi, ww
+	\DeclareOption{sw}{\def\default@faculty{-sw}}	% sw, sa
+	\DeclareOption{me}{\def\default@faculty{-me}}	% me
+
+	% Insert a separate frame for each section heading (ignore \section*) (default: off)
+	\DeclareOption{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
+
+	% Insert a table of contents at the beginning of the document (default: off)
+	\DeclareOption{toc}{\AddToHook{begindocument/end}{\maketoc}}
+
+	% Switches babel language to english (default: off)
+	\newtoggle{language@english}
+	\DeclareOption{english}{\toggletrue{language@english}}
+	%	\DeclareOption{english}{\AddToHook{begindocument/before}{\selectlanguage{english}}} %TODO: Language switch does not trigger correctly... loading babel option directly works...
+
+	% Hides the progressbar in footline (default: off)
+	\newtoggle{show@progressbar}\toggletrue{show@progressbar}  % \settoggle{show@progressbar}{true|false} \toggletrue{show@progressbar} % \iftoggle{show@progressbar}{if}{else}
+	\DeclareOption{noprogressbar}{\togglefalse{show@progressbar}}
+
+	% Hides the total number of slide in footline (default: on)
+	\newtoggle{show@totalpages}\toggletrue{show@totalpages}
+	\DeclareOption{nototalpages}{\togglefalse{show@totalpages}}
+
+	% Hides the faculty icon on title page (default: on)
+	\newtoggle{show@facultyicon}\toggletrue{show@facultyicon}
+	\DeclareOption{nofacultyicon}{\togglefalse{show@facultyicon}}
+
+	\ProcessOptions\relax
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load Packages
+% Preloaded packages by beamer in presentation mode: amsthm, color, enumerate, hyperref, xcolor
+
+\RequirePackage[T1]{fontenc} % Font-Encoding
+\RequirePackage[utf8]{inputenc} % Input-Encoding
+\RequirePackage{lmodern} % Font tweaking to latin modern (less pixelated) as fallback font
+
+\RequirePackage[default,proportional,scale=0.95]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
+
+\RequirePackage[fixed]{fontawesome5} % Symbols (marvosym)
+\RequirePackage[autostyle=true,german=quotes]{csquotes} % Improves nested quoting in bibliography (provides \enquote makro for quoting)
+%\RequirePackage[factor=1100, stretch=10, shrink=10, babel=true, nopatch=footnote]{microtype} %TODO: Seems to have problems within overleaf: "keyval error: nopatch undefined"
+
+\RequirePackage{etoolbox} % Programming library
+\RequirePackage{tikz} % Tikz-Library for improved drawing capabilities
+\RequirePackage{tikz-layers} % Loads background library and creates new layers to use as scope options "backround", "behind", "main" (normal), "above", "glass" -> e.g. "on above layer"
+
+\RequirePackage[absolute, overlay]{textpos} % Abosolute placement of elements (display with option showboxes)
+\RequirePackage{tabularx, booktabs} % Tabular packages
+\RequirePackage{adjustbox} % Versatile boy environments (e.g. resizebox)
+
+% Load babel depending of language switch (%TODO Use keyvalue option and use value here directly)
+\iftoggle{language@english}
+{\RequirePackage[english]{babel}}
+{\RequirePackage[ngerman]{babel}}
+
+\RequirePackage[
+%	backend=biber,	% Specified used backend (biber, bibtex, bibtex8); default:biber
+	style=ieee,		% Used bibliography and citation style (bbx and cbx) % use bibstyle=<> and citestyle=<> for separate use; default: numeric
+	citestyle=numeric-comp, % multiple citation numbers all within same bracket \cite{keya, keyb}
+	sorting=none,	% Sorting order of bibliography (default: nty = name title year); none: no sorting, entries are processed in citation order
+	%
+	natbib=true,	% Compatiobility mode for natbib cite-aliases; default: false
+	hyperref=true,	% Convert citations and back references to hyperlinks; default: auto (like true, but without warning if package not loaded)
+	backref=false,	% Print backreferences; default: false
+	% Style specific
+	dashed=false	% Recurring authors and names are replaced by a dash (references with modified ugly "default dashes" if one author occurs multiple times in a row in the bibliography)
+]{biblatex} % Bibliography
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Default configurations
+
+% Sets the page grid to the default aspect ratio for easy alignment: (1, 1) is 1 cm away from the right and top border; (8, 4.5) is the page center
+\TPGrid{16}{9} 
+
+% Adds the subtitle into the pdf document metadata
+\AddToHook{begindocument/before}{\subject{\insertsubtitle}}
+% Leaves pdf metadata keywords empty
+\keywords{}
+
+% TODO If more than one institute is given, they should be separated using the command \and and they should be prefixed by the command \inst with different parameters.
+%\institute[]{} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Latex switch case construct
+
+\newboolean{default}
+\newcommand{\case}{}
+\newcommand{\default}{}
+\newenvironment{switch}[1]%
+{%
+	\setboolean{default}{true}%
+	\renewcommand{\case}[2]{\ifthenelse{\equal{#1}{##1}}{\setboolean{default}{false}##2}{}}%
+	\renewcommand{\default}[1]{\ifthenelse{\boolean{default}}{##1}{}}%
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set faculty name and icon
+
+% The name of the faculty (default: empty)
+\newcommand{\insertfacultyname}{} 
+% The faculty logo (default: all icons side by side)
+\newcommand{\insertfacultyicon}
+{%
+	\foreach \f in {INW, CB, WI, SW, ME, HS}%
+	{%
+		\includegraphics[height=0.65 cm]{figures/iconFaculty\f.pdf}%
+		\hspace*{0.5 cm}%
+	}%
+}
+
+% Use the faculty name as default institution
+\institute{\insertfacultyname}
+
+% CD page 16
+\makeatletter
+	\begin{switch}{\default@faculty}  
+		\case{-inw}{
+			\addto\captionsngerman{\renewcommand{\insertfacultyname}{Ingenieur\-wissenschaften}}
+			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Engineering Sciences}}
+			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyINW.pdf}}
+		}  
+		\case{-cb}{
+			\addto\captionsngerman{\renewcommand{\insertfacultyname}{Angewandte Computer- und Biowissenschaften}}
+			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Applied Computer Sciences and Biosciences}}
+			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyCB.pdf}}
+		}  
+		\case{-wi}{
+			\addto\captionsngerman{\renewcommand{\insertfacultyname}{Wirtschafts\-ingenieurwesen}}
+			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Industrial Engineering}}
+			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyWI.pdf}}
+		}  
+		\case{-sw}{
+			\addto\captionsngerman{\renewcommand{\insertfacultyname}{Soziale Arbeit}}
+			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Social Sciences}}
+			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultySW.pdf}}
+		}  
+		\case{-me}{
+			\addto\captionsngerman{\renewcommand{\insertfacultyname}{Medien}}
+			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Media Sciences}}
+			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyME.pdf}}
+		} 
+		\default{}% Default: placing all icons without any text
+	\end{switch}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define speaker commands
+
+\newcommand{\currentSpeakerLabel}{}
+\addto\captionsngerman{\renewcommand{\currentSpeakerLabel}{Sprecher}}
+\addto\captionsenglish{\renewcommand{\currentSpeakerLabel}{Speaker}}
+
+\NewDocumentCommand{\setCurrentSpeaker}{sm}{\gdef\currentSpeaker{\IfBooleanTF#1{\currentSpeakerLabel{}: }{}#2}}
+\NewDocumentCommand{\resetCurrentSpeaker}{s}{\IfBooleanTF#1{\setCurrentSpeaker*{\insertauthor}}{\setCurrentSpeaker{\insertauthor}}}
+\NewDocumentCommand{\insertcurrentspeaker}{}{\currentSpeaker}
+
+\resetCurrentSpeaker{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load theme files
+
+\makeatletter
+	\usecolortheme{hsmw\default@faculty} % Load specific color theme for faculty
+	\usecolortheme{hsmw} % Load default color theme (previously defined values will be used)
+	\usefonttheme{hsmw} % Used fonts and font styles
+	\useinnertheme{hsmw} % Typesetting objects inside the frames (content): enumerations, blocks, toc, ...
+	\useoutertheme{hsmw} % Typesetting the overall layout, headline, footer, sidebar, logo, navigation, frametitle, ...
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Prepare macros for easier access of default slides
+
+% Redefines the maketitle macro
+\RenewDocumentCommand{\maketitle}{}
+{
+	\begin{frame}[plain]
+		\titlepage
+	\end{frame}
+}
+% Automatically inserts maketitle at the beginning of the document
+\AddToHook{begindocument}{\maketitle}
+
+%  Defines the maketoc macro
+\NewDocumentCommand{\maketoc}{}
+{
+	\begin{frame}{\contentsname}
+		\tableofcontents
+	\end{frame}
+}
+
+%  Defines the makebibliography macro
+\NewDocumentCommand{\makebibliography}{}
+{
+	\begin{frame}[allowframebreaks]{\bibname}
+		\printbibliography
+	\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines the makethankyou macro and associated macros for content modification
+
+\NewDocumentCommand{\makethankyou}{}
+{
+	\begin{frame}[plain]
+		\usebeamertemplate*{thankyou page}
+	\end{frame}
+}
+\newcommand{\insertthankyoutitle}{}
+\addto\captionsngerman{\renewcommand{\insertthankyoutitle}{Vielen Dank}}
+\addto\captionsenglish{\renewcommand{\insertthankyoutitle}{Thank You}}
+
+\NewDocumentCommand{\insertthankyousidebartext}{}
+{
+	\textbf{Hochschule Mittweida}\\
+	University of Applied Sciences\\
+	Technikumplatz 17 | 09648 Mittweida\\
+	\insertfacultyname
+}
+\newcommand{\insertemail}{}
+\newcommand{\inserttelephone}{}
+\newcommand{\insertlocation}{}
+\newcommand{\impressum}[3]{
+	\renewcommand{\inserttelephone}{#1}	
+	\renewcommand{\insertemail}{#2}	
+	\renewcommand{\insertlocation}{#3}	
+}
+\newcommand{\insertthankyoutext}{%
+	%Vorname Name
+	%Position
+	%T +49 (0) 3727 58-1234
+	%F +49 (0) 3727 58-21234 / optional
+	%M +49 (0) 175 123 456 7 / optional
+	%max.mustermann@hs-mittweida.de
+	%www.hs-mittweida.de/design / optional
+	%Haus XX | Name des Hauses | Raum hh.ee.rr
+	%Musterstraße 123| 09648 Mittweida
+	\begin{tabularx}{\linewidth}{@{}cX@{}}
+		\faIdCard[regular] & \insertauthor\\
+		\\
+		\if\relax\insertemail\relax\else
+			\faEnvelope[regular] & \insertemail\\
+		\fi
+		\if\relax\inserttelephone\relax\else
+			\faPhone* & \inserttelephone\\
+		\fi
+		\if\relax\insertlocation\relax\else
+			\\
+			\faUniversity & \insertlocation\\
+		\fi
+	\end{tabularx}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Place 2 slightly shrinked slides per a4 page on handout mode
+\mode<handout>
+{
+	\usepackage{pgfpages}
+	\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
+}

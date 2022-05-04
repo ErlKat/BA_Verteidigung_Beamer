@@ -1,0 +1,353 @@
+\documentclass[
+	aspectratio=169,	% Modern aspect ratio (TODO: Other ratios not yet supported)
+	onlytextwidth,		% Sets totalwidth=\textwidth and therefore e.g. columns won't invade the margins
+	t,					% Default vertical alignment of frames and colums at top (default is centered) % Stored in \beamer@centered (\beamer@centeredfalse, \beamer@centeredtrue)
+%	handout,			% Create a basic handout of the presentation
+	]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1) Load the desired presentation theme
+\usetheme[
+	hs, 			% Change default faculty color set and predefined faculty values: hs or <empty> (default), inw, cb, me, sw, wi
+%	english,		% Change default language to english
+%	toc,			% Adds a ToC slide
+%	sectionslide,	% Display separate section slides
+%	noprogressbar,	% Hides the progressbar in footline (run twice to update progressbar)
+%	nototalpages,	% Hides the total number of slide in footline
+%	nofacultyicon,	% Hides the faculty icon on title page
+	]{hsmw} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2) Specify default fields for presentation and pdf document properties
+% Set the title: \title{Long title everywhere} \title[Short title for footline]{Long title for titlepage}
+\title[Neue \LaTeX-Vorlage]{Eine neue \LaTeX{}-Vorlage für Präsentationen angelehnt an das aktuelle Corporate Design (2019) der Hochschule Mittweida (auch für überlange Titel geeignet!)}
+\subtitle{Von Grund auf neu nach den Guidelines für Beamer-Vorlagen, noch komplett ungetestet und mit vielen neuen Bugs (Work in Progress)}
+% Authors (separate multiple author names e.g. with \and for additional space)
+\author{Stefan Schildbach, M.Sc.}
+% Date of presentation (\today or a fixed value)
+%\date{\today} % 22. März 2022
+% Impressum for thankyou slide: phone, email, location (leave one empty if not wanted or needed)
+\impressum{+49 3727 58-1598}{schildba@hs-mittweida.de}{Haus 8 | Richard Stücklen-Bau | Raum 8-207\newline Am Schwanenteich 6b | 09648 Mittweida} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3) Use features
+% Titlegraphic changes the title page to "wide" (default) if left empty or inserts given image (by file path) and scales to 6.2cm height otherwise:
+\titlegraphic{} %\titlegraphic{figures/thankyou.jpg}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 4) Add bibliography file
+%\addbibresource{literature.bib} % Dont forget to use \makebibliography where you want to put it
+% Compile with following command sequence to fully include bibliography: pdflatex, biber, pdflatex, pdflatex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 5) Existing macro usage examples
+
+% \appendix is used as end marker for slides (slide numbers and progressbar)
+% \makethankyou creates a thank you slide and is used as end marker for slides (progressbar)
+% \makebibliography creates one or multiple bibliography slides
+
+% For multiple speakers you can use \setCurrentSpeaker{speaker name} or \setCurrentSpeaker*{speaker name} prior to the frame
+% To reset to the default author, use \resetCurrentSpeaker{} or \resetCurrentSpeaker*{}
+% Starred versions of these macros prepend the word "speaker"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6) Import additional packages you need, (re-)define macros and create a wonderful latex presentation
+
+% You can remove this package - it is only needed for the dummy content
+\usepackage{blindtext}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	
+	\section{Grundlegende Verwendung}
+	
+	\begin{frame}[fragile]{Allgemeines zur Verwendung}{Minimalbeispiel}
+		Der folgende Ausschnitt erzeugt Ihnen eine neue, leere Präsentation im Stil der Hochschule (ohne spezifische Fakultät) mit den Standardoptionen:
+		
+		\scriptsize
+		\begin{verbatim}
+		\documentclass[aspectratio=169,onlytextwidth,t]{beamer}
+		\usetheme{hsmw}
+		
+		\title[Kurztitel für Fußzeile]{Titel der Präsentation für Titelseite}
+		\subtitle{Untertitel für Titelseite}
+		\author{Name Vortragende(r)}
+		\date{Datum der Präsentation}
+		
+		\begin{document}
+			\begin{frame}{Erste Folie}
+				Inhalt
+			\end{frame}				
+		\end{document}
+		\end{verbatim}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Mögliche Optionen}{Grundlegende Stilelemente beeinflussen}
+		Sie können grundlegende Stilelemente über die Angabe von Optionen beim Laden des \textit{Beamer-Schemas} (\texttt{\textbackslash{}usetheme[\textcolor{hsmw}{optionen}]\{hsmw\}}) beeinflussen:
+		\begin{itemize}
+			\item Allgemeine Anpassungen (Farben und Texte):
+			\begin{itemize}
+				\item Farbschema: \textcolor{hsmw}{hs} oder \textit{<leer>} (Standard), \textcolor{hsmw}{inw}, \textcolor{hsmw}{cb}, \textcolor{hsmw}{me}, \textcolor{hsmw}{sw}, \textcolor{hsmw}{wi}
+			
+				\item Sprache: \textit{<leer>} (Standard: ngerman), \textcolor{hsmw}{english}
+			\end{itemize}
+		
+			\item Weitere grafische Elemente:
+			\begin{itemize}
+				\item \textcolor{hsmw}{toc} fügt ein Inhaltsverzeichnis nach der Titelseite ein
+				\item \textcolor{hsmw}{sectionslide} fügt eine zusätzliche Seite für jede \verb!\section! ein
+				\item \textcolor{hsmw}{noprogressbar} verbirgt den Fortschrittsbalken am unteren Rand der Folien
+				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
+				\item \textcolor{hsmw}{nofacultyicon} verbirgt das Fakultäts-Icon auf der Titelseite
+			\end{itemize}
+		\end{itemize}
+	
+		Beispiel: \verb!\usetheme[cb, sectionslide, nofacultyicon]{hsmw}!
+	\end{frame}
+	
+	\begin{frame}[fragile]{Zusätzliche Befehle}{Folien erstellen oder Werte manipulieren}
+		\begin{itemize}
+			\item Grafik auf der Titelseite einfügen: \verb!\titlegraphic{pfad/zum/bild.jpg}!
+			
+			\item Bibliographie hinzufügen
+			\begin{itemize}
+				\item Literaturdateien in Präambel einfügen: \verb!\addbibresource{literature.bib}!
+				\item Literaturverzeichnis im Textkörper einbinden: \verb!\makebibliography!
+			\end{itemize}
+			
+			\item Abschlussfolie hinzufügen
+			\begin{itemize}
+				\item Kontaktdaten in Präambel ergänzen: \verb!\impressum{Telefon}{eMail}{Büro}!
+				\item Abschlussfolie im Textkörper einbinden: \verb!\makethankyou!
+			\end{itemize}
+		
+			\item Aktuellen Sprecher auf Folie anzeigen (bei mehreren Präsentierenden)
+			\begin{itemize}
+				\item Vor der Folie den Sprecher setzen: \verb!\setCurrentSpeaker{Name des Sprechers}!
+				\item Nach der Folie wieder zurücksetzen: \verb!\resetCurrentSpeaker{}!
+				\item Mittels Stern-Befehlen das Wort \enquote{Sprecher} voranstellen: \verb!\setCurrentSpeaker*!
+			\end{itemize}
+		\end{itemize}
+	
+		\vfill
+		\resizebox{\textwidth}{!}{Hinweis: Überlange (Unter-)Titel auf der Titelseite und auf den Folien werden bei Bedarf verkleinert, damit Sie nicht aus ihren Boxen fallen.}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Erweitertes Beispiel im Stil der Fakultät CB}{Mit ein paar zusätzlichen Optionen und Befehlen}
+		\scriptsize
+		\begin{verbatim}
+			\documentclass[aspectratio=169,onlytextwidth,t]{beamer}
+			\usetheme[cb]{hsmw}
+			
+			\title[Kurztitel für Fußzeile]{Titel der Präsentation für Titelseite}
+			\subtitle{Untertitel für Titelseite}
+			\author{Name Vortragende(r)}
+			\date{\today}
+			\impressum{Telefon}{eMail}{Büro}
+			\titlegraphic{figures/thankyou.jpg}
+			
+			\begin{document}
+				\begin{frame}{Erste Folie}{Mit Untertitel}
+					Inhalt
+				\end{frame}		
+			
+				\appendix
+				\makethankyou		
+			\end{document}
+		\end{verbatim}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Anwendungshinweise}{Was es zu beachten gibt}
+		\begin{itemize}
+			\item Für die Verwendung in lokalen TeX-Distributionen oder auch Overleaf geeignet
+			
+			\item Verzeichnisstruktur für das Auffinden der Dateien notwendig
+			\begin{itemize}
+				\item Funktionen und Aufbau auf mehrere Quelldateien verteilt\footnote{Nach den Empfehlungen der offiziellen Richtlinien zur Erstellung von Beamer-Vorlagen.}
+				\begin{itemize}
+					\item beamerthemehsmw.sty: Optionen, Pakete und Macros (lädt die restlichen Dateien)
+					\item beamerouterthemehsmw.sty: Allgemeine Layout-Einstellungen (Folientitel, Fußzeilen, ...)
+					\item beamerinnerthemehsmw.sty: Inhaltsbezogene Layout-Einstellungen (Titelseite, Aufzählungen, ...)
+					\item beamerfontthemehsmw.sty: Die verwendeten Schriftstile und -größen
+					\item beamercolorthemehsmw*.sty: Das spezifische Farbschema für die einzelnen Elemente (inkl. Fakultätsfarben)
+				\end{itemize}
+			
+				\item Unterverzeichnis für zusätzliches Bildmaterial: ./figures/*
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\section{Inhalte gestalten}
+	
+	\begin{frame}{Eine normale Folie mit Fließtext}{... und einem Untertitel}
+		\blindmathtrue
+		\blindtext
+	\end{frame}
+
+	\begin{frame}[c]{Eine normale Folie vertikal zentriert}{Unter Verwendung der Folien-Option: \texttt{\textbackslash{}begin\{frame\}[c] ... \textbackslash{}end\{frame\}}}
+		\blindmathtrue
+		\blindtext
+	\end{frame}
+
+	\begin{frame}[b]{Eine normale Folie unten ausgerichtet}{Unter Verwendung der Folien-Option: \texttt{\textbackslash{}begin\{frame\}[b] ... \textbackslash{}end\{frame\}}}
+		\blindmathtrue
+		\blindtext
+	\end{frame}
+	
+	\begin{frame}{Eine Folie mit zwei Spalten für mehr Platz}{Einfache Mathematik: Mehr Spalten = mehr Platz}
+		\begin{columns}
+			\begin{column}[T]{.5\textwidth}
+				\blindlistlist[3]{itemize}[4]
+			\end{column}
+			\begin{column}[T]{.5\textwidth}
+				\blindlistlist[3]{itemize}[3]
+			\end{column}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}{Eine Folie mit zwei Spalten für mehr Platz}{Auch passend für Abbildungen}
+		\begin{columns}
+			\begin{column}[T]{.5\textwidth}
+				\blindlistlist[3]{itemize}[4]
+			\end{column}
+			\begin{column}[T]{.5\textwidth}
+				\includegraphics[width=\textwidth]{figures/thankyou.jpg}
+				
+				\begin{figure}[!htb]
+					\insertfacultyicon
+					\caption{Aktuelles Icon mit Bildunterschrift}
+					\label{fig:icon}
+				\end{figure}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Inhalte absolut positionieren}
+		\begin{itemize}
+			\item Der Koordinatenursprung für ist die obere linke Ecke
+			\item Koordinatensystem in Zentimetern, an Seitenverhältnis 16:9 ausgerichtet
+			\begin{itemize}
+				\item $ 0 \le x \le 16 $
+				\item $ 0 \le y \le 9 $
+			\end{itemize}
+		
+			\item Verwendung von \verb!begin{textblock}{breite}(x-pos, y-pos)!...
+		\end{itemize}
+			
+		\begin{textblock}{5}(10, 4.5)
+			\scriptsize
+			\begin{verbatim}
+				\begin{textblock}{5}(10, 4.5)
+					Inhalt
+				\end{textblock}
+			\end{verbatim}
+		\end{textblock}
+	
+		\begin{textblock}{15}(0.5, 6)
+			\hrule
+			\scriptsize
+			\begin{verbatim}
+				\begin{textblock}{15}(0.5, 6)
+					\hrule
+				\end{textblock}
+			\end{verbatim}
+		\end{textblock}
+	\end{frame}
+	
+	\begin{frame} 
+		\frametitle{Mittels \textit{Overlay} mehrere Folien erzeugen} 
+		\begin{theorem}
+			Es gibt keine \enquote{größte} Primzahl.
+		\end{theorem} 
+		\begin{enumerate} 
+			\item<1-| alert@1> Angenommen $p$ wäre die größte Primzahl.
+			\item<2-> Sei $q$ das Produkt der ersten $p$ Zahlen. 
+			\item<3-> Dann ist $q+1$ durch keine davon teilbar.
+			\item<4-> Aber $q + 1$ ist größer als $1$ und daher durch eine Primzahl teilbar, die nicht in den ersten $p$ Zahlen liegt.
+		\end{enumerate}
+		
+		\uncover<3->{\scriptsize Hinweis: Mathe ist super kompliziert!}
+		
+		\vfill
+		\only<2,4>{\centering\textbf{Achtung}: Besonders wichtiger Schritt!}
+		\vfill
+	\end{frame}
+	
+	\section{Benutzerdefinierte Anpassungen}
+	
+	\newcommand{\rgb}[1]{\textcolor{hsmw80}{#1}}
+	\newcommand{\cmd}[1]{\rgb{\textbackslash{}#1}}
+	\begin{frame}{Zusätzliche, beeinflussbare Macros}{... und deren Abhängigkeiten (zur Feinabstimmung der eigenen Präsentation)}
+		\centering
+		\scriptsize
+		\begin{tikzpicture}[every node/.style={font={\vphantom{Ag}}}, every edge/.append style={-latex, rounded corners}, label/.style={hsmwLightGray, scale=.8, inner sep=0}]
+			% Option: hs, cb, ...
+			\node (optionFaculty) {Option \rgb{hs}, \rgb{cb}, \dots};
+			\draw[-latex] (optionFaculty.east) to[out=0,in=180] ++(1, .375) node[anchor=west] (macroInsertfacultyicon) {\cmd{insertfacultyicon}};
+			\draw[-latex] (optionFaculty.east) to[out=0,in=180] ++(1, -.375) node[anchor=west] (macroInsertfacultyname) {\cmd{insertfacultyname}};
+			\draw[-latex] (macroInsertfacultyname.east) to ++(1, 0) node[anchor=west] (effectInstitute) {\cmd{institute\{\cmd{insertfacultyname}\}}};
+			
+			\node[label, anchor=north] at (macroInsertfacultyicon.south) {(Titelseite)};
+			\node[label, anchor=north] at (macroInsertfacultyname.south) {(Fußzeile und Abschlussfolie)};
+			\node[label, anchor=north] at (effectInstitute.south) {(Titelseite)};
+			
+			% Macro \impressum and \makethankyou
+			\node[anchor=north west] (macroImpressum) at ([yshift=-2cm] optionFaculty.south west) {\cmd{impressum}};
+			\draw[-latex] (macroImpressum.east) to[out=0,in=180] ++(1, .75) node[anchor=west] (macroInsertemail) {\cmd{insertemail}};
+			\draw[-latex] (macroImpressum.east) to[out=0,in=180] ++(1, 0) node[anchor=west] (macroInserttelephone) {\cmd{inserttelephone}};
+			\draw[-latex] (macroImpressum.east) to[out=0,in=180] ++(1, -.75) node[anchor=west] (macroInsertlocation) {\cmd{insertlocation}};
+			%
+			\draw[-latex] (macroInserttelephone.east) to ++(1, 0) node[anchor=west] (macroInsertthankyoutext) {\cmd{insertthankyoutext}};
+			\draw[-latex] (macroInsertemail.east) to[out=0,in=180] (macroInsertthankyoutext.west);
+			\draw[-latex] (macroInsertlocation.east) to[out=0,in=180] (macroInsertthankyoutext.west);
+			%
+			\node[anchor=west] (macroInsertthankyoutitle) at ([yshift=.75 cm] macroInsertthankyoutext.west) {\cmd{insertthankyoutitle}};
+			\node[anchor=west] (macroInsertthankyousidebartext) at ([yshift=-.75 cm] macroInsertthankyoutext.west) {\cmd{insertthankyousidebartext}};
+			
+			\node[label, anchor=north] at (macroInsertthankyoutitle.south) {(Abschlussfolie)};
+			\node[label, anchor=north] at (macroInsertthankyoutext.south) {(Abschlussfolie)};
+			\node[label, anchor=north] at (macroInsertthankyousidebartext.south) {(Abschlussfolie)};
+			
+			% Macro \*currentSpeaker	
+			\node[anchor=north west] (macroSetCurrentSpeaker) at ([yshift=-2cm] macroImpressum.south west) {\cmd{setCurrentSpeaker}};
+			\draw[-latex, dotted] (macroSetCurrentSpeaker.east) to[out=0,in=180] ++(1, .375) node[anchor=west] (macroCurrentSpeakerLabel) {\cmd{currentSpeakerLabel}};
+			\draw[-latex] (macroSetCurrentSpeaker.east) to[out=0,in=180] ++(1, -.375) node[anchor=west] (macroCurrentSpeaker) {\cmd{currentSpeaker}};
+			\draw[-latex, dotted] (macroCurrentSpeakerLabel.south -| macroCurrentSpeaker.north) to (macroCurrentSpeaker.north);
+			%
+			\node[anchor=south west] (macroResetCurrentSpeaker) at ([yshift=.75cm]macroSetCurrentSpeaker.north west) {\cmd{resetCurrentSpeaker}};
+			\draw[-latex, dotted] (macroResetCurrentSpeaker.south -| macroSetCurrentSpeaker.north) to node[label, pos=.5, anchor=west, outer sep=.25em] {\cmd{insertauthor}} (macroSetCurrentSpeaker.north);
+			%
+			\draw[-latex] (macroCurrentSpeaker.east) to ++(1, 0) node[anchor=west] (macroInsertcurrentspeaker) {\cmd{insertcurrentspeaker}};
+			
+			\node[label, anchor=north] at (macroInsertcurrentspeaker.south) {(Fußzeile)};
+		\end{tikzpicture}
+	\end{frame}
+	
+	\section{FAQ}
+	
+	\begin{frame}[c]{FAQ: Häufig gestellte Fragen}{Hier ist noch Platz für Anwendungsfälle oder Antworten auf häufig gestellte Fragen}
+		Es sind alle zum Testen und zur Übermittlung von konstruktivem Feedback eingeladen!
+		\\[\baselineskip]
+		Bei Ideen, Wünschen, Anregungen, Fragen und auch Problemen:
+		\begin{itemize}
+			\item Offizielle LaTeX-GitLab-Gruppe der Hochschule Mittweida:
+			\newline
+			\href{https://git.hs-mittweida.de/hsmw-latex}{git.hs-mittweida.de/hsmw-latex}
+			
+			\item Kontaktieren Sie mich gern per eMail \href{mailto:schildba@hs-mittweida.de?subject=[LaTeX] Beamer-Vorlage}{schildba@hs-mittweida.de}
+			
+			\item Nutzen Sie einen der anderen verfügbaren Kommunikationskanäle
+		\end{itemize}
+	\end{frame}
+	
+	\appendix
+	\makethankyou
+%	\makebibliography
+	
+	\section{\appendixname}
+	
+	\begin{frame}{Zusätzliche Folien}{Der Anhang zählt nicht mit zu den regulären Folien}
+		\blindtext
+	\end{frame}
+	
+\end{document}
