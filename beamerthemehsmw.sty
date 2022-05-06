@@ -5,40 +5,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Process theme options
 
+% allows Options as key-value pair - Need to use \DeclareOptionX, \ProcessOptionsX ect.
+\RequirePackage{xkeyval} 
+
 \makeatletter
 	% Sets the default faculty to hs (responsible for color model, default institute and default logo)
 	\def\default@faculty{} 							
-	\DeclareOption{hs}{\def\default@faculty{}}		% <empty>, hs, ext, inst
-	\DeclareOption{inw}{\def\default@faculty{-inw}}	% inw, mb
-	\DeclareOption{cb}{\def\default@faculty{-cb}}	% cb, mni
-	\DeclareOption{wi}{\def\default@faculty{-wi}}	% wi, ww
-	\DeclareOption{sw}{\def\default@faculty{-sw}}	% sw, sa
-	\DeclareOption{me}{\def\default@faculty{-me}}	% me
+	\DeclareOptionX{hs}{\def\default@faculty{}}		% <empty>, hs, ext, inst
+	\DeclareOptionX{inw}{\def\default@faculty{-inw}}	% inw, mb
+	\DeclareOptionX{cb}{\def\default@faculty{-cb}}	% cb, mni
+	\DeclareOptionX{wi}{\def\default@faculty{-wi}}	% wi, ww
+	\DeclareOptionX{sw}{\def\default@faculty{-sw}}	% sw, sa
+	\DeclareOptionX{me}{\def\default@faculty{-me}}	% me
 
 	% Insert a separate frame for each section heading (ignore \section*) (default: off)
-	\DeclareOption{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
+	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
 
 	% Insert a table of contents at the beginning of the document (default: off)
-	\DeclareOption{toc}{\AddToHook{begindocument/end}{\maketoc}}
+	\DeclareOptionX{toc}{\AddToHook{begindocument/end}{\maketoc}}
 
-	% Switches babel language to english (default: off)
-	\newtoggle{language@english}
-	\DeclareOption{english}{\toggletrue{language@english}}
-	%	\DeclareOption{english}{\AddToHook{begindocument/before}{\selectlanguage{english}}} %TODO: Language switch does not trigger correctly... loading babel option directly works...
+	% Declare language as key value Option with default ngerman. Passes language directly to babel 
+	\DeclareOptionX{language}[ngerman]{\PassOptionsToPackage{#1}{babel}}
 
+	
 	% Hides the progressbar in footline (default: off)
 	\newtoggle{show@progressbar}\toggletrue{show@progressbar}  % \settoggle{show@progressbar}{true|false} \toggletrue{show@progressbar} % \iftoggle{show@progressbar}{if}{else}
-	\DeclareOption{noprogressbar}{\togglefalse{show@progressbar}}
+	\DeclareOptionX{noprogressbar}{\togglefalse{show@progressbar}}
 
 	% Hides the total number of slide in footline (default: on)
 	\newtoggle{show@totalpages}\toggletrue{show@totalpages}
-	\DeclareOption{nototalpages}{\togglefalse{show@totalpages}}
+	\DeclareOptionX{nototalpages}{\togglefalse{show@totalpages}}
 
 	% Hides the faculty icon on title page (default: on)
 	\newtoggle{show@facultyicon}\toggletrue{show@facultyicon}
-	\DeclareOption{nofacultyicon}{\togglefalse{show@facultyicon}}
+	\DeclareOptionX{nofacultyicon}{\togglefalse{show@facultyicon}}
 
-	\ProcessOptions\relax
+	\ExecuteOptionsX{language=ngerman}% Default Options to be loaded 
+	\ProcessOptionsX\relax
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,7 +54,10 @@
 
 \RequirePackage[default,proportional,scale=0.95]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
 
+\RequirePackage{babel}% load babel package - Options comes from package Option 'language' 
+
 \RequirePackage[fixed]{fontawesome5} % Symbols (marvosym)
+%TODO: loading csquotes package and its options may depend on the choosen language
 \RequirePackage[autostyle=true,german=quotes]{csquotes} % Improves nested quoting in bibliography (provides \enquote makro for quoting)
 %\RequirePackage[factor=1100, stretch=10, shrink=10, babel=true, nopatch=footnote]{microtype} %TODO: Seems to have problems within overleaf: "keyval error: nopatch undefined"
 
@@ -62,11 +68,6 @@
 \RequirePackage[absolute, overlay]{textpos} % Abosolute placement of elements (display with option showboxes)
 \RequirePackage{tabularx, booktabs} % Tabular packages
 \RequirePackage{adjustbox} % Versatile boy environments (e.g. resizebox)
-
-% Load babel depending of language switch (%TODO Use keyvalue option and use value here directly)
-\iftoggle{language@english}
-{\RequirePackage[english]{babel}}
-{\RequirePackage[ngerman]{babel}}
 
 \RequirePackage[
 %	backend=biber,	% Specified used backend (biber, bibtex, bibtex8); default:biber
