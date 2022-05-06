@@ -46,6 +46,10 @@
 	\newtoggle{show@titlepagedate}
 	\DeclareOption{titlepagedate}{\toggletrue{show@titlepagedate}}
 
+	% Enables coloring of math text
+	\newtoggle{use@colormath}
+	\DeclareOption{colormath}{\toggletrue{use@colormath}}
+
 	\ProcessOptions\relax
 \makeatother
 
@@ -70,6 +74,7 @@
 \RequirePackage[absolute, overlay]{textpos} % Abosolute placement of elements (display with option showboxes)
 \RequirePackage{tabularx, booktabs} % Tabular packages
 \RequirePackage{adjustbox} % Versatile boy environments (e.g. resizebox)
+\RequirePackage{caption}
 
 % Load babel depending of language switch (%TODO Use keyvalue option and use value here directly)
 \iftoggle{language@english}
@@ -94,6 +99,9 @@
 
 % Sets the page grid to the default aspect ratio for easy alignment: (1, 1) is 1 cm away from the right and top border; (8, 4.5) is the page center
 \TPGrid{16}{9} 
+
+% Sets the distance between figure/table and caption
+\captionsetup{skip=.25cm}
 
 % Adds the subtitle into the pdf document metadata
 \AddToHook{begindocument/before}{\subject{\insertsubtitle}}
@@ -169,15 +177,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define speaker commands
 
-\newcommand{\currentSpeakerLabel}{}
-\addto\captionsngerman{\renewcommand{\currentSpeakerLabel}{Sprecher}}
-\addto\captionsenglish{\renewcommand{\currentSpeakerLabel}{Speaker}}
+\newcommand{\currentspeakerlabel}{}
+\addto\captionsngerman{\renewcommand{\currentspeakerlabel}{Sprecher}}
+\addto\captionsenglish{\renewcommand{\currentspeakerlabel}{Speaker}}
 
-\NewDocumentCommand{\setCurrentSpeaker}{sm}{\gdef\currentSpeaker{\IfBooleanTF#1{\currentSpeakerLabel{}: }{}#2}}
-\NewDocumentCommand{\resetCurrentSpeaker}{s}{\IfBooleanTF#1{\setCurrentSpeaker*{\insertauthor}}{\setCurrentSpeaker{\insertauthor}}}
+\NewDocumentCommand{\setcurrentspeaker}{sm}{\gdef\currentSpeaker{\IfBooleanTF#1{\currentspeakerlabel{}: }{}#2}}
+\NewDocumentCommand{\resetcurrentspeaker}{s}{\IfBooleanTF#1{\setcurrentspeaker*{\insertauthor}}{\setcurrentspeaker{\insertauthor}}}
 \NewDocumentCommand{\insertcurrentspeaker}{}{\currentSpeaker}
 
-\resetCurrentSpeaker{}
+\resetcurrentspeaker{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load theme files
@@ -234,10 +242,15 @@
 
 \NewDocumentCommand{\insertthankyousidebartext}{}
 {
-	\textbf{Hochschule Mittweida}\\
-	University of Applied Sciences\\
-	Technikumplatz 17 | 09648 Mittweida\\
-	\insertfacultyname
+	\textbf{Hochschule Mittweida}
+	\newline
+	University of Applied Sciences
+	\newline
+	Technikumplatz 17 | 09648 Mittweida
+	\if&\insertfacultyname&\else
+		\newline
+		\insertfacultyname
+	\fi
 }
 \newcommand{\insertemail}{}
 \newcommand{\inserttelephone}{}
@@ -267,22 +280,36 @@
 			\fi
 		\end{tabularx}
 	}{
-		\begin{tabularx}{\linewidth}{@{}cX@{}}
-			\multicolumn{2}{@{}X@{}}{\insertauthor}\\
-			\\
-			\if\relax\inserttelephone\relax\else
-				\textbf{T} & \inserttelephone\\
-			\fi
-			\if\relax\insertemail\relax\else
-				\multicolumn{2}{@{}X@{}}{\insertemail}\\
-			\fi
-			\if\relax\insertlocation\relax\else
-				\\
-				\multicolumn{2}{@{}X@{}}{\insertlocation}\\
-			\fi
-		\end{tabularx}
+		\insertauthor
+		
+		\vspace*{\baselineskip}
+		\if\relax\inserttelephone\relax\else
+			\textbf{T}\qquad\inserttelephone
+		\fi
+		
+		\if\relax\insertemail\relax\else
+			\insertemail
+		\fi
+	
+		\if\relax\insertlocation\relax\else
+		\vspace*{\baselineskip}
+		\insertlocation
+		\fi
 	}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Patches and adjustments
+
+% Redefine top aligned frames to remove additional skip for nicer overall alignments of contents: https://github.com/josephwright/beamer/blob/main/base/beamerbaseframe.sty#L262
+\makeatletter
+\define@key{beamerframe}{t}[true]{% top
+	\beamer@frametopskip=0pt\relax% \beamer@frametopskip=.2cm plus .5\paperheight\relax%
+	\beamer@framebottomskip=0pt plus 1fill\relax%
+	\beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+	\beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

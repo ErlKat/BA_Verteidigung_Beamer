@@ -182,21 +182,19 @@
 
 	\begin{textblock}{8.5}(1, 4)
 		\begin{beamercolorbox}[wd=\linewidth, ht=4cm, dp=.1cm]{thankyou page text}
-			\vbox to 4cm{\hsize=\linewidth
+			\begin{minipage}[b][4cm][t]{\linewidth}
 				\usebeamerfont{thankyou page text}
 				\insertthankyoutext
-				\vfill
-			}
+			\end{minipage}
 		\end{beamercolorbox}	
 	\end{textblock}
 
 	\begin{textblock}{5}(10.5, 4)
 		\begin{beamercolorbox}[wd=\linewidth, ht=2.5cm, dp=.1cm]{thankyou page sidebar text}
-			\parbox[b][2.5cm][t]{\linewidth}
-			{
+			\begin{minipage}[b][2.5cm][t]{\linewidth}
 				\usebeamerfont{thankyou page sidebar text}
 				\insertthankyousidebartext
-			}
+			\end{minipage}
 		\end{beamercolorbox}	
 	\end{textblock}
 

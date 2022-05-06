@@ -76,7 +76,6 @@
 \setbeamercolor*{caption name}{fg=hsmw} % Caption names
 \setbeamercolor*{block title}{fg=hsmw, bg=hsmw20} % Block enivornment names (theorem, proof, etc.)
 \setbeamercolor*{block body}{bg=hsmw10} % Block enivornment names (theorem, proof, etc.)
-\setbeamercolor*{math text}{fg=hsmw,bg=}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Switch elements of the color theme depending on given options
@@ -86,4 +85,9 @@
 	\setbeamercolor*{title page subtitle}{parent=title page, fg=hsmw80}
 	\setbeamercolor*{framesubtitle}{fg=hsmw60}
 	\setbeamercolor*{normal text}{fg=hsmwDarkGray}
+}{}
+
+\iftoggle{use@colormath}
+{
+	\setbeamercolor*{math text}{fg=hsmw}
 }{}
