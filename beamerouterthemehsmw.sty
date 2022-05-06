@@ -29,19 +29,16 @@
 \defbeamertemplate*{frametitle}{hsmw}
 {
 	\begin{textblock}{14}(1, 0.5)
-		\begin{beamercolorbox}[wd=\linewidth, ht=.7 cm, dp=.1cm]{frametitle} 
+		\begin{beamercolorbox}[wd=\linewidth, ht=.7cm, dp=.2cm]{frametitle} 
 			\usebeamerfont{frametitle}%
-			\autofontscaledownbox{\linewidth}{.7 cm}{\insertframetitle}
+			\autofontscaledownbox{\linewidth}{.7cm}{\insertframetitle}
 		\end{beamercolorbox}	
 	\end{textblock}
 
 	\begin{textblock}{14}(1, 1.4)
-		\begin{beamercolorbox}[wd=\linewidth, ht=.5 cm]{framesubtitle}
-			\vbox to .4cm{\hsize=\linewidth
-				\usebeamerfont{framesubtitle}%
-				\insertframesubtitle%
-				\vfill
-			}
+		\begin{beamercolorbox}[wd=\linewidth, ht=.4cm, dp=.1cm]{framesubtitle}
+			\usebeamerfont{framesubtitle}%
+			\autofontscaledownbox{\linewidth}{.4cm}{\insertframesubtitle}
 		\end{beamercolorbox}	
 	\end{textblock}
 }
@@ -49,7 +46,7 @@
 % Frame headline
 \defbeamertemplate*{headline}{hsmw}
 {
-	\begin{beamercolorbox}[wd=\paperwidth, ht=1.5 cm]{headline}
+	\begin{beamercolorbox}[wd=\paperwidth, ht=1.5cm]{headline}
 		% Just occupy space, so the main text is properly aligned
 	\end{beamercolorbox}
 }
@@ -95,37 +92,37 @@
 {
 	%TODO: Use stylable template for numbering instead of hardcoded one
 	\leavevmode%
-	\begin{beamercolorbox}[wd=1 cm, ht=.5cm, dp=.1cm, right]{footline number current} 
+	\begin{beamercolorbox}[wd=1cm, ht=.5cm, dp=.1cm, right]{footline number current} 
 		\usebeamerfont{footline number current}
 		\vspace*{.05cm}
 		\insertframenumber
 	\end{beamercolorbox}%
 	%
-	\begin{beamercolorbox}[wd=.5 cm, ht=.5cm, dp=.1cm]{footline number overall} 
+	\begin{beamercolorbox}[wd=.5cm, ht=.5cm, dp=.1cm]{footline number overall} 
 		\usebeamerfont{footline number overall}%
 		\iftoggle{show@totalpages}{/\insertmainframenumber}{}
 	\end{beamercolorbox}%
 	%
 	\vbox{
-		\begin{beamercolorbox}[wd=9.5 cm, ht=.25cm, dp=.1cm]{footline title} 
+		\begin{beamercolorbox}[wd=9.5cm, ht=.25cm, dp=.1cm]{footline title} 
 			\usebeamerfont{footline title}
 			\insertshorttitle{} | \insertcurrentspeaker{}
 		\end{beamercolorbox}%
 		%
-		\begin{beamercolorbox}[wd=9.5 cm, ht=.15cm, dp=.1cm]{footline date} 
+		\begin{beamercolorbox}[wd=9.5cm, ht=.15cm, dp=.1cm]{footline date} 
 			\usebeamerfont{footline date}
 			\copyright{} \insertdate{} Hochschule Mittweida
 		\end{beamercolorbox}%
 	}%
 	%
-	\begin{beamercolorbox}[wd=5 cm, ht=.5cm, dp=.1cm, right, rightskip=1cm]{footline faculty} % CD page 16 and 17
+	\begin{beamercolorbox}[wd=5cm, ht=.5cm, dp=.1cm, right, rightskip=1cm]{footline faculty} % CD page 16 and 17
 		\usebeamerfont{footline faculty}
 		
 		\leavevmode%
 		\if&\insertfacultyname&\else%
 			\vbox to .3cm{\hsize=2cm \raggedleft\insertfacultyname\vfill}%
 			\hspace*{.12cm}%
-			\rule{.15 pt}{4 mm}% .15pt = .0529 mm (scaled according to CD)
+			\rule{.15pt}{4mm}% .15pt = .0529 mm (scaled according to CD)
 			\hspace*{.12cm}%
 		\fi%
 		%

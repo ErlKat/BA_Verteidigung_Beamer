@@ -234,6 +234,7 @@
 			%
 			\ifnum\autofontscaledownbox@boxHeight<\autofontscaledownbox@maxHeight%
 				\usebox{\autofontscaledown@box}%
+				\if1\f\else{\PackageWarning{beamerinnerthemehsmw}{Font of text '#3' is scaled down by a factor of \f}}\fi%
 				\breakforeach%
 			\fi%
 		}%
