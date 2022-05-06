@@ -9,17 +9,18 @@
 % 1) Load the desired presentation theme
 \usetheme[
 	% Individual options to customize the presentation conforming to the corporate design
-	hs, 			% Change default faculty color set and predefined faculty values: hs or <empty> (default), inw, cb, me, sw, wi
-%	english,		% Change default language to english
-%	toc,			% Adds a ToC slide
-%	sectionslide,	% Display separate section slides
-%	nototalpages,	% Hides the total number of slide in footline
-%	nofacultyicon,	% Hides the faculty icon on title page
-	colormath,		% Enables coloring of math text
+	hs, 				% Change default faculty color set and predefined faculty values: hs or <empty> (default), inw, cb, me, sw, wi
+%	language=english,	% Change default language to english [default  is ngerman] other languages are possible (see babel-package) but may need further adjustments 
+%	toc,				% Adds a ToC slide
+%	sectionslide,		% Display separate section slides
+%	noprogressbar,		% Hides the progressbar in footline (run twice to update progressbar)
+%	nototalpages,		% Hides the total number of slide in footline
+%	nofacultyicon,		% Hides the faculty icon on title page
+	colormath,			% Enables coloring of math text
 	% Additional style options not completely conforming to the corporate design
-%	titlepagedate,	% Shows the date on the titelpage
-%	fancystyle,		% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
-%	progressbar,	% Shows the progressbar in footline (run twice to update progressbar)
+%	titlepagedate,		% Shows the date on the titelpage
+%	fancystyle,			% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
+%	progressbar,		% Shows the progressbar in footline (run twice to update progressbar)
 	]{hsmw} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -96,12 +97,14 @@
 				\begin{itemize}
 					\item Standardeinstellung Hochschul-Blau: \textcolor{hsmw}{hs} oder \textit{<leer>}
 					\item Fakultäts-Farben: \textcolor{hsmw}{inw}, \textcolor{hsmw}{cb}, \textcolor{hsmw}{me}, \textcolor{hsmw}{sw}, \textcolor{hsmw}{wi}
+					\item Alternative Schreibweise: \textcolor{hsmw}{faculty=inw}, \textcolor{hsmw}{faculty=cb}, \dots
 				\end{itemize}
 
 				\item Sprache (Ändert einige Bezeichner, z.B. Fakultätsnamen, Datumsformat, \dots): 
 				\begin{itemize}
-					\item Standardeinstellung Deutsch: \textit{<leer>}
-					\item Englisch: \textcolor{hsmw}{english}
+					\item Standardeinstellung Deutsch: \textcolor{hsmw}{language=ngerman} oder \textit{<leer>}
+					\item Englisch: \textcolor{hsmw}{language=english}
+					\item Andere Sprachen sind möglich, aber nocht nicht implementiert (bei Interesse melden!)
 				\end{itemize}
 			\end{itemize}
 
@@ -109,7 +112,6 @@
 			\begin{itemize}
 				\item \textcolor{hsmw}{toc} fügt ein Inhaltsverzeichnis nach der Titelseite ein
 				\item \textcolor{hsmw}{sectionslide} fügt eine zusätzliche Seite für jede \verb!\section! ein
-				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
 			\end{itemize}
 		\end{itemize}
 
@@ -119,6 +121,7 @@
 		\begin{itemize}
 			\item[] \textcolor{hsmwLightGray}{Individuelle Anpassungen an den eigenen Geschmack (Fortsetzung):}
 			\begin{itemize}
+				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
 				\item \textcolor{hsmw}{nofacultyicon} verbirgt das Fakultäts-Icon auf der Titelseite
 				\item \textcolor{hsmw}{colormath} hebt mathematische Formeln farbig ab
 			\end{itemize}
@@ -136,6 +139,7 @@
 		\begin{itemize}
 			\item \verb!\usetheme[toc, sectionslide, nofacultyicon]{hsmw}!
 			\item \verb!\usetheme[cb, colormath, progressbar]{hsmw}!
+			\item \verb!\usetheme[faculty=wi, colormath]{hsmw}!
 		\end{itemize}
 
 	\end{frame}
