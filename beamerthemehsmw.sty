@@ -48,8 +48,17 @@
 % Load Packages
 % Preloaded packages by beamer in presentation mode: amsthm, color, enumerate, hyperref, xcolor
 
-\RequirePackage[T1]{fontenc} % Font-Encoding
-\RequirePackage[utf8]{inputenc} % Input-Encoding
+\RequirePackage{iftex}
+\ifxetex%
+    \PassOptionsToPackage{defaultsans}{opensans}%make opensans default sans font
+\else%
+    \ifluatex%
+        \PassOptionsToPackage{defaultsans}{opensans}%make opensans default sans font
+    \else%
+        \RequirePackage[T1]{fontenc} % Font-Encoding
+        \RequirePackage[utf8]{inputenc} % Input-Encoding
+    \fi
+\fi
 \RequirePackage{lmodern} % Font tweaking to latin modern (less pixelated) as fallback font
 
 \RequirePackage[default,proportional,scale=0.95]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
