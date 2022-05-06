@@ -43,82 +43,81 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newsavebox{\facultyIconBox}
-\savebox{\facultyIconBox}{\insertfacultyicon}
+\savebox{\facultyIconBox}{\insertfacultyicon\hspace*{.15cm}}
 
 % Title page
 \defbeamertemplate*{title page}{hsmw}
 {
-	\def\spacer{.15 cm}
+	\ifx\inserttitlegraphic\empty
+		\def\titleBoxWidth{14}
+		\def\titleBoxStart{3}
+		\def\titleBoxHeight{2.4}
+		\def\bottomBoxWidth{9}
+	\else
+		\def\titleBoxWidth{6.75}
+		\def\titleBoxStart{1.9}
+		\def\titleBoxHeight{3.5}
+		\def\bottomBoxWidth{6.75}
+	\fi	
 
 	% Faculty logo and text
-	\begin{textblock}{9.25}(1, 0.675)
-		\begin{beamercolorbox}[wd=\linewidth, ht=0.65 cm, dp=0cm, leftskip = 0cm]{title page faculty}
+	\begin{textblock}{9}(1, 0.675)
+		\begin{beamercolorbox}[wd=\linewidth, ht=0.65cm, dp=0cm, leftskip = 0cm]{title page faculty}
 			\iftoggle{show@facultyicon}
 			{%
 				\usebox{\facultyIconBox}%
-				\hspace*{\spacer}%
-				\pgfmathparse{\linewidth - \wd\facultyIconBox - \spacer}%
+				\pgfmathparse{\linewidth - \wd\facultyIconBox}%
 			}
 			{\pgfmathparse{\linewidth}}%
 			%
 			\ifstrempty{\insertinstitute}{}
 			{%
-				\vbox to 0.65cm{\hsize=\pgfmathresult pt%
+				\parbox[b][0.65cm][c]{\pgfmathresult pt}
+				{%
 					\usebeamerfont{title page faculty}%
-					\vfill%
 					\vspace*{.5ex}%
 					\insertinstitute%
-					\vphantom{Ag}% Align Baseline
-					\vfill%
-				}%	
+					\vphantom{Ag}%
+				}
 			}%
 		\end{beamercolorbox}	
 	\end{textblock}
 	
-	\ifx\inserttitlegraphic\empty
-		\def\boxWidth{14}
-		\def\boxStart{3}
-		\def\boxHeight{2.5}
-	\else
-		\def\boxWidth{6.75}
-		\def\boxStart{2.2}
-		\def\boxHeight{3.2}
-	\fi
-	
 	% Title
-	\begin{textblock}{\boxWidth}(1, \boxStart)
-		\begin{beamercolorbox}[wd=\linewidth, ht=\boxHeight cm, dp=0cm, leftskip = 0cm]{title page title} 
+	\begin{textblock}{\titleBoxWidth}(1, \titleBoxStart)
+		\begin{beamercolorbox}[wd=\linewidth, ht=\titleBoxHeight cm, dp=.2cm, leftskip = 0cm]{title page title} 
 			\usebeamerfont{title page title}%
-			\autofontscaledownbox{\linewidth}{\boxHeight cm}{\inserttitle}
+			\autofontscaledownbox{\linewidth}{\titleBoxHeight cm}{\inserttitle}
 		\end{beamercolorbox}	
 	\end{textblock}
 	
 	% Subtitle
-	\begin{textblock}{\boxWidth}(1, 5.75)
-		\begin{beamercolorbox}[wd=\linewidth, ht=1 cm, dp=.0cm, leftskip = 0cm]{title page subtitle} 
-			\vbox to 1cm{\hsize=\linewidth
+	\begin{textblock}{\titleBoxWidth}(1, 5.65)
+		\begin{beamercolorbox}[wd=\linewidth, ht=1cm, dp=.1cm, leftskip = 0cm]{title page subtitle} 
+			\parbox[b][1cm][t]{\linewidth}
+			{%
 				\usebeamerfont{title page subtitle}%
-				\autofontscaledownbox{\linewidth}{1 cm}{\insertsubtitle}%
-				\vfill
+				\autofontscaledownbox{\linewidth}{1cm}{\insertsubtitle}%
 			}
 		\end{beamercolorbox}	
 	\end{textblock}
 
 	% Author
-	\begin{textblock}{6.75}(1, 6.8)
-		\begin{beamercolorbox}[wd=\linewidth, ht=1 cm, dp=0cm, leftskip = 0cm]{title page subsubtitle} 
+	\begin{textblock}{\bottomBoxWidth}(1, 6.8)
+		\begin{beamercolorbox}[wd=\linewidth, ht=1cm, dp=.1cm, leftskip = 0cm]{title page subsubtitle} 
 			\usebeamerfont{title page subsubtitle}%
+			\nohyphenation
 			\insertauthor
 		\end{beamercolorbox}	
 	\end{textblock}
 
 	% Date
-	\begin{textblock}{6.75}(1, 8.2)
-		\begin{beamercolorbox}[wd=\linewidth, ht=.5 cm, dp=0cm, leftskip = 0cm]{title page date} 
-			\vbox to .5cm{
+	\begin{textblock}{\bottomBoxWidth}(1, 8.1)
+		\begin{beamercolorbox}[wd=\linewidth, ht=.5cm, dp=.1cm, leftskip = 0cm]{title page date} 
+			\parbox[b][.5cm][t]{\linewidth}
+			{%
 				\usebeamerfont{title page date}%
-				\insertdate
-				\vfill
+				\iftoggle{show@titlepagedate}{\insertdate}{}%
 			}
 		\end{beamercolorbox}	
 	\end{textblock}
@@ -172,19 +171,19 @@
 \defbeamertemplate*{thankyou page}{hsmw}
 {
 	\begin{textblock}{8.5}(1, 2.5)
-		\begin{beamercolorbox}[wd=\linewidth, ht=1 cm]{thankyou page title}
-			\vbox to 1cm{%
-				\usebeamerfont{thankyou page title}%
-				\insertthankyoutitle%
-				\vfill
+		\begin{beamercolorbox}[wd=\linewidth, ht=.8cm, dp=.2cm]{thankyou page title}
+			\parbox[b][.8cm]{\linewidth}
+			{
+				\usebeamerfont{thankyou page title}
+				\insertthankyoutitle
 			}
 		\end{beamercolorbox}	
 	\end{textblock}
 
 	\begin{textblock}{8.5}(1, 4)
-		\begin{beamercolorbox}[wd=\linewidth, ht=4 cm]{thankyou page text}
-			\vbox to 4cm{%
-				\usebeamerfont{thankyou page text}%
+		\begin{beamercolorbox}[wd=\linewidth, ht=4cm, dp=.1cm]{thankyou page text}
+			\vbox to 4cm{\hsize=\linewidth
+				\usebeamerfont{thankyou page text}
 				\insertthankyoutext
 				\vfill
 			}
@@ -192,16 +191,16 @@
 	\end{textblock}
 
 	\begin{textblock}{5}(10.5, 4)
-		\begin{beamercolorbox}[wd=\linewidth, ht=2.5 cm]{thankyou page sidebar text}
-			\vbox to 2.5cm{%
-				\usebeamerfont{thankyou page sidebar text}%
+		\begin{beamercolorbox}[wd=\linewidth, ht=2.5cm, dp=.1cm]{thankyou page sidebar text}
+			\parbox[b][2.5cm][t]{\linewidth}
+			{
+				\usebeamerfont{thankyou page sidebar text}
 				\insertthankyousidebartext
-				\vfill
 			}
 		\end{beamercolorbox}	
 	\end{textblock}
 
-	\begin{tikzpicture}[remember picture, overlay] %TODO: externalize and combine with title page
+	\begin{tikzpicture}[remember picture, overlay]
 		\begin{scope}[on background layer]
 			\node (bg) at (current page.center) {\includegraphics[width=\paperwidth]{figures/thankyou.jpg}};
 			\fill[hsmw, fill opacity=.8] (bg.north west) rectangle (bg.south east);

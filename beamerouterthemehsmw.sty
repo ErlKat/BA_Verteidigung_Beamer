@@ -20,10 +20,20 @@
 \setbeamertemplate{section in toc}[sections numbered] % (options: default (indented subsections), sections numbered, subsections numbered, circle, square, ball, ball unnumbered)
 \setbeamertemplate{subsection in toc}[subsections numbered]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Navigation symbols
 \defbeamertemplate*{navigation symbols}{hsmw}{} % Use empty template as default to remove navigation symbols completely
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Frame headline
+\defbeamertemplate*{headline}{hsmw}
+{
+	\begin{beamercolorbox}[wd=\paperwidth, ht=2cm]{headline}
+		% Just occupy space, so the main text is properly aligned
+	\end{beamercolorbox}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Frame title
 \defbeamertemplate*{frametitle}{hsmw}
@@ -42,15 +52,6 @@
 		\end{beamercolorbox}	
 	\end{textblock}
 }
-
-% Frame headline
-\defbeamertemplate*{headline}{hsmw}
-{
-	\begin{beamercolorbox}[wd=\paperwidth, ht=1.5cm]{headline}
-		% Just occupy space, so the main text is properly aligned
-	\end{beamercolorbox}
-}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Progressbar
@@ -90,44 +91,43 @@
 
 \defbeamertemplate*{footline}{hsmw}
 {
-	%TODO: Use stylable template for numbering instead of hardcoded one
 	\leavevmode%
-	\begin{beamercolorbox}[wd=1cm, ht=.5cm, dp=.1cm, right]{footline number current} 
+	\begin{beamercolorbox}[wd=1cm, ht=.5cm, dp=.12cm, right]{footline number current} 
 		\usebeamerfont{footline number current}
 		\vspace*{.05cm}
 		\insertframenumber
 	\end{beamercolorbox}%
 	%
-	\begin{beamercolorbox}[wd=.5cm, ht=.5cm, dp=.1cm]{footline number overall} 
+	\begin{beamercolorbox}[wd=.5cm, ht=.5cm, dp=.12cm]{footline number overall} 
 		\usebeamerfont{footline number overall}%
 		\iftoggle{show@totalpages}{/\insertmainframenumber}{}
 	\end{beamercolorbox}%
 	%
-	\vbox{
-		\begin{beamercolorbox}[wd=9.5cm, ht=.25cm, dp=.1cm]{footline title} 
+	\vbox%
+	{%
+		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.1cm]{footline title} 
 			\usebeamerfont{footline title}
 			\insertshorttitle{} | \insertcurrentspeaker{}
 		\end{beamercolorbox}%
 		%
-		\begin{beamercolorbox}[wd=9.5cm, ht=.15cm, dp=.1cm]{footline date} 
+		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.12cm]{footline date} 
 			\usebeamerfont{footline date}
 			\copyright{} \insertdate{} Hochschule Mittweida
 		\end{beamercolorbox}%
 	}%
 	%
-	\begin{beamercolorbox}[wd=5cm, ht=.5cm, dp=.1cm, right, rightskip=1cm]{footline faculty} % CD page 16 and 17
+	\begin{beamercolorbox}[wd=5cm, ht=.5cm, dp=.12cm, right, rightskip=1cm]{footline faculty} % CD page 16 and 17
 		\usebeamerfont{footline faculty}
 		
 		\leavevmode%
 		\if&\insertfacultyname&\else%
-			\vbox to .3cm{\hsize=2cm \raggedleft\insertfacultyname\vfill}%
+			\parbox[b][.3cm][t]{2cm}{\raggedleft\insertfacultyname}%
 			\hspace*{.12cm}%
 			\rule{.15pt}{4mm}% .15pt = .0529 mm (scaled according to CD)
 			\hspace*{.12cm}%
 		\fi%
 		%
-		\usebeamertemplate*{footline logo}%
-%		\includegraphics[height=.44cm]{figures/sublogoHsmwCB.pdf} % 1.76 x 0.44
+		\usebeamertemplate*{footline logo}% 1.76 x 0.44
 	\end{beamercolorbox}%	
 	
 	\iftoggle{show@progressbar}

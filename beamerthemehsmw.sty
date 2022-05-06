@@ -26,9 +26,9 @@
 	\DeclareOption{english}{\toggletrue{language@english}}
 	%	\DeclareOption{english}{\AddToHook{begindocument/before}{\selectlanguage{english}}} %TODO: Language switch does not trigger correctly... loading babel option directly works...
 
-	% Hides the progressbar in footline (default: off)
-	\newtoggle{show@progressbar}\toggletrue{show@progressbar}  % \settoggle{show@progressbar}{true|false} \toggletrue{show@progressbar} % \iftoggle{show@progressbar}{if}{else}
-	\DeclareOption{noprogressbar}{\togglefalse{show@progressbar}}
+	% Shows the progressbar in footline (default: on)
+	\newtoggle{show@progressbar}  % \settoggle{show@progressbar}{true|false} \toggletrue{show@progressbar} % \iftoggle{show@progressbar}{if}{else}
+	\DeclareOption{progressbar}{\toggletrue{show@progressbar}}
 
 	% Hides the total number of slide in footline (default: on)
 	\newtoggle{show@totalpages}\toggletrue{show@totalpages}
@@ -37,6 +37,14 @@
 	% Hides the faculty icon on title page (default: on)
 	\newtoggle{show@facultyicon}\toggletrue{show@facultyicon}
 	\DeclareOption{nofacultyicon}{\togglefalse{show@facultyicon}}
+
+	% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
+	\newtoggle{use@fancystyle}
+	\DeclareOption{fancystyle}{\toggletrue{use@fancystyle}}
+	
+	% Shows the date on the titelpage
+	\newtoggle{show@titlepagedate}
+	\DeclareOption{titlepagedate}{\toggletrue{show@titlepagedate}}
 
 	\ProcessOptions\relax
 \makeatother
@@ -234,35 +242,46 @@
 \newcommand{\insertemail}{}
 \newcommand{\inserttelephone}{}
 \newcommand{\insertlocation}{}
-\newcommand{\impressum}[3]{
+\newcommand{\impressum}[3]
+{
 	\renewcommand{\inserttelephone}{#1}	
 	\renewcommand{\insertemail}{#2}	
 	\renewcommand{\insertlocation}{#3}	
 }
-\newcommand{\insertthankyoutext}{%
-	%Vorname Name
-	%Position
-	%T +49 (0) 3727 58-1234
-	%F +49 (0) 3727 58-21234 / optional
-	%M +49 (0) 175 123 456 7 / optional
-	%max.mustermann@hs-mittweida.de
-	%www.hs-mittweida.de/design / optional
-	%Haus XX | Name des Hauses | Raum hh.ee.rr
-	%Musterstraße 123| 09648 Mittweida
-	\begin{tabularx}{\linewidth}{@{}cX@{}}
-		\faIdCard[regular] & \insertauthor\\
-		\\
-		\if\relax\insertemail\relax\else
-			\faEnvelope[regular] & \insertemail\\
-		\fi
-		\if\relax\inserttelephone\relax\else
-			\faPhone* & \inserttelephone\\
-		\fi
-		\if\relax\insertlocation\relax\else
+\newcommand{\insertthankyoutext}
+{
+	\iftoggle{use@fancystyle}
+	{	
+		\begin{tabularx}{\linewidth}{@{}cX@{}}
+			\faIdCard[regular] & \insertauthor\\
 			\\
-			\faUniversity & \insertlocation\\
-		\fi
-	\end{tabularx}
+			\if\relax\insertemail\relax\else
+				\faEnvelope[regular] & \insertemail\\
+			\fi
+			\if\relax\inserttelephone\relax\else
+				\faPhone* & \inserttelephone\\
+			\fi
+			\if\relax\insertlocation\relax\else
+				\\
+				\faUniversity & \insertlocation\\
+			\fi
+		\end{tabularx}
+	}{
+		\begin{tabularx}{\linewidth}{@{}cX@{}}
+			\multicolumn{2}{@{}X@{}}{\insertauthor}\\
+			\\
+			\if\relax\inserttelephone\relax\else
+				\textbf{T} & \inserttelephone\\
+			\fi
+			\if\relax\insertemail\relax\else
+				\multicolumn{2}{@{}X@{}}{\insertemail}\\
+			\fi
+			\if\relax\insertlocation\relax\else
+				\\
+				\multicolumn{2}{@{}X@{}}{\insertlocation}\\
+			\fi
+		\end{tabularx}
+	}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

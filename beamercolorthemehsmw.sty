@@ -19,7 +19,7 @@
 % Title page
 \setbeamercolor*{title page}{}
 \setbeamercolor*{title page title}{parent=title page, fg=hsmw}
-\setbeamercolor*{title page subtitle}{parent=title page, fg=hsmw80}
+\setbeamercolor*{title page subtitle}{parent=title page title}
 \setbeamercolor*{title page subsubtitle}{parent=title page, fg=hsmwBlack}
 \setbeamercolor*{title page date}{parent=title page, fg=hsmwLightGray}
 \setbeamercolor*{title page sidebar}{parent=title page, fg=hsmwWhite, bg=hsmw}
@@ -34,19 +34,19 @@
 % Thankyou page
 \setbeamercolor*{thankyou page}{fg=hsmwWhite, bg=hsmw}
 \setbeamercolor*{thankyou page sidebar}{fg=hsmw, bg=hsmwWhite}
-\setbeamercolor*{thankyou page title}{fg=hsmwWhite, bg=}
+\setbeamercolor*{thankyou page title}{fg=hsmwWhite}
 \setbeamercolor*{thankyou page text}{parent=thankyou page title}
 \setbeamercolor*{thankyou page sidebar text}{parent=thankyou page title}
 
 % General title for every other slides
-\setbeamercolor*{frametitle}{fg=hsmw, bg=} % Title of each slide
-\setbeamercolor*{framesubtitle}{fg=hsmw60, bg=} % Subtitle of each slide
+\setbeamercolor*{frametitle}{fg=hsmw} % Title of each slide
+\setbeamercolor*{framesubtitle}{parent=frametitle} % Subtitle of each slide
 
 % Headline
 \setbeamercolor*{headline}{fg=, bg=}
 
 % Footline
-\setbeamercolor*{footline}{fg=hsmw, bg=}
+\setbeamercolor*{footline}{fg=hsmw}
 \setbeamercolor*{footline title}{parent=footline, fg=hsmw}
 \setbeamercolor*{footline date}{parent=footline, fg=hsmwLightGray}
 \setbeamercolor*{footline number current}{parent=footline, fg=hsmw}
@@ -71,7 +71,7 @@
 %\setbeamercolor*{bibliography entry note}{fg=red, bg=green} % The default color is the same as for the journal.
 
 % General
-\setbeamercolor*{normal text}{fg=hsmwDarkGray, bg=} % General text
+\setbeamercolor*{normal text}{fg=hsmwBlack} % General text
 \setbeamercolor*{item}{fg=hsmw} % Item-Symbols
 \setbeamercolor*{caption name}{fg=hsmw} % Caption names
 \setbeamercolor*{block title}{fg=hsmw, bg=hsmw20} % Block enivornment names (theorem, proof, etc.)
@@ -79,3 +79,11 @@
 \setbeamercolor*{math text}{fg=hsmw,bg=}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Switch elements of the color theme depending on given options
+
+\iftoggle{use@fancystyle}
+{
+	\setbeamercolor*{title page subtitle}{parent=title page, fg=hsmw80}
+	\setbeamercolor*{framesubtitle}{fg=hsmw60}
+	\setbeamercolor*{normal text}{fg=hsmwDarkGray}
+}{}
