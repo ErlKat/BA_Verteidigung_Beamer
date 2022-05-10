@@ -2,9 +2,11 @@
 	aspectratio=169,	% Modern aspect ratio (TODO: Other ratios not yet supported)
 	onlytextwidth,		% Sets totalwidth=\textwidth and therefore e.g. columns won't invade the margins
 	t,					% Default vertical alignment of frames and colums at top (default is centered) % Stored in \beamer@centered (\beamer@centeredfalse, \beamer@centeredtrue)
-% 	handout,			% Create a basic handout of the presentation
+%	handout,			% Create a basic handout of the presentation
 	]{beamer}
 
+	
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 1) Load the desired presentation theme
 \usetheme[
@@ -13,10 +15,9 @@
 %	language=english,	% Change default language to english [default  is ngerman] other languages are possible (see babel-package) but may need further adjustments 
 %	toc,				% Adds a ToC slide
 %	sectionslide,		% Display separate section slides
-%	noprogressbar,		% Hides the progressbar in footline (run twice to update progressbar)
 %	nototalpages,		% Hides the total number of slide in footline
 %	nofacultyicon,		% Hides the faculty icon on title page
-	colormath,			% Enables coloring of math text
+	colormath=textasnormal,	% Enables coloring of math text. possible values are 'full', 'textasnormal' and 'off' (default) 'colormath' is equal to 'colormath=full'
 	% Additional style options not completely conforming to the corporate design
 %	titlepagedate,		% Shows the date on the titelpage
 %	fancystyle,			% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
@@ -89,7 +90,7 @@
 		\end{verbatim}
 	\end{frame}
 
-	\begin{frame}[fragile]{Mögliche Optionen (1/2)}{Grundlegende Stilelemente beeinflussen}
+	\begin{frame}[fragile]{Mögliche Optionen (1/3)}{Grundlegende Stilelemente beeinflussen}
 		Sie können grundlegende Stilelemente über die Angabe von Optionen beim Laden des \textit{Beamer-Themes} (\texttt{\textbackslash{}usetheme[\textcolor{hsmw}{optionen}]\{hsmw\}}) beeinflussen:
 		\begin{itemize}
 			\item Allgemeine Anpassungen (Farben und Texte):
@@ -118,15 +119,29 @@
 
 	
 	\end{frame}
-	\begin{frame}[fragile]{Mögliche Optionen (2/2)}{Grundlegende Stilelemente beeinflussen}
+	\begin{frame}[fragile]{Mögliche Optionen (2/3)}{Grundlegende Stilelemente beeinflussen}
 		\begin{itemize}
 			\item[] \textcolor{hsmwLightGray}{Individuelle Anpassungen an den eigenen Geschmack (Fortsetzung):}
 			\begin{itemize}
 				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
 				\item \textcolor{hsmw}{nofacultyicon} verbirgt das Fakultäts-Icon auf der Titelseite
 				\item \textcolor{hsmw}{colormath} hebt mathematische Formeln farbig ab
+                                \begin{itemize}
+                                    \item Standardeinstellung vollständige Hervorhebung: \textcolor{hsmw}{colormath=full} oder \textcolor{hsmw}{colormath}
+                                    \item Formeln sind hervorgehoben, aber Text in Formeln mittels \verb!\text{...}! wird wie normaler Text dargestellt: \textcolor{hsmw}{colormath=textasnormal}
+                                    z.B.
+                                    \[\sum^n_{k=0} k = \frac{n(n+1)}2 \qquad \text{ für }  n \in\mathbb N\]
+                                    \item keine Hervorhebung: \textcolor{hsmw}{colormath=off} oder \textit{<leer>}
+                                \end{itemize}
 			\end{itemize}
 
+		\end{itemize}
+
+
+	\end{frame}
+	
+        \begin{frame}[fragile]{Mögliche Optionen (3/3)}{Grundlegende Stilelemente beeinflussen}
+		\begin{itemize}
 			\item Zusätzliche Optionen, die nicht ganz konform mit dem Corporate Design sind:
 			\begin{itemize}
 				\item \textcolor{hsmw}{titlepagedate} zeigt das Datum auf der Titelseite
@@ -136,7 +151,7 @@
 			\end{itemize}
 		\end{itemize}
 
-% 		\vspace*{\baselineskip}
+ 		\vspace*{\baselineskip}
 		\textbf{Beispiele:}
 		\begin{itemize}
 			\item \verb!\usetheme[toc, sectionslide, nofacultyicon]{hsmw}!
