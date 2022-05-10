@@ -51,7 +51,13 @@
 	% Enables coloring of math text
 	\newtoggle{use@colormath}
 	\DeclareOptionX{colormath}{\toggletrue{use@colormath}}
+	
+	% Enables Two that the handout is twosided needs handout option in beamerclass to make a difference
+	\newtoggle{use@twoslidesona4handout}
+	\DeclareOptionX{twoslidesona4handout}{\toggletrue{use@twoslidesona4handout}}
 
+	
+	
 	\ExecuteOptionsX{language=ngerman}% Default options to be loaded 
 	\ProcessOptionsX\relax
 \makeatother
@@ -329,8 +335,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Place 2 slightly shrinked slides per a4 page on handout mode
-\mode<handout>
-{
-	\usepackage{pgfpages}
-	\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
-}
+\iftoggle{use@twoslidesona4handout}{%
+    \mode<handout>
+    {
+            \usepackage{pgfpages}
+            \pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
+    }
+}{}%

@@ -2,7 +2,7 @@
 	aspectratio=169,	% Modern aspect ratio (TODO: Other ratios not yet supported)
 	onlytextwidth,		% Sets totalwidth=\textwidth and therefore e.g. columns won't invade the margins
 	t,					% Default vertical alignment of frames and colums at top (default is centered) % Stored in \beamer@centered (\beamer@centeredfalse, \beamer@centeredtrue)
-%	handout,			% Create a basic handout of the presentation
+% 	handout,			% Create a basic handout of the presentation
 	]{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,6 +21,7 @@
 %	titlepagedate,		% Shows the date on the titelpage
 %	fancystyle,			% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
 %	progressbar,		% Shows the progressbar in footline (run twice to update progressbar)
+% 	twoslidesona4handout,        % using this option a handout version is in DinA4 and has two slides on each page. Needs the handout option of the beamer package
 	]{hsmw} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,10 +132,11 @@
 				\item \textcolor{hsmw}{titlepagedate} zeigt das Datum auf der Titelseite
 				\item \textcolor{hsmw}{fancystyle} aktiviert einige Farbanpassungen
 				\item \textcolor{hsmw}{progressbar} zeigt einen Fortschrittsbalken am unteren Rand der Folien
+				\item \textcolor{hsmw}{twoslidesona4handout} wandelt \textcolor{hsmw}{handout} ins A4-Format mit zwei Folien pro Seite
 			\end{itemize}
 		\end{itemize}
 
-		\vspace*{\baselineskip}
+% 		\vspace*{\baselineskip}
 		\textbf{Beispiele:}
 		\begin{itemize}
 			\item \verb!\usetheme[toc, sectionslide, nofacultyicon]{hsmw}!
