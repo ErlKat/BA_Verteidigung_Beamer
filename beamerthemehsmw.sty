@@ -60,6 +60,7 @@
 % Load Packages
 % Preloaded packages by beamer in presentation mode: amsthm, color, enumerate, hyperref, xcolor
 
+% Pass specific options to the font package depending on the used compiler (pdfLaTeX, XeLaTeX, LuaLaTeX)
 \RequirePackage{iftex}
 \ifxetex%
     \PassOptionsToPackage{defaultsans}{opensans}%make opensans default sans font
@@ -73,7 +74,8 @@
 \fi
 \RequirePackage{lmodern} % Font tweaking to latin modern (less pixelated) as fallback font
 
-\RequirePackage[default,proportional,scale=0.95]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
+% CD page 31 (Scaling to 1)
+\RequirePackage[default,proportional]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
 
 \RequirePackage{babel}% load babel package - Options comes from package Option 'language' 
 
@@ -262,7 +264,7 @@
 	University of Applied Sciences
 	\newline
 	Technikumplatz 17 | 09648 Mittweida
-	\if&\insertfacultyname&\else
+	\if\relax\insertfacultyname\relax\else
 		\newline
 		\insertfacultyname
 	\fi
@@ -307,8 +309,8 @@
 		\fi
 	
 		\if\relax\insertlocation\relax\else
-		\vspace*{\baselineskip}
-		\insertlocation
+			\vspace*{\baselineskip}
+			\insertlocation
 		\fi
 	}
 }
