@@ -49,8 +49,12 @@
 	\DeclareOptionX{titlepagedate}{\toggletrue{show@titlepagedate}}
 
 	% Enables coloring of math text
-	\newtoggle{use@colormath}
-	\DeclareOptionX{colormath}{\toggletrue{use@colormath}}
+	\edef\variant@colormath{off}
+	\DeclareOptionX{colormath}[full]{\edef\variant@colormath{#1}} %possible values are 'full','textasnormal','off' (if just 'colormath' is used default is 'full')
+	
+	% Enables Two that the handout is twosided needs handout option in beamerclass to make a difference
+	\newtoggle{use@twoslidesona4handout}
+	\DeclareOptionX{twoslidesona4handout}{\toggletrue{use@twoslidesona4handout}}
 
 	\ExecuteOptionsX{language=ngerman}% Default options to be loaded 
 	\ProcessOptionsX\relax
@@ -93,6 +97,7 @@
 \RequirePackage{adjustbox} % Versatile boy environments (e.g. resizebox)
 \RequirePackage{caption}
 
+%TODO: should be turned into an option -> not every presentation uses citation
 \RequirePackage[
 %	backend=biber,	% Specified used backend (biber, bibtex, bibtex8); default:biber
 	style=ieee,		% Used bibliography and citation style (bbx and cbx) % use bibstyle=<> and citestyle=<> for separate use; default: numeric
@@ -126,6 +131,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Latex switch case construct
 
+% TODO: following commands are provided originally by package 'ifthen' which is loaded by package 'biblatex'. 
+% If you are not using the package 'biblatex', you need to uncomment the following line:
+% \ProvidesPackage{ifthen} % provide Makros \newboolean, \setboolean, \ifthenelse ect.
 \newboolean{default}
 \newcommand{\case}{}
 \newcommand{\default}{}
@@ -312,7 +320,7 @@
 			\vspace*{\baselineskip}
 			\insertlocation
 		\fi
-	}
+	}% this comment fixes underfull hbox in fancystyle
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -331,8 +339,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Place 2 slightly shrinked slides per a4 page on handout mode
-\mode<handout>
-{
-	\usepackage{pgfpages}
-	\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
-}
+\iftoggle{use@twoslidesona4handout}{%
+    \mode<handout>
+    {
+            \usepackage{pgfpages}
+            \pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
+    }
+}{}%

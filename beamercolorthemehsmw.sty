@@ -87,7 +87,26 @@
 	\setbeamercolor*{normal text}{fg=hsmwDarkGray}
 }{}
 
-\iftoggle{use@colormath}
-{
-	\setbeamercolor*{math text}{fg=hsmw}
-}{}
+\newcommand{\default@colormath}{\setbeamercolor*{math text}{fg=hsmw}}
+\makeatletter%TODO: make this code more readable. tried the switch enviroment but even \global switch does not help to make\setbeamer color to be global         
+%% colormath=full or colormath
+\ifthenelse{\equal{full}{\variant@colormath}}{
+    \default@colormath}{%
+%
+    %% colormath=textasnormal or colormath    
+    \ifthenelse{\equal{textasnormal}{\variant@colormath}}{%
+        \default@colormath%
+        \setbeamercolor*{normal text in math text}{fg=normal text.fg}}{% TODO: may be it should make use of the current text color instead, but how?
+
+        %% colormath=off or no colormath at all        
+        \ifthenelse{\equal{off}{\variant@colormath}}{%%
+        
+            }{%%%
+            %% unknown option-value used else/defaultcase
+                \setbeamercolor*{math text}{fg=hsmw}
+                \PackageWarning{beamerinnerthemehsmw}{Unknown value '\variant@colormath' for option 'colormath'. using value 'full' instead}
+            }%
+        }%
+    }
+\makeatother
+ 
