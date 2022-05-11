@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemehsmw}[2022/05/02 Beamer Vorlage der Hochschule Mittweida (Schildbach Stefan)] % https://zip.hs-mittweida.de/intranet/corporate_design.php
+\ProvidesPackage{beamerthemehsmw}[2022/05/11 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
 % Please note: This template currently addresses only pdflatex (no active support for lualatex or xelatex)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -17,6 +17,7 @@
 	\DeclareOptionX{wi}{\def\default@faculty{wi}}		% wi, ww
 	\DeclareOptionX{sw}{\def\default@faculty{sw}}		% sw, sa
 	\DeclareOptionX{me}{\def\default@faculty{me}}		% me
+	\DeclareOptionX{inst}{\def\default@faculty{inst}}	% inst
 	\DeclareOptionX{faculty}[]{\def\default@faculty{#1}}
 
 	% Insert a separate frame for each section heading (ignore \section*) (default: off)
@@ -48,13 +49,13 @@
 	\newtoggle{show@titlepagedate}
 	\DeclareOptionX{titlepagedate}{\toggletrue{show@titlepagedate}}
 
-	% Enables coloring of math text
-	\edef\variant@colormath{off}
-	\DeclareOptionX{colormath}[full]{\edef\variant@colormath{#1}} %possible values are 'full','textasnormal','off' (if just 'colormath' is used default is 'full')
+	% Enables coloring of math text | possible values: off, full, nottext (default if specified)
+	\def\variant@colormath{off}
+	\DeclareOptionX{colormath}[nottext]{\def\variant@colormath{#1}}
 	
 	% Enables Two that the handout is twosided needs handout option in beamerclass to make a difference
-	\newtoggle{use@twoslidesona4handout}
-	\DeclareOptionX{twoslidesona4handout}{\toggletrue{use@twoslidesona4handout}}
+	\newtoggle{use@printhandout}
+	\DeclareOptionX{printhandout}{\toggletrue{use@printhandout}}
 
 	\ExecuteOptionsX{language=ngerman}% Default options to be loaded 
 	\ProcessOptionsX\relax
@@ -82,6 +83,7 @@
 \RequirePackage[default,proportional]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
 
 \RequirePackage{babel}% load babel package - Options comes from package Option 'language' 
+\RequirePackage[none]{hyphenat} %https://texfaq.org/FAQ-hyphoff
 
 \RequirePackage[fixed]{fontawesome5} % Symbols (marvosym)
 %TODO: loading csquotes package and its options may depend on the choosen language
@@ -96,20 +98,6 @@
 \RequirePackage{tabularx, booktabs} % Tabular packages
 \RequirePackage{adjustbox} % Versatile boy environments (e.g. resizebox)
 \RequirePackage{caption}
-
-%TODO: should be turned into an option -> not every presentation uses citation
-\RequirePackage[
-%	backend=biber,	% Specified used backend (biber, bibtex, bibtex8); default:biber
-	style=ieee,		% Used bibliography and citation style (bbx and cbx) % use bibstyle=<> and citestyle=<> for separate use; default: numeric
-	citestyle=numeric-comp, % multiple citation numbers all within same bracket \cite{keya, keyb}
-	sorting=none,	% Sorting order of bibliography (default: nty = name title year); none: no sorting, entries are processed in citation order
-	%
-	natbib=true,	% Compatiobility mode for natbib cite-aliases; default: false
-	hyperref=true,	% Convert citations and back references to hyperlinks; default: auto (like true, but without warning if package not loaded)
-	backref=false,	% Print backreferences; default: false
-	% Style specific
-	dashed=false	% Recurring authors and names are replaced by a dash (references with modified ugly "default dashes" if one author occurs multiple times in a row in the bibliography)
-]{biblatex} % Bibliography
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default configurations
@@ -131,9 +119,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Latex switch case construct
 
-% TODO: following commands are provided originally by package 'ifthen' which is loaded by package 'biblatex'. 
-% If you are not using the package 'biblatex', you need to uncomment the following line:
-% \ProvidesPackage{ifthen} % provide Makros \newboolean, \setboolean, \ifthenelse ect.
+%TODO: Replace by more robust version that is capable of global changes (ifthenelse works in local group) and use more stable toggle from etoolbox instead of boolean
+\RequirePackage{ifthen} % provide Makros \newboolean, \setboolean, \ifthenelse ect. 
 \newboolean{default}
 \newcommand{\case}{}
 \newcommand{\default}{}
@@ -193,11 +180,16 @@
 			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Media Sciences}}
 			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyME.pdf}}
 		}
+		\case{inst}{
+			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyHS.pdf}}
+			\gdef\default@faculty{} % Load default blue hsmw color theme
+		}
 		\default{% Default: placing all icons without any text 
 			\gdef\default@faculty{} % resetting faculty to hs, if anything else is given, to correctly load color theme
 		}
 	\end{switch}
 \makeatother
+%TODO: Introduce separate options for color theme, faculty icon, faculty name (titlepage and footnote) and use presets for currently existing setups (hs, cb, ...)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define speaker commands
@@ -293,7 +285,7 @@
 		\begin{tabularx}{\linewidth}{@{}cX@{}}
 			\faIdCard[regular] & \insertauthor\\
 			\\
-			\if\relax\insertemail\relax\else
+			\if&\insertemail&\else % TODO: Check with \relax causes \href to crash
 				\faEnvelope[regular] & \insertemail\\
 			\fi
 			\if\relax\inserttelephone\relax\else
@@ -312,7 +304,7 @@
 			\textbf{T}\qquad\inserttelephone
 		\fi
 		
-		\if\relax\insertemail\relax\else
+		\if&\insertemail&\else % TODO: Check with \relax causes \href to crash
 			\insertemail
 		\fi
 	
@@ -338,11 +330,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Place 2 slightly shrinked slides per a4 page on handout mode
-\iftoggle{use@twoslidesona4handout}{%
-    \mode<handout>
-    {
-            \usepackage{pgfpages}
-            \pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
-    }
+\mode<handout>
+{
+	% Place 2 slightly shrinked slides per a4 page on handout mode
+	\iftoggle{use@printhandout}
+	{
+		%TODO: Maybe find a workaround to automatically pass the classoption handout to already loaded beamer
+
+		\usepackage{pgfpages}
+		\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
+	}
 }{}%

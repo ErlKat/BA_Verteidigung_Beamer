@@ -82,6 +82,6 @@
 %\setbeamerfont{bibliography entry title}{size=\footnotesize}
 %\setbeamerfont{bibliography entry location}{size=\footnotesize}
 %\setbeamerfont{bibliography entry note}{size=\footnotesize}
-\renewcommand*{\bibfont}{\footnotesize}
+\ifdef{\bibfont}{\renewcommand*{\bibfont}{\footnotesize}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

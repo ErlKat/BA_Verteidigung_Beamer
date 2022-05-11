@@ -2,27 +2,25 @@
 	aspectratio=169,	% Modern aspect ratio (TODO: Other ratios not yet supported)
 	onlytextwidth,		% Sets totalwidth=\textwidth and therefore e.g. columns won't invade the margins
 	t,					% Default vertical alignment of frames and colums at top (default is centered) % Stored in \beamer@centered (\beamer@centeredfalse, \beamer@centeredtrue)
-%	handout,			% Create a basic handout of the presentation
+%	handout,			% Create a basic handout of the presentation (removes overlays)
 	]{beamer}
 
-	
-	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 1) Load the desired presentation theme
 \usetheme[
-	% Individual options to customize the presentation conforming to the corporate design
-	hs, 				% Change default faculty color set and predefined faculty values: hs or <empty> (default), inw, cb, me, sw, wi
-%	language=english,	% Change default language to english [default  is ngerman] other languages are possible (see babel-package) but may need further adjustments 
+% Individual options to customize the presentation conforming to the corporate design
+	hs,					% Change default faculty color set and predefined faculty values: hs or <empty> (default), inw, cb, me, sw, wi, inst (\renewcommand{\insertfacultyname}{Institutname} needed)
+%	language=english,	% Change language to english (default: ngerman), other languages are possible (see babel-package) but may need further adjustments 
 %	toc,				% Adds a ToC slide
 %	sectionslide,		% Display separate section slides
 %	nototalpages,		% Hides the total number of slide in footline
 %	nofacultyicon,		% Hides the faculty icon on title page
-	colormath=textasnormal,	% Enables coloring of math text. possible values are 'full', 'textasnormal' and 'off' (default) 'colormath' is equal to 'colormath=full'
-	% Additional style options not completely conforming to the corporate design
+	colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottext (default)
+%	printhandout,		% Places two slides on a single a4 paper for printing the presentation (beamer class option 'handout' needed)
+% Additional style options not completely conforming to the corporate design
 %	titlepagedate,		% Shows the date on the titelpage
 %	fancystyle,			% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
 %	progressbar,		% Shows the progressbar in footline (run twice to update progressbar)
-% 	twoslidesona4handout,        % using this option a handout version is in DinA4 and has two slides on each page. Needs the handout option of the beamer package
 	]{hsmw} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,8 +41,14 @@
 \titlegraphic{} %\titlegraphic{figures/thankyou.jpg}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 4) Add bibliography file
-%\addbibresource{literature.bib} % Dont forget to use \makebibliography where you want to put it
+% 4) Add bibliography
+% Load the package and options you like, e.g. for recommended ieee style in combination of biblatex and biber:
+%\usepackage[backend=biber, bibstyle=ieee, citestyle=numeric-comp, sorting=none, natbib=true, hyperref=true, dashed=false]{biblatex}
+% Add your bibliography file(s)
+%\addbibresource{literature.bib} 
+% Dont forget to use \makebibliography where you want to put it, e.g. at the end of your presentation, after the "normal" slides:
+% \appendix
+% \makebibliography
 % Compile with following command sequence to fully include bibliography: pdflatex, biber, pdflatex, pdflatex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,7 +101,7 @@
 			\begin{itemize}
 				\item Farbschema:
 				\begin{itemize}
-					\item Standardeinstellung Hochschul-Blau: \textcolor{hsmw}{hs} oder \textit{<leer>}
+					\item Standardeinstellung Hochschul-Blau: \textcolor{hsmw}{hs}, \textcolor{hsmw}{inst} oder \textit{<leer>}
 					\item Fakultäts-Farben: \textcolor{hsmw}{inw}, \textcolor{hsmw}{cb}, \textcolor{hsmw}{me}, \textcolor{hsmw}{sw}, \textcolor{hsmw}{wi}
 					\item Alternative Schreibweise: \textcolor{hsmw}{faculty=inw}, \textcolor{hsmw}{faculty=cb}, \dots
 				\end{itemize}
@@ -106,7 +110,7 @@
 				\begin{itemize}
 					\item Standardeinstellung Deutsch: \textcolor{hsmw}{language=ngerman} oder \textit{<leer>}
 					\item Englisch: \textcolor{hsmw}{language=english}
-					\item Andere Sprachen sind möglich, aber nocht nicht implementiert (bei Interesse melden!)
+					\item Andere Sprachen sind möglich, aber noch nicht implementiert (bei Interesse melden!)
 				\end{itemize}
 			\end{itemize}
 
@@ -116,9 +120,8 @@
 				\item \textcolor{hsmw}{sectionslide} fügt eine zusätzliche Seite für jede \verb!\section! ein
 			\end{itemize}
 		\end{itemize}
-
-	
 	\end{frame}
+
 	\begin{frame}[fragile]{Mögliche Optionen (2/3)}{Grundlegende Stilelemente beeinflussen}
 		\begin{itemize}
 			\item[] \textcolor{hsmwLightGray}{Individuelle Anpassungen an den eigenen Geschmack (Fortsetzung):}
@@ -126,39 +129,35 @@
 				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
 				\item \textcolor{hsmw}{nofacultyicon} verbirgt das Fakultäts-Icon auf der Titelseite
 				\item \textcolor{hsmw}{colormath} hebt mathematische Formeln farbig ab
-                                \begin{itemize}
-                                    \item Standardeinstellung vollständige Hervorhebung: \textcolor{hsmw}{colormath=full} oder \textcolor{hsmw}{colormath}
-                                    \item Formeln sind hervorgehoben, aber Text in Formeln mittels \verb!\text{...}! wird wie normaler Text dargestellt: \textcolor{hsmw}{colormath=textasnormal}
-                                    z.B.
-                                    \[\sum^n_{k=0} k = \frac{n(n+1)}2 \qquad \text{ für }  n \in\mathbb N\]
-                                    \item keine Hervorhebung: \textcolor{hsmw}{colormath=off} oder \textit{<leer>}
-                                \end{itemize}
+                \begin{itemize}
+                	\item Keine Hervorhebung: \textcolor{hsmw}{colormath=off} oder \textit{<leer>}
+                    \item Formeln sind hervorgehoben, aber Text in Formeln mittels \verb!\text{...}! wird wie normaler Text dargestellt: \textcolor{hsmw}{colormath=nottext} oder \textcolor{hsmw}{colormath}
+                    z.B.
+                    \[\sum^n_{k=0} k = \frac{n(n+1)}2 \qquad \text{ für }  n \in\mathbb N\]
+                    \item Vollständige Hervorhebung: \textcolor{hsmw}{colormath=full}
+                \end{itemize}
+            	\item \textcolor{hsmw}{printhandout} setzt zwei Folien pro A4-Seite (Klassenoption \textit{handout} notwendig)
 			\end{itemize}
-
 		\end{itemize}
-
-
 	\end{frame}
 	
-        \begin{frame}[fragile]{Mögliche Optionen (3/3)}{Grundlegende Stilelemente beeinflussen}
+	\begin{frame}[fragile]{Mögliche Optionen (3/3)}{Grundlegende Stilelemente beeinflussen}
 		\begin{itemize}
-			\item Zusätzliche Optionen, die nicht ganz konform mit dem Corporate Design sind:
+			\item Zusätzliche Optionen (nicht ganz konform mit dem Corporate Design):
 			\begin{itemize}
 				\item \textcolor{hsmw}{titlepagedate} zeigt das Datum auf der Titelseite
 				\item \textcolor{hsmw}{fancystyle} aktiviert einige Farbanpassungen
 				\item \textcolor{hsmw}{progressbar} zeigt einen Fortschrittsbalken am unteren Rand der Folien
-				\item \textcolor{hsmw}{twoslidesona4handout} wandelt \textcolor{hsmw}{handout} ins A4-Format mit zwei Folien pro Seite
 			\end{itemize}
 		\end{itemize}
 
- 		\vspace*{\baselineskip}
+		\vspace*{\baselineskip}
 		\textbf{Beispiele:}
 		\begin{itemize}
 			\item \verb!\usetheme[toc, sectionslide, nofacultyicon]{hsmw}!
 			\item \verb!\usetheme[cb, colormath, progressbar]{hsmw}!
 			\item \verb!\usetheme[faculty=wi, colormath]{hsmw}!
 		\end{itemize}
-
 	\end{frame}
 
 	\begin{frame}[fragile]{Zusätzliche Befehle}{Folien erstellen oder Werte manipulieren}
@@ -181,16 +180,16 @@
 			\begin{itemize}
 				\item Vor der Folie den Sprecher setzen: \verb!\setcurrentspeaker{Name des Sprechers}!
 				\item Nach der Folie wieder zurücksetzen: \verb!\resetcurrentspeaker{}!
-				\item Mittels Stern-Befehlen das Wort \enquote{Sprecher} voranstellen: \verb!\setcurrentspeaker*!
+				\item Mittels Stern-Befehlen das Wort \enquote{Sprecher} voranstellen: \verb!\setcurrentspeaker*{Name des Sprechers}!
 			\end{itemize}
 		\end{itemize}
 	\end{frame}
 	
-	\begin{frame}[c,fragile]{Erweitertes Beispiel (Stil: Fakultät CB)}{Mit ein paar zusätzlichen Optionen und Befehlen}
+	\begin{frame}[fragile]{Erweitertes Beispiel (Stil: Fakultät CB)}{Mit ein paar zusätzlichen Optionen und Befehlen}
 		\scriptsize
 		\begin{verbatim}
 			\documentclass[aspectratio=169,onlytextwidth,t]{beamer}
-			\usetheme[cb]{hsmw}
+			\usetheme[cb, colormath]{hsmw}
 			
 			\title[Kurztitel für Fußzeile]{Titel der Präsentation für Titelseite}
 			\subtitle{Untertitel für Titelseite}
@@ -209,13 +208,13 @@
 		\end{verbatim}
 	\end{frame}
 
-	\begin{frame}[fragile]{Anwendungshinweise}{Was es zu beachten gilt}
+	\begin{frame}{Anwendungshinweise}{Was es zu beachten gilt}
 		\begin{itemize}
 			\item Für die Verwendung in lokalen TeX-Distributionen oder auch Overleaf geeignet
 
 			\item Verzeichnisstruktur für das Auffinden der Dateien notwendig
 			\begin{itemize}
-				\item Funktionen und Aufbau auf mehrere Quelldateien verteilt\footnote{Nach den Empfehlungen der offiziellen Richtlinien zur Erstellung von Beamer-Vorlagen.}
+				\item Funktionen und Aufbau auf mehrere Quelldateien verteilt
 				\begin{itemize}
 					\item beamerthemehsmw.sty: Optionen, Pakete und Macros (lädt die restlichen Dateien)
 					\item beamerouterthemehsmw.sty: Allgemeine Layout-Einstellungen (Folientitel, Fußzeilen, ...)
@@ -315,7 +314,7 @@
 	\end{frame}
 
 	\begin{frame} 
-		\frametitle{Mittels \textit{Overlay} mehrere Folien erzeugen} 
+		\frametitle{Mehrere Folien mittels \textit{Overlays}} 
 		\begin{theorem}
 			Es gibt keine \enquote{größte} Primzahl.
 		\end{theorem} 

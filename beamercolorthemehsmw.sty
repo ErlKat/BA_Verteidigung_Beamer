@@ -80,6 +80,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Switch elements of the color theme depending on given options
 
+% fancystyle
 \iftoggle{use@fancystyle}
 {
 	\setbeamercolor*{title page subtitle}{parent=title page, fg=hsmw80}
@@ -87,26 +88,21 @@
 	\setbeamercolor*{normal text}{fg=hsmwDarkGray}
 }{}
 
-\newcommand{\default@colormath}{\setbeamercolor*{math text}{fg=hsmw}}
-\makeatletter%TODO: make this code more readable. tried the switch enviroment but even \global switch does not help to make\setbeamer color to be global         
-%% colormath=full or colormath
-\ifthenelse{\equal{full}{\variant@colormath}}{
-    \default@colormath}{%
-%
-    %% colormath=textasnormal or colormath    
-    \ifthenelse{\equal{textasnormal}{\variant@colormath}}{%
-        \default@colormath%
-        \setbeamercolor*{normal text in math text}{fg=normal text.fg}}{% TODO: may be it should make use of the current text color instead, but how?
-
-        %% colormath=off or no colormath at all        
-        \ifthenelse{\equal{off}{\variant@colormath}}{%%
-        
-            }{%%%
-            %% unknown option-value used else/defaultcase
-                \setbeamercolor*{math text}{fg=hsmw}
-                \PackageWarning{beamerinnerthemehsmw}{Unknown value '\variant@colormath' for option 'colormath'. using value 'full' instead}
-            }%
-        }%
-    }
-\makeatother
- 
+%TODO: Improve readablility with e.g. switch-environment: current problem with local scope of switch (not globally changed)
+% colormath 
+\ifthenelse{\equal{full}{\variant@colormath}} % full = fully color math text
+{
+	\setbeamercolor*{math text}{fg=hsmw}
+}{
+	\ifthenelse{\equal{nottext}{\variant@colormath}} % nottext = \text in normal text, rest colored
+	{
+		\setbeamercolor*{math text}{fg=hsmw}
+		\setbeamercolor*{normal text in math text}{use={normal text}, fg=normal text.fg} % TODO: may be it should make use of the current text color instead, but how?
+	}{
+		\ifthenelse{\equal{off}{\variant@colormath}} % off = do nothing    
+		{}
+		{% Print warning for unknown values
+			\PackageWarning{beamercolorthemehsmw}{Unknown value for option 'colormath'}
+		}
+	}
+}

@@ -106,7 +106,7 @@
 	\begin{textblock}{\bottomBoxWidth}(1, 6.8)
 		\begin{beamercolorbox}[wd=\linewidth, ht=1cm, dp=.1cm, leftskip = 0cm]{title page subsubtitle} 
 			\usebeamerfont{title page subsubtitle}%
-			\nohyphenation
+			\nohyphens
 			\insertauthor
 		\end{beamercolorbox}	
 	\end{textblock}
@@ -226,7 +226,7 @@
 			\pgfmathsetmacro{\scaledFontsize}{\f * \f@size}% \f@size = current font size
 			\pgfmathsetmacro{\scaledBaselineskip}{\scaledFontsize * 1.2}%
 			%
-			\savebox{\autofontscaledown@box}{\parbox[b]{#1}{\nohyphenation\raggedright\fontsize{\scaledFontsize pt}{\scaledBaselineskip pt}\selectfont#3\par}}%
+			\savebox{\autofontscaledown@box}{\parbox[b]{#1}{\raggedright\fontsize{\scaledFontsize pt}{\scaledBaselineskip pt}\selectfont\nohyphens#3\par}}%
 			\setlength{\autofontscaledownbox@boxHeight}{\ht\autofontscaledown@box}%
 			%
 			\ifnum\autofontscaledownbox@boxHeight<\autofontscaledownbox@maxHeight%
