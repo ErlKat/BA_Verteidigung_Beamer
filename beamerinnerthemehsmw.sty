@@ -43,7 +43,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newsavebox{\facultyIconBox}
-\savebox{\facultyIconBox}{\insertfacultyicon\hspace*{.15cm}}
+\savebox{\facultyIconBox}{\insertfacultyicon\hspace*{.25cm}}
 
 % Title page
 \defbeamertemplate*{title page}{hsmw}
@@ -184,6 +184,7 @@
 		\begin{beamercolorbox}[wd=\linewidth, ht=4cm, dp=.1cm]{thankyou page text}
 			\begin{minipage}[b][4cm][t]{\linewidth}
 				\usebeamerfont{thankyou page text}
+				\raggedright
 				\insertthankyoutext
 			\end{minipage}
 		\end{beamercolorbox}	
@@ -193,6 +194,7 @@
 		\begin{beamercolorbox}[wd=\linewidth, ht=2.5cm, dp=.1cm]{thankyou page sidebar text}
 			\begin{minipage}[b][2.5cm][t]{\linewidth}
 				\usebeamerfont{thankyou page sidebar text}
+				\raggedright
 				\insertthankyousidebartext
 			\end{minipage}
 		\end{beamercolorbox}	
