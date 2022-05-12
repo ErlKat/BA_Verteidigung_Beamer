@@ -28,6 +28,7 @@
 
 	% Insert a separate frame for each section heading (ignore \section*) (default: off)
 	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
+	%TODO: Provide multiple styles for sectionslides (fully colored, minimalistic, with agenda, ...)
 
 	% Hides the total number of slide in footline (default: on)
 	\newtoggle{option@totalpages}\toggletrue{option@totalpages}
@@ -44,6 +45,11 @@
 	% Enables Two that the handout is twosided needs handout option in beamerclass to make a difference
 	\newtoggle{option@printhandout}
 	\DeclareOptionX{printhandout}{\toggletrue{option@printhandout}}
+	%TODO: Switch to CMYK colors for fabulous printing experience in printout mode
+
+	% Disables frame subtitles alltogether and slightly increases frame height
+	\newtoggle{option@framesubtitle}\toggletrue{option@framesubtitle}
+	\DeclareOptionX{noframesubtitle}{\togglefalse{option@framesubtitle}}
 
 	%%%%%%% Non-compliant options %%%%%%%
 
@@ -122,8 +128,9 @@
 % \institute{\inst{1} First Institute \and \inst{2} Second Department \and \inst{3} Third University}  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Latex switch case construct
+% Internal programming commands
 
+% Latex switch case construct
 %TODO: Replace by more robust version that is capable of global changes (ifthenelse works in local group) and use more stable toggle from etoolbox instead of boolean
 \RequirePackage{ifthen} % provide Makros \newboolean, \setboolean, \ifthenelse ect. 
 \newboolean{default}
@@ -135,6 +142,13 @@
 	\renewcommand{\case}[2]{\ifthenelse{\equal{#1}{##1}}{\setboolean{default}{false}##2}{}}%
 	\renewcommand{\default}[1]{\ifthenelse{\boolean{default}}{##1}{}}%
 }{}
+
+\newlength{\displayablecontentwidth}
+\newcommand{\ifdisplayablecontent}[3]%
+{%
+	\settowidth{\displayablecontentwidth}{#1}%
+	\ifdimequal{\displayablecontentwidth}{0pt}{#3}{#2}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Set faculty name and icon
@@ -252,6 +266,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Defines the makethankyou macro and associated macros for content modification
 
+\newcommand{\insertemail}{}
+\newcommand{\email}[1]{\renewcommand{\insertemail}{#1}}
+
+\newcommand{\inserttelephone}{}
+\newcommand{\insertmobilephone}{}
+\newcommand{\phone}[2][]{\renewcommand{\insertmobilephone}{#1}\renewcommand{\inserttelephone}{#2}}
+
+\newcommand{\insertoffice}{}
+\newcommand{\office}[1]{\renewcommand{\insertoffice}{#1}}
+
+\newcommand{\insertcourseofstudies}{}
+\newcommand{\courseofstudies}[1]{\renewcommand{\insertcourseofstudies}{#1}}
+
+\newcommand{\insertadditional}{}
+\newcommand{\insertadditionalsidebar}{}
+\newcommand{\additional}[2][]{\renewcommand{\insertadditionalsidebar}{#1}\renewcommand{\insertadditional}{#2}}
+
 \NewDocumentCommand{\makethankyou}{}
 {
 	\begin{frame}[plain]
@@ -269,54 +300,43 @@
 	University of Applied Sciences
 	\newline
 	Technikumplatz 17 | 09648 Mittweida
-	\if&\insertshortinstitute&\else
-		\newline
-		\insertshortinstitute
-	\fi
+	\ifdisplayablecontent{\insertshortinstitute}{\newline\insertshortinstitute}{}
+	\ifdisplayablecontent{\insertadditionalsidebar}{\newline\insertadditionalsidebar}{}
 }
-\newcommand{\insertemail}{}
-\newcommand{\inserttelephone}{}
-\newcommand{\insertlocation}{}
-\newcommand{\impressum}[3]
-{
-	\renewcommand{\inserttelephone}{#1}	
-	\renewcommand{\insertemail}{#2}	
-	\renewcommand{\insertlocation}{#3}	
-}
+
 \newcommand{\insertthankyoutext}
 {
 	\iftoggle{option@fancystyle}
-	{	
+	{
+		%TODO: Remove fontawesome and use hsmw icons from webpage
+		% eMail: M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z
+		% Phone: M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z
+		% Office: 
+		% M8 3.293l6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z
+		% M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z
+		% Person: 
+		% M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z
+		% M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z
+		
 		\begin{tabularx}{\linewidth}{@{}cX@{}}
 			\faIdCard[regular] & \insertauthor\\
 			\\
-			\if&\insertemail&\else % TODO: Check with \relax causes \href to crash
-				\faEnvelope[regular] & \insertemail\\
-			\fi
-			\if\relax\inserttelephone\relax\else
-				\faPhone* & \inserttelephone\\
-			\fi
-			\if\relax\insertlocation\relax\else
-				\\
-				\faUniversity & \insertlocation\\
-			\fi
+			\ifdisplayablecontent{\inserttelephone}{\faPhone* & \inserttelephone\\}{}
+			\ifdisplayablecontent{\insertmobilephone}{\faMobile* & \insertmobilephone\\}{}
+			\ifdisplayablecontent{\insertemail}{\faEnvelope[regular] & \insertemail\\\\}{}
+			\ifdisplayablecontent{\insertoffice}{\faUniversity & \insertoffice\\\\}{}
+			\ifdisplayablecontent{\insertcourseofstudies}{&\insertcourseofstudies\\}{}
+			\ifdisplayablecontent{\insertadditional}{&\insertadditional\\}{}
 		\end{tabularx}
 	}{
-		\insertauthor
-		
+		\insertauthor\\
 		\vspace*{\baselineskip}
-		\if\relax\inserttelephone\relax\else
-			\textbf{T}\qquad\inserttelephone
-		\fi
-		
-		\if&\insertemail&\else % TODO: Check with \relax causes \href to crash
-			\insertemail
-		\fi
-	
-		\if\relax\insertlocation\relax\else
-			\vspace*{\baselineskip}
-			\insertlocation
-		\fi
+		\ifdisplayablecontent{\inserttelephone}{\parbox{2em}{\textbf{T}}\inserttelephone\\}{}
+		\ifdisplayablecontent{\insertmobilephone}{\parbox{2em}{\textbf{M}}\insertmobilephone\\}{}
+		\ifdisplayablecontent{\insertemail}{\insertemail\\\vspace*{\baselineskip}}{}
+		\ifdisplayablecontent{\insertoffice}{\insertoffice\\\vspace*{\baselineskip}}{}
+		\ifdisplayablecontent{\insertcourseofstudies}{\insertcourseofstudies\\}{}
+		\ifdisplayablecontent{\insertadditional}{\insertadditional\\}{}
 	}% this comment fixes underfull hbox in fancystyle
 }
 

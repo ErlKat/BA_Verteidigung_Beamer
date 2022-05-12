@@ -28,7 +28,11 @@
 % Frame headline
 \defbeamertemplate*{headline}{hsmw}
 {
-	\begin{beamercolorbox}[wd=\paperwidth, ht=2cm]{headline}
+	\iftoggle{option@framesubtitle}
+	{\def\headheight{2cm}}
+	{\def\headheight{1.5cm}}
+	
+	\begin{beamercolorbox}[wd=\paperwidth, ht=\headheight]{headline}
 		% Just occupy space, so the main text is properly aligned
 	\end{beamercolorbox}
 }
@@ -45,12 +49,15 @@
 		\end{beamercolorbox}	
 	\end{textblock}
 
-	\begin{textblock}{14}(1, 1.4)
-		\begin{beamercolorbox}[wd=\linewidth, ht=.4cm, dp=.1cm]{framesubtitle}
-			\usebeamerfont{framesubtitle}%
-			\autofontscaledownbox{\linewidth}{.4cm}{\insertframesubtitle}
-		\end{beamercolorbox}	
-	\end{textblock}
+	\iftoggle{option@framesubtitle}
+	{
+		\begin{textblock}{14}(1, 1.4)
+			\begin{beamercolorbox}[wd=\linewidth, ht=.4cm, dp=.1cm]{framesubtitle}
+				\usebeamerfont{framesubtitle}%
+				\autofontscaledownbox{\linewidth}{.4cm}{\insertframesubtitle}
+			\end{beamercolorbox}	
+		\end{textblock}
+	}{}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -117,12 +124,13 @@
 		\usebeamerfont{footline faculty}
 		
 		\leavevmode%
-		\if&\insertshortinstitute&\else%
+		\ifdisplayablecontent{\insertshortinstitute}
+		{%
 			\parbox[b][.3cm][t]{2cm}{\raggedleft\insertshortinstitute}%
 			\hspace*{.12cm}%
 			\rule{.15pt}{4mm}% .15pt = .0529 mm (scaled according to CD)
 			\hspace*{.12cm}%
-		\fi%
+		}{}%
 		%
 		\usebeamertemplate*{footline logo}% 1.76 x 0.44
 	\end{beamercolorbox}%	
@@ -146,6 +154,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Corporate design style elements as tikz paths (for easy coloring)
+
+%TODO: Put style elements into separate package (logo, "klinke", icons) and provide interface for usage
 \defbeamertemplate*{sidebar}{hsmw}
 {%
 	\begin{tikzpicture}[remember picture, overlay]
