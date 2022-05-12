@@ -31,11 +31,9 @@
 \setlength{\leftmarginii}{0.5cm}
 \setlength{\leftmarginiii}{0.5cm}
 
-\makeatletter
-	% Patch underline-Command to smash its contents and destroy the bounding box, thus drawing a nice baseline-underline
-	\let\old@underline\underline
-	\renewcommand{\underline}[1]{\old@underline{\smash{#1}}}
-\makeatother
+% Patch underline-Command to smash its contents and destroy the bounding box, thus drawing a nice baseline-underline
+\let\old@underline\underline
+\renewcommand{\underline}[1]{\old@underline{\smash{#1}}}
 
 %TODO Debug Background
 %\setbeamertemplate{background}[grid]
@@ -63,7 +61,7 @@
 	% Faculty logo and text
 	\begin{textblock}{9}(1, 0.675)
 		\begin{beamercolorbox}[wd=\linewidth, ht=0.65cm, dp=0cm, leftskip = 0cm]{title page faculty}
-			\iftoggle{show@facultyicon}
+			\iftoggle{option@facultyicon}
 			{%
 				\usebox{\facultyIconBox}%
 				\pgfmathparse{\linewidth - \wd\facultyIconBox}%
@@ -117,7 +115,7 @@
 			\parbox[b][.5cm][t]{\linewidth}
 			{%
 				\usebeamerfont{title page date}%
-				\iftoggle{show@titlepagedate}{\insertdate}{}%
+				\iftoggle{option@titlepagedate}{\insertdate}{}%
 			}
 		\end{beamercolorbox}	
 	\end{textblock}
@@ -214,31 +212,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Adjust font size to better fit text into box if it gets too large
-\makeatletter
-	\newlength{\autofontscaledownbox@maxHeight}
-	\newlength{\autofontscaledownbox@boxHeight}
-	\newsavebox{\autofontscaledown@box}
-	
-	\NewDocumentCommand{\autofontscaledownbox}{mmm} % width, height, text
+\newlength{\autofontscaledownbox@maxHeight}
+\newlength{\autofontscaledownbox@boxHeight}
+\newsavebox{\autofontscaledown@box}
+
+\NewDocumentCommand{\autofontscaledownbox}{mmm} % width, height, text
+{%
+	\setlength{\autofontscaledownbox@maxHeight}{#2}%
+	%
+	\foreach \f in {1, 0.99, ..., 0.1}%
 	{%
-		\setlength{\autofontscaledownbox@maxHeight}{#2}%
+		\pgfmathsetmacro{\scaledFontsize}{\f * \f@size}% \f@size = current font size
+		\pgfmathsetmacro{\scaledBaselineskip}{\scaledFontsize * 1.2}%
 		%
-		\foreach \f in {1, 0.99, ..., 0.1}%
-		{%
-			\pgfmathsetmacro{\scaledFontsize}{\f * \f@size}% \f@size = current font size
-			\pgfmathsetmacro{\scaledBaselineskip}{\scaledFontsize * 1.2}%
-			%
-			\savebox{\autofontscaledown@box}{\parbox[b]{#1}{\raggedright\fontsize{\scaledFontsize pt}{\scaledBaselineskip pt}\selectfont\nohyphens#3\par}}%
-			\setlength{\autofontscaledownbox@boxHeight}{\ht\autofontscaledown@box}%
-			%
-			\ifnum\autofontscaledownbox@boxHeight<\autofontscaledownbox@maxHeight%
-				\usebox{\autofontscaledown@box}%
-				\if1\f\else{\PackageWarning{beamerinnerthemehsmw}{Font of text '#3' is scaled down by a factor of \f}}\fi%
-				\breakforeach%
-			\fi%
-		}%
-	}
-\makeatother
+		\savebox{\autofontscaledown@box}{\parbox[b]{#1}{\raggedright\fontsize{\scaledFontsize pt}{\scaledBaselineskip pt}\selectfont\nohyphens#3\par}}%
+		\setlength{\autofontscaledownbox@boxHeight}{\ht\autofontscaledown@box}%
+		%
+		\ifnum\autofontscaledownbox@boxHeight<\autofontscaledownbox@maxHeight%
+			\usebox{\autofontscaledown@box}%
+			\if1\f\else{\PackageWarning{beamerinnerthemehsmw}{Font of text '#3' is scaled down by a factor of \f}}\fi%
+			\breakforeach%
+		\fi%
+	}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -56,34 +56,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Progressbar
 
-\iftoggle{show@progressbar}
-{
-	% Count pages with separate counter, due to the implemented counters in beamer do not seem to be sufficient
-	\makeatletter
-		% Save current slide counter on thank you slide to the aux file
-		\AddToHook{cmd/makethankyou/after}{\immediate\write\@auxout{\string\gdef\string\progressbar@thankyou@slide{\arabic{progressPage}}}}
-		% Save current slide counter on appendix to the aux file
-		\AddToHook{cmd/appendix/after}{\immediate\write\@auxout{\string\gdef\string\progressbar@appendix@slide{\arabic{progressPage}}}} % \g@addto@macro{\appendix}
-		% Save current slide counter on end of document to the aux file
-		\AddToHook{enddocument/afterlastpage}{\immediate\write\@auxout{\string\gdef\string\progressbar@last@slide{\arabic{progressPage}}}} % \AtEndDocument
-		
-		% Retrieve the last progressed page from aux file or return 1 as intermediate (double run needed)
-		\newcommand{\GetProgressbarLastSlide}{
-			\ifdefined\progressbar@last@slide
-				\ifdefined\progressbar@thankyou@slide % If thankyou is present, take it as last slide
-					\progressbar@thankyou@slide
-				\else
-					\ifdefined\progressbar@appendix@slide % If appendix is present, take it as last slide
-						\progressbar@appendix@slide
-					\else % Use actual last slide if there is no appendix
-						\progressbar@last@slide
-					\fi
-				\fi
+\iftoggle{option@progressbar}
+{% Count pages with separate counter, due to the implemented counters in beamer do not seem to be sufficient
+	% Save current slide counter on thank you slide to the aux file
+	\AddToHook{cmd/makethankyou/after}{\immediate\write\@auxout{\string\gdef\string\progressbar@thankyou@slide{\arabic{progressPage}}}}
+	% Save current slide counter on appendix to the aux file
+	\AddToHook{cmd/appendix/after}{\immediate\write\@auxout{\string\gdef\string\progressbar@appendix@slide{\arabic{progressPage}}}} % \g@addto@macro{\appendix}
+	% Save current slide counter on end of document to the aux file
+	\AddToHook{enddocument/afterlastpage}{\immediate\write\@auxout{\string\gdef\string\progressbar@last@slide{\arabic{progressPage}}}} % \AtEndDocument
+	
+	% Retrieve the last progressed page from aux file or return 1 as intermediate (double run needed)
+	\newcommand{\GetProgressbarLastSlide}{
+		\ifdefined\progressbar@last@slide
+			\ifdefined\progressbar@thankyou@slide % If thankyou is present, take it as last slide
+				\progressbar@thankyou@slide
 			\else
-				1 % Return 1 on first run (placeholder)
+				\ifdefined\progressbar@appendix@slide % If appendix is present, take it as last slide
+					\progressbar@appendix@slide
+				\else % Use actual last slide if there is no appendix
+					\progressbar@last@slide
+				\fi
 			\fi
-		}
-	\makeatother
+		\else
+			1 % Return 1 on first run (placeholder)
+		\fi
+	}
 	
 	\newcounter{progressPage} % Will be used for tracking real content pages based on display of footline (not plain frames)
 	\setcounter{progressPage}{-1} % Adjust counter for titlepage
@@ -100,7 +97,7 @@
 	%
 	\begin{beamercolorbox}[wd=.5cm, ht=.5cm, dp=.12cm]{footline number overall} 
 		\usebeamerfont{footline number overall}%
-		\iftoggle{show@totalpages}{/\insertmainframenumber}{}
+		\iftoggle{option@totalpages}{/\insertmainframenumber}{}
 	\end{beamercolorbox}%
 	%
 	\vbox%
@@ -130,7 +127,7 @@
 		\usebeamertemplate*{footline logo}% 1.76 x 0.44
 	\end{beamercolorbox}%	
 	
-	\iftoggle{show@progressbar}
+	\iftoggle{option@progressbar}
 	{%
 		\stepcounter{progressPage}%
 		%

@@ -1,63 +1,73 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerthemehsmw}[2022/05/11 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
-% Please note: This template currently addresses only pdflatex (no active support for lualatex or xelatex)
+% Please note: This template currently addresses primarily pdflatex (no active development with lualatex or xelatex, although compatibility is watched out for)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Process theme options
 
-% Allows options as key-value pairs - Need to use \DeclareOptionX, \ProcessOptionsX ect.
+% Allows options as key-value pairs (\DeclareOptionX instead of \DeclareOption)
 \RequirePackage{xkeyval} 
 
 \makeatletter
-	% Sets the default faculty to hs (responsible for color model, default institute and default logo)
-	\def\default@faculty{} 							
-	\DeclareOptionX{hs}{\def\default@faculty{}}			% <empty>, hs, ext, inst
-	\DeclareOptionX{inw}{\def\default@faculty{inw}}		% inw, mb
-	\DeclareOptionX{cb}{\def\default@faculty{cb}}		% cb, mni
-	\DeclareOptionX{wi}{\def\default@faculty{wi}}		% wi, ww
-	\DeclareOptionX{sw}{\def\default@faculty{sw}}		% sw, sa
-	\DeclareOptionX{me}{\def\default@faculty{me}}		% me
-	\DeclareOptionX{inst}{\def\default@faculty{inst}}	% inst
-	\DeclareOptionX{faculty}[]{\def\default@faculty{#1}}
+	% Sets the default faculty to hs (responsible for color model, institute name and institute icon)
+	\def\option@value@faculty{}
+	\DeclareOptionX{hs}{\def\option@value@faculty{}}			% <empty>, hs (default)
+	\DeclareOptionX{inw}{\def\option@value@faculty{inw}}		% inw (maybe incorporate alternative/old values: mb)
+	\DeclareOptionX{cb}{\def\option@value@faculty{cb}}			% cb (maybe incorporate alternative/old values: mni)
+	\DeclareOptionX{wi}{\def\option@value@faculty{wi}}			% wi (maybe incorporate alternative/old values: ww)
+	\DeclareOptionX{sw}{\def\option@value@faculty{sw}}			% sw (maybe incorporate alternative/old values: sa)
+	\DeclareOptionX{me}{\def\option@value@faculty{me}}			% me
+	\DeclareOptionX{inst}{\def\option@value@faculty{inst}}		% inst
+	\DeclareOptionX{faculty}[]{\def\option@value@faculty{#1}}
 
-	% Insert a separate frame for each section heading (ignore \section*) (default: off)
-	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
+	% Declare language as key value option (default: ngerman)
+	\DeclareOptionX{language}[ngerman]{\PassOptionsToPackage{#1}{babel}} % Passes language directly to babel 
 
 	% Insert a table of contents at the beginning of the document (default: off)
 	\DeclareOptionX{toc}{\AddToHook{begindocument/end}{\maketoc}}
 
-	% Declare language as key value Option with default ngerman. Passes language directly to babel 
-	\DeclareOptionX{language}[ngerman]{\PassOptionsToPackage{#1}{babel}}
-
-	% Shows the progressbar in footline (default: on)
-	\newtoggle{show@progressbar}  % \settoggle{show@progressbar}{true|false} \toggletrue{show@progressbar} % \iftoggle{show@progressbar}{if}{else}
-	\DeclareOptionX{progressbar}{\toggletrue{show@progressbar}}
+	% Insert a separate frame for each section heading (ignore \section*) (default: off)
+	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
 
 	% Hides the total number of slide in footline (default: on)
-	\newtoggle{show@totalpages}\toggletrue{show@totalpages}
-	\DeclareOptionX{nototalpages}{\togglefalse{show@totalpages}}
-
+	\newtoggle{option@totalpages}\toggletrue{option@totalpages}
+	\DeclareOptionX{nototalpages}{\togglefalse{option@totalpages}}
+	
 	% Hides the faculty icon on title page (default: on)
-	\newtoggle{show@facultyicon}\toggletrue{show@facultyicon}
-	\DeclareOptionX{nofacultyicon}{\togglefalse{show@facultyicon}}
+	\newtoggle{option@facultyicon}\toggletrue{option@facultyicon}
+	\DeclareOptionX{nofacultyicon}{\togglefalse{option@facultyicon}}
+
+	% Enables coloring of math text | possible values: off (default if not specified), full, nottext (default if specified)
+	\def\option@value@colormath{off}
+	\DeclareOptionX{colormath}[nottext]{\def\option@value@colormath{#1}}
+
+	% Enables Two that the handout is twosided needs handout option in beamerclass to make a difference
+	\newtoggle{option@printhandout}
+	\DeclareOptionX{printhandout}{\toggletrue{option@printhandout}}
+
+	%%%%%%% Non-compliant options %%%%%%%
+
+	% Shows the date on the titelpage
+	\newtoggle{option@titlepagedate}
+	\DeclareOptionX{titlepagedate}{\toggletrue{option@titlepagedate}}
 
 	% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
-	\newtoggle{use@fancystyle}
-	\DeclareOptionX{fancystyle}{\toggletrue{use@fancystyle}}
-	
-	% Shows the date on the titelpage
-	\newtoggle{show@titlepagedate}
-	\DeclareOptionX{titlepagedate}{\toggletrue{show@titlepagedate}}
+	\newtoggle{option@fancystyle}
+	\DeclareOptionX{fancystyle}{\toggletrue{option@fancystyle}}
 
-	% Enables coloring of math text | possible values: off, full, nottext (default if specified)
-	\def\variant@colormath{off}
-	\DeclareOptionX{colormath}[nottext]{\def\variant@colormath{#1}}
-	
-	% Enables Two that the handout is twosided needs handout option in beamerclass to make a difference
-	\newtoggle{use@printhandout}
-	\DeclareOptionX{printhandout}{\toggletrue{use@printhandout}}
+	% Shows the progressbar in footline (default: on)
+	\newtoggle{option@progressbar}  % \settoggle{show@progressbar}{true|false} \toggletrue{show@progressbar} % \iftoggle{show@progressbar}{if}{else}
+	\DeclareOptionX{progressbar}{\toggletrue{option@progressbar}}
 
-	\ExecuteOptionsX{language=ngerman}% Default options to be loaded 
+	%%%%%%% Option processing %%%%%%%
+	
+	% Print warnings for unknown options
+	\DeclareOptionX*{\PackageWarning{bemaerthemehsmw}{Unknown option is ignored: \CurrentOption}}
+	
+	% Default options to be loaded 
+	\ExecuteOptionsX{language=ngerman}
+	
+	% Process all options
 	\ProcessOptionsX\relax
 \makeatother
 
@@ -67,37 +77,31 @@
 
 % Pass specific options to the font package depending on the used compiler (pdfLaTeX, XeLaTeX, LuaLaTeX)
 \RequirePackage{iftex}
-\ifxetex%
+\iftutex% True for XeTeX (\ifxetex) and LuaTeX (ifluatex)
     \PassOptionsToPackage{defaultsans}{opensans}%make opensans default sans font
-\else%
-    \ifluatex%
-        \PassOptionsToPackage{defaultsans}{opensans}%make opensans default sans font
-    \else%
-        \RequirePackage[T1]{fontenc} % Font-Encoding
-        \RequirePackage[utf8]{inputenc} % Input-Encoding
-    \fi
+\else% Probably PDFTeX
+    \RequirePackage[T1]{fontenc} % Font-Encoding
+    \RequirePackage[utf8]{inputenc} % Input-Encoding
 \fi
+
 \RequirePackage{lmodern} % Font tweaking to latin modern (less pixelated) as fallback font
+\RequirePackage[default,proportional]{opensans} % Use OpenSans as default font with proportional numbers
 
-% CD page 31 (Scaling to 1)
-\RequirePackage[default,proportional]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
-
-\RequirePackage{babel}% load babel package - Options comes from package Option 'language' 
-\RequirePackage{hyphenat} %https://texfaq.org/FAQ-hyphoff
-
-\RequirePackage[fixed]{fontawesome5} % Symbols (marvosym)
-%TODO: loading csquotes package and its options may depend on the choosen language
-\RequirePackage[autostyle=true,german=quotes]{csquotes} % Improves nested quoting in bibliography (provides \enquote makro for quoting)
+\RequirePackage{babel} % Load babel package for language support (options passed by theme option "language")
+\RequirePackage{hyphenat} % Disables hyphenation by using a fake language (provides \nohyphens{})
+\RequirePackage[autostyle]{csquotes} % Improves nested quoting (provides \enquote makro for language specific quoting)
+\RequirePackage[fixed]{fontawesome5} % Provides modern symbols (http://mirrors.ctan.org/fonts/fontawesome5/doc/fontawesome5.pdf)
 %\RequirePackage[factor=1100, stretch=10, shrink=10, babel=true, nopatch=footnote]{microtype} %TODO: Seems to have problems within overleaf: "keyval error: nopatch undefined"
 
-\RequirePackage{etoolbox} % Programming library
 \RequirePackage{tikz} % Tikz-Library for improved drawing capabilities
-\RequirePackage{tikz-layers} % Loads background library and creates new layers to use as scope options "backround", "behind", "main" (normal), "above", "glass" -> e.g. "on above layer"
+\RequirePackage{tikz-layers} % Loads background library and creates new layers to use as scope options "backround", "behind", "main" (normal), "above", "glass" (e.g. "on above layer")
 
-\RequirePackage[absolute, overlay]{textpos} % Abosolute placement of elements (display with option showboxes)
 \RequirePackage{tabularx, booktabs} % Tabular packages
-\RequirePackage{adjustbox} % Versatile boy environments (e.g. resizebox)
-\RequirePackage{caption}
+
+\RequirePackage{etoolbox} % Programming library
+\RequirePackage[absolute, overlay]{textpos} % Absolute placement of elements (display with option showboxes)
+\RequirePackage{adjustbox} % Versatile box environments (e.g. resizebox)
+\RequirePackage{caption} % Customizing options of captions (provides \captionof{env}{text})
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default configurations
@@ -110,7 +114,7 @@
 
 % Adds the subtitle into the pdf document metadata
 \AddToHook{begindocument/before}{\subject{\insertsubtitle}}
-% Leaves pdf metadata keywords empty
+% Sets the pdf keywords
 \keywords{Hochschule Mittweida}
 
 % TODO If more than one institute is given, they should be separated using the command \and and they should be prefixed by the command \inst with different parameters.
@@ -147,15 +151,12 @@
 	}%
 }
 
-% Use the faculty name as default institution
-\institute{\insertfacultyname}
-
 % CD page 16
 \makeatletter
 	% Fallback if faculty=hs is specified: reset to empty
-	\ifthenelse{\equal{\default@faculty}{hs}}{\def\default@faculty{}}{}
+	\ifthenelse{\equal{\option@value@faculty}{hs}}{\def\option@value@faculty{}}{}
 	
-	\begin{switch}{\default@faculty}  
+	\begin{switch}{\option@value@faculty}  
 		\case{inw}{
 			\addto\captionsngerman{\renewcommand{\insertfacultyname}{Ingenieur\-wissenschaften}}
 			\addto\captionsenglish{\renewcommand{\insertfacultyname}{Engineering Sciences}}
@@ -183,14 +184,17 @@
 		}
 		\case{inst}{
 			\gdef\insertfacultyicon{\includegraphics[height=0.65 cm]{figures/iconFacultyHS.pdf}}
-			\gdef\default@faculty{} % Load default blue hsmw color theme
+			\gdef\option@value@faculty{} % Load default blue hsmw color theme
 		}
 		\default{% Default: placing all icons without any text 
-			\gdef\default@faculty{} % resetting faculty to hs, if anything else is given, to correctly load color theme
+			\gdef\option@value@faculty{} % resetting faculty to hs, if anything else is given, to correctly load color theme
 		}
 	\end{switch}
 \makeatother
 %TODO: Introduce separate options for color theme, faculty icon, faculty name (titlepage and footnote) and use presets for currently existing setups (hs, cb, ...)
+
+% Use the faculty name as default institution
+\institute{\insertfacultyname}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define speaker commands
@@ -209,7 +213,7 @@
 % Load theme files
 
 \makeatletter
-	\usecolortheme{hsmw\default@faculty} % Load specific color theme for faculty
+	\usecolortheme{hsmw\option@value@faculty} % Load specific color theme for faculty
 	\usecolortheme{hsmw} % Load default color theme (previously defined values will be used)
 	\usefonttheme{hsmw} % Used fonts and font styles
 	\useinnertheme{hsmw} % Typesetting objects inside the frames (content): enumerations, blocks, toc, ...
@@ -281,7 +285,7 @@
 }
 \newcommand{\insertthankyoutext}
 {
-	\iftoggle{use@fancystyle}
+	\iftoggle{option@fancystyle}
 	{	
 		\begin{tabularx}{\linewidth}{@{}cX@{}}
 			\faIdCard[regular] & \insertauthor\\
@@ -319,7 +323,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Patches and adjustments
 
-
 \makeatletter
 	% Redefine top aligned frames to remove additional skip for nicer overall alignments of contents: https://github.com/josephwright/beamer/blob/main/base/beamerbaseframe.sty#L262
 	\define@key{beamerframe}{t}[true]%
@@ -342,7 +345,7 @@
 \mode<handout>
 {
 	% Place 2 slightly shrinked slides per a4 page on handout mode
-	\iftoggle{use@printhandout}
+	\iftoggle{option@printhandout}
 	{
 		%TODO: Maybe find a workaround to automatically pass the classoption handout to already loaded beamer
 

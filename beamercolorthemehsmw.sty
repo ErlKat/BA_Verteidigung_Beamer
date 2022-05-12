@@ -81,7 +81,7 @@
 %%% Switch elements of the color theme depending on given options
 
 % fancystyle
-\iftoggle{use@fancystyle}
+\iftoggle{option@fancystyle}
 {
 	\setbeamercolor*{title page subtitle}{parent=title page, fg=hsmw80}
 	\setbeamercolor*{framesubtitle}{fg=hsmw60}
@@ -90,16 +90,16 @@
 
 %TODO: Improve readablility with e.g. switch-environment: current problem with local scope of switch (not globally changed)
 % colormath 
-\ifthenelse{\equal{full}{\variant@colormath}} % full = fully color math text
+\ifthenelse{\equal{full}{\option@value@colormath}} % full = fully color math text
 {
 	\setbeamercolor*{math text}{fg=hsmw}
 }{
-	\ifthenelse{\equal{nottext}{\variant@colormath}} % nottext = \text in normal text, rest colored
+	\ifthenelse{\equal{nottext}{\option@value@colormath}} % nottext = \text in normal text, rest colored
 	{
 		\setbeamercolor*{math text}{fg=hsmw}
 		\setbeamercolor*{normal text in math text}{use={normal text}, fg=normal text.fg} % TODO: may be it should make use of the current text color instead, but how?
 	}{
-		\ifthenelse{\equal{off}{\variant@colormath}} % off = do nothing    
+		\ifthenelse{\equal{off}{\option@value@colormath}} % off = do nothing    
 		{}
 		{% Print warning for unknown values
 			\PackageWarning{beamercolorthemehsmw}{Unknown value for option 'colormath'}
