@@ -112,7 +112,7 @@
 		%
 		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.12cm]{footline date} 
 			\usebeamerfont{footline date}
-			\copyright{} \insertdate{} Hochschule Mittweida
+			\copyright{} \insertshortdate{} Hochschule Mittweida
 		\end{beamercolorbox}%
 	}%
 	%
@@ -120,8 +120,8 @@
 		\usebeamerfont{footline faculty}
 		
 		\leavevmode%
-		\if&\insertfacultyname&\else%
-			\parbox[b][.3cm][t]{2cm}{\raggedleft\insertfacultyname}%
+		\if&\insertshortinstitute&\else%
+			\parbox[b][.3cm][t]{2cm}{\raggedleft\insertshortinstitute}%
 			\hspace*{.12cm}%
 			\rule{.15pt}{4mm}% .15pt = .0529 mm (scaled according to CD)
 			\hspace*{.12cm}%

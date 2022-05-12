@@ -83,7 +83,7 @@
 \RequirePackage[default,proportional]{opensans} % Use OpenSans as default font, slightly downscaled - Numbers: oldstyle | lining (default) and tabular (default) | proportional
 
 \RequirePackage{babel}% load babel package - Options comes from package Option 'language' 
-\RequirePackage[none]{hyphenat} %https://texfaq.org/FAQ-hyphoff
+\RequirePackage{hyphenat} %https://texfaq.org/FAQ-hyphoff
 
 \RequirePackage[fixed]{fontawesome5} % Symbols (marvosym)
 %TODO: loading csquotes package and its options may depend on the choosen language
@@ -111,10 +111,11 @@
 % Adds the subtitle into the pdf document metadata
 \AddToHook{begindocument/before}{\subject{\insertsubtitle}}
 % Leaves pdf metadata keywords empty
-\keywords{}
+\keywords{Hochschule Mittweida}
 
 % TODO If more than one institute is given, they should be separated using the command \and and they should be prefixed by the command \inst with different parameters.
-%\institute[]{} 
+% \author{Name\inst{1} \and Name\inst{1,2} \and Name\inst{3}}
+% \institute{\inst{1} First Institute \and \inst{2} Second Department \and \inst{3} Third University}  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Latex switch case construct
@@ -199,7 +200,7 @@
 \addto\captionsenglish{\renewcommand{\currentspeakerlabel}{Speaker}}
 
 \NewDocumentCommand{\setcurrentspeaker}{sm}{\gdef\currentSpeaker{\IfBooleanTF#1{\currentspeakerlabel{}: }{}#2}}
-\NewDocumentCommand{\resetcurrentspeaker}{s}{\IfBooleanTF#1{\setcurrentspeaker*{\insertauthor}}{\setcurrentspeaker{\insertauthor}}}
+\NewDocumentCommand{\resetcurrentspeaker}{s}{\IfBooleanTF#1{\setcurrentspeaker*{\insertshortauthor}}{\setcurrentspeaker{\insertshortauthor}}}
 \NewDocumentCommand{\insertcurrentspeaker}{}{\currentSpeaker}
 
 \resetcurrentspeaker{}
@@ -264,9 +265,9 @@
 	University of Applied Sciences
 	\newline
 	Technikumplatz 17 | 09648 Mittweida
-	\if\relax\insertfacultyname\relax\else
+	\if&\insertshortinstitute&\else
 		\newline
-		\insertfacultyname
+		\insertshortinstitute
 	\fi
 }
 \newcommand{\insertemail}{}
@@ -318,14 +319,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Patches and adjustments
 
-% Redefine top aligned frames to remove additional skip for nicer overall alignments of contents: https://github.com/josephwright/beamer/blob/main/base/beamerbaseframe.sty#L262
+
 \makeatletter
-\define@key{beamerframe}{t}[true]{% top
-	\beamer@frametopskip=0pt\relax% \beamer@frametopskip=.2cm plus .5\paperheight\relax%
-	\beamer@framebottomskip=0pt plus 1fill\relax%
-	\beamer@frametopskipautobreak=\beamer@frametopskip\relax%
-	\beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
-}
+	% Redefine top aligned frames to remove additional skip for nicer overall alignments of contents: https://github.com/josephwright/beamer/blob/main/base/beamerbaseframe.sty#L262
+	\define@key{beamerframe}{t}[true]%
+	{% top
+		\beamer@frametopskip=0pt\relax% \beamer@frametopskip=.2cm plus .5\paperheight\relax%
+		\beamer@framebottomskip=0pt plus 1fill\relax%
+		\beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+		\beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+	}
+
+	% Redefine shortinserts, so they are not stuck in a box (break all preparations): https://github.com/josephwright/beamer/blob/main/base/beamerbasemisc.sty#L186
+	\renewcommand{\beamer@insertshort}[1]%
+	{%\beamer@ststart#1\beamer@stend
+		#1%
+	}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
