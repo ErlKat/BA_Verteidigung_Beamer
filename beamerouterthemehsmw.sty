@@ -111,7 +111,8 @@
 	{%
 		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.1cm]{footline title} 
 			\usebeamerfont{footline title}
-			\insertshorttitle{} | \insertcurrentspeaker{}
+			\ifdisplayablecontent{\insertshorttitle}{\insertshorttitle{} | }{}%
+			\insertcurrentspeaker{}
 		\end{beamercolorbox}%
 		%
 		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.12cm]{footline date} 

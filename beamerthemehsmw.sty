@@ -304,8 +304,12 @@
 	\ifdisplayablecontent{\insertadditionalsidebar}{\newline\insertadditionalsidebar}{}
 }
 
+\makeatletter
 \newcommand{\insertthankyoutext}
 {
+	% Remove \inst from author
+	\let\beamer@insttitle=\@gobble
+		
 	\iftoggle{option@fancystyle}
 	{
 		%TODO: Remove fontawesome and use hsmw icons from webpage
@@ -339,6 +343,7 @@
 		\ifdisplayablecontent{\insertadditional}{\insertadditional\\}{}
 	}% this comment fixes underfull hbox in fancystyle
 }
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Patches and adjustments
@@ -358,7 +363,16 @@
 	{%\beamer@ststart#1\beamer@stend
 		#1%
 	}
+
+% Redefine \and within \insertauthor from \quad to comma: https://github.com/josephwright/beamer/blob/main/base/beamerbasetitle.sty#L143
+\def\beamer@andtitle{\unskip, }
+
 \makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Deprecated macros not longer in use
+
+\newcommand{\impressum}[3]{\PackageError{beamerthemehsmw}{The command '\string\impressum' was removed. Please use \string\phone, \string\email and \string\office instead}{Please use \string\phone, \string\email and \string\office instead}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

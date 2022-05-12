@@ -17,6 +17,7 @@
 %	nofacultyicon,		% Hides the faculty icon on title page
 	colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottext (default)
 %	printhandout,		% Places two slides on a single a4 paper for printing the presentation (beamer class option 'handout' needed)
+%	noframesubtitle,	% Disables frame subtitles alltogether and slightly increases frame height
 % Additional style options not completely conforming to the corporate design
 %	titlepagedate,		% Shows the date on the titelpage
 %	fancystyle,			% Enables some fancy styles, that are not part of the corporate design specifications (default: off)
@@ -25,15 +26,21 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2) Specify default fields for presentation and pdf document properties
-% Set the title: \title{Long title everywhere} \title[Short title for footline]{Long title for titlepage}
+% Set the title: \title{Long title everywhere} or \title[Short title for footline]{Long title for titlepage}
 \title[Neue \LaTeX-Vorlage]{Eine \LaTeX{}-Vorlage für Präsentationen -- angelehnt an das Corporate Design 2019 der Hochschule Mittweida (auch für überlange Titel geeignet!)}
 \subtitle{Nach den Guidelines für Beamer-Vorlagen neu erstellt, noch komplett ungetestet und mit vielen neuen Bugs (Work in Progress)}
-% Authors (separate multiple author names e.g. with \and for additional space)
-\author{Stefan Schildbach, M.Sc.}
-% Date of presentation (\today or a fixed value)
+% Authors (separate multiple author names e.g. with \and for additional space): \author{author for everywhere} or \author[author for footline]{author for titlepage and thankyouslide}
+\author[Stefan Schildbach]{Stefan Schildbach, M.Sc.}
+% Institute (will be prefilled automatically, depending on chosen faculty theme option): \institute{institute for everywhere} or \institute[institute for footline and thankyouslide]{institute for titlepage}
+%\institute[institute for footline and thankyouslide]{institute for titlepage}
+% Date of presentation (\today or a fixed value): \date{date for everywhere} or \date[date for footline]{date for titlepage}
 %\date{\today} % 22. März 2022
-% Impressum for thankyou slide: phone, email, location (leave one empty if not wanted or needed)
-\impressum{+49 3727 58-1598}{schildba@hs-mittweida.de}{Haus 8 | Richard Stücklen-Bau | Raum 8-207\newline Am Schwanenteich 6b | 09648 Mittweida} 
+% Impressum for thankyou slide (leave one empty if not wanted or needed):
+\email{schildba@hs-mittweida.de} % \email{eMail}
+\phone{+49 3727 58-1598} % \phone[Mobile Number]{Telephone Number}
+\office{Haus 8 | Richard Stücklen-Bau | Raum 8-207\newline Am Schwanenteich 6b | 09648 Mittweida} % \office{Office}
+%\courseofstudies{Informatik (IF10w1-M)} % \courseofstudies{Course of Studies (Group Number)}
+%\additional[Sidebar Text]{Main Text} % Additional information you may want to give (Department, Module, etc.) \additional[Sidebar Text]{Main Text}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3) Use features
@@ -129,14 +136,15 @@
 				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
 				\item \textcolor{hsmw}{nofacultyicon} verbirgt das Fakultäts-Icon auf der Titelseite
 				\item \textcolor{hsmw}{colormath} hebt mathematische Formeln farbig ab
-                \begin{itemize}
-                	\item Keine Hervorhebung: \textcolor{hsmw}{colormath=off} oder \textit{<leer>}
-                    \item Formeln sind hervorgehoben, aber Text in Formeln mittels \verb!\text{...}! wird wie normaler Text dargestellt: \textcolor{hsmw}{colormath=nottext} oder \textcolor{hsmw}{colormath}
-                    z.B.
-                    \[\sum^n_{k=0} k = \frac{n(n+1)}2 \qquad \text{ für }  n \in\mathbb N\]
-                    \item Vollständige Hervorhebung: \textcolor{hsmw}{colormath=full}
-                \end{itemize}
-            	\item \textcolor{hsmw}{printhandout} setzt zwei Folien pro A4-Seite (Klassenoption \textit{handout} notwendig)
+				\begin{itemize}
+					\item Keine Hervorhebung: \textcolor{hsmw}{colormath=off} oder \textit{<leer>}
+					\item Formeln sind hervorgehoben, aber Text in Formeln mittels \verb!\text{...}! wird wie normaler Text dargestellt: \textcolor{hsmw}{colormath=nottext} oder \textcolor{hsmw}{colormath}
+					z.B.
+					\[\sum^n_{k=0} k = \frac{n(n+1)}2 \qquad \text{ für }  n \in\mathbb N\]
+					\item Vollständige Hervorhebung: \textcolor{hsmw}{colormath=full}
+				\end{itemize}
+				\item \textcolor{hsmw}{printhandout} setzt zwei Folien pro A4-Seite (Klassenoption \textit{handout} notwendig)
+				\item \textcolor{hsmw}{noframesubtitle} deaktiviert alle Untertitel der Folien (vergrößert Textbereich)
 			\end{itemize}
 		\end{itemize}
 	\end{frame}
@@ -172,7 +180,7 @@
 
 			\item Abschlussfolie hinzufügen
 			\begin{itemize}
-				\item Kontaktdaten in Präambel ergänzen: \verb!\impressum{Telefon}{eMail}{Büro}!
+				\item Kontaktdaten in Präambel ergänzen: \verb!\email{eMail}! ...
 				\item Abschlussfolie im Textkörper einbinden: \verb!\makethankyou!
 			\end{itemize}
 
@@ -194,7 +202,7 @@
 			\title[Kurztitel für Fußzeile]{Titel der Präsentation für Titelseite}
 			\subtitle{Untertitel für Titelseite}
 			\author{Name Vortragende(r)}
-			\impressum{Telefon}{eMail}{Büro}
+			\email{eMail}
 			\titlegraphic{figures/thankyou.jpg}
 
 			\begin{document}
@@ -336,50 +344,28 @@
 
 	\newcommand{\rgb}[1]{\textcolor{hsmw80}{#1}}
 	\newcommand{\cmd}[1]{\rgb{\textbackslash{}#1}}
-	\begin{frame}[c]{Zusätzliche, beeinflussbare Macros}{... und deren Abhängigkeiten (zur Feinabstimmung der eigenen Präsentation)}
-		\centering
-		\scriptsize
-		\begin{tikzpicture}[every node/.style={font={\vphantom{Ag}}}, every edge/.append style={-latex, rounded corners}, label/.style={hsmwLightGray, scale=.8, inner sep=0}]
-			% Option: hs, cb, ...
-			\node (optionFaculty) {Option \rgb{hs}, \rgb{cb}, \dots};
-			\draw[-latex] (optionFaculty.east) to[out=0,in=180] ++(1, .375) node[anchor=west] (macroInsertfacultyicon) {\cmd{insertfacultyicon}};
-			\draw[-latex] (optionFaculty.east) to[out=0,in=180] ++(1, -.375) node[anchor=west] (macroInsertfacultyname) {\cmd{insertfacultyname}};
-			\draw[-latex] (macroInsertfacultyname.east) to ++(1, 0) node[anchor=west] (effectInstitute) {\cmd{institute\{\cmd{insertfacultyname}\}}};
-
-			\node[label, anchor=north] at (macroInsertfacultyicon.south) {(Titelseite)};
-			\node[label, anchor=north] at (macroInsertfacultyname.south) {(Fußzeile und Abschlussfolie)};
-			\node[label, anchor=north] at (effectInstitute.south) {(Titelseite)};
-
-			% Macro \impressum and \makethankyou
-			\node[anchor=north west] (macroImpressum) at ([yshift=-1.75cm] optionFaculty.south west) {\cmd{impressum}};
-			\draw[-latex] (macroImpressum.east) to[out=0,in=180] ++(1, .75) node[anchor=west] (macroInsertemail) {\cmd{insertemail}};
-			\draw[-latex] (macroImpressum.east) to[out=0,in=180] ++(1, 0) node[anchor=west] (macroInserttelephone) {\cmd{inserttelephone}};
-			\draw[-latex] (macroImpressum.east) to[out=0,in=180] ++(1, -.75) node[anchor=west] (macroInsertlocation) {\cmd{insertlocation}};
-			%
-			\draw[-latex] (macroInserttelephone.east) to ++(1, 0) node[anchor=west] (macroInsertthankyoutext) {\cmd{insertthankyoutext}};
-			\draw[-latex] (macroInsertemail.east) to[out=0,in=180] (macroInsertthankyoutext.west);
-			\draw[-latex] (macroInsertlocation.east) to[out=0,in=180] (macroInsertthankyoutext.west);
-			%
-			\node[anchor=west] (macroInsertthankyoutitle) at ([yshift=.75 cm] macroInsertthankyoutext.west) {\cmd{insertthankyoutitle}};
-			\node[anchor=west] (macroInsertthankyousidebartext) at ([yshift=-.75 cm] macroInsertthankyoutext.west) {\cmd{insertthankyousidebartext}};
-
-			\node[label, anchor=north] at (macroInsertthankyoutitle.south) {(Abschlussfolie)};
-			\node[label, anchor=north] at (macroInsertthankyoutext.south) {(Abschlussfolie)};
-			\node[label, anchor=north] at (macroInsertthankyousidebartext.south) {(Abschlussfolie)};
-
-			% Macro \*currentspeaker	
-			\node[anchor=north west] (macroSetcurrentspeaker) at ([yshift=-1.75cm] macroImpressum.south west) {\cmd{setcurrentspeaker}};
-			\draw[-latex, dotted] (macroSetcurrentspeaker.east) to[out=0,in=180] ++(1, .375) node[anchor=west] (macroCurrentspeakerlabel) {\cmd{currentspeakerlabel}};
-			\draw[-latex] (macroSetcurrentspeaker.east) to[out=0,in=180] ++(1, -.375) node[anchor=west] (macroCurrentspeaker) {\cmd{currentspeaker}};
-			\draw[-latex, dotted] (macroCurrentspeakerlabel.south -| macroCurrentspeaker.north) to (macroCurrentspeaker.north);
-			%
-			\node[anchor=south west] (macroResetcurrentspeaker) at ([yshift=.5cm]macroSetcurrentspeaker.north west) {\cmd{resetcurrentspeaker}};
-			\draw[-latex, dotted] (macroResetcurrentspeaker.south -| macroSetcurrentspeaker.north) to node[label, pos=.5, anchor=west, outer sep=.25em] {\cmd{insertauthor}} (macroSetcurrentspeaker.north);
-			%
-			\draw[-latex] (macroCurrentspeaker.east) to ++(1, 0) node[anchor=west] (macroInsertcurrentspeaker) {\cmd{insertcurrentspeaker}};
-
-			\node[label, anchor=north] at (macroInsertcurrentspeaker.south) {(Fußzeile)};
-		\end{tikzpicture}
+	\newcommand{\textto}{\hspace*{0.2ex}\tikz[baseline=-.33em] \draw[-latex] (0,0) to ++(2ex, 0);\hspace*{0.2ex}}
+	\begin{frame}{Zusätzliche, beeinflussbare Macros}{... und deren Abhängigkeiten (zur Feinabstimmung der eigenen Präsentation)}
+		\begin{itemize}
+			\item Option \rgb{hs}, \rgb{cb}, ... oder \rgb{faculty=cb, me, ...} (Farbschema)
+			\begin{itemize}
+				\item \cmd{insertfacultyicon} (Titelseite)
+				\item \cmd{insertfacultyname} (Option \rgb{language}) \textto{} \cmd{institute\{\cmd{insertfacultyname}\}}
+			\end{itemize}
+			\item \cmd{insertthankyoutitle}, \cmd{insertthankyoutext}, \cmd{insertthankyousidebartext}
+			\begin{itemize}
+				\item \cmd{email} \textto{} \cmd{insertemail}
+				\item \cmd{phone} \textto{} \cmd{insertmobilephone}, \cmd{inserttelephone}
+				\item \cmd{office} \textto{} \cmd{insertoffice}
+				\item \cmd{courseofstudies} \textto{} \cmd{insertcourseofstudies}
+				\item \cmd{additional} \textto{} \cmd{insertadditionalsidebar}, \cmd{insertadditional}
+			\end{itemize}
+			\item \cmd{setcurrentspeaker}, \cmd{resetcurrentspeaker} (\cmd{insertshortauthor})
+			\begin{itemize}
+				\item Stern-Version (\cmd{setcurrentspeaker*}) setzt zusätzlich Label (Option \rgb{language})
+				\item \cmd{currentspeaker} (\cmd{currentspeakerlabel}) \textto{} \cmd{insertcurrentspeaker}
+			\end{itemize}
+		\end{itemize}
 	\end{frame}
 
 	\section{FAQ}
