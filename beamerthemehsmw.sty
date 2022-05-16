@@ -30,6 +30,9 @@
 	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
 	%TODO: Provide multiple styles for sectionslides (fully colored, minimalistic, with agenda, ...)
 
+	% Reduces the size of the page number
+	\DeclareOptionX{smallpagenumber}{\AddToHook{begindocument/before}{\setbeamertemplate{page number in head/foot}[small]}}
+
 	% Hides the total number of slide in footline (default: on)
 	\newtoggle{option@totalpages}\toggletrue{option@totalpages}
 	\DeclareOptionX{nototalpages}{\togglefalse{option@totalpages}}
@@ -76,6 +79,9 @@
 	% Process all options
 	\ProcessOptionsX\relax
 \makeatother
+
+%TODO: Partnerlogo
+%\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load Packages

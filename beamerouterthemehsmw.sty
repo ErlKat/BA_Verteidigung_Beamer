@@ -93,35 +93,83 @@
 	\setcounter{progressPage}{-1} % Adjust counter for titlepage
 }{}
 
-\defbeamertemplate*{footline}{hsmw}
+%%% Pagenumber templates
+%TODO: Change appendix numbering style (maybe to small roman?) and restart counter for appendix
+\defbeamertemplate*{page number in head/foot}{hsmw}
 {
-	\leavevmode%
-	\begin{beamercolorbox}[wd=1cm, ht=.5cm, dp=.12cm, right]{footline number current} 
+	\begin{beamercolorbox}[wd=1cm, ht=.5cm, right]{footline number current} 
 		\usebeamerfont{footline number current}
 		\vspace*{.05cm}
 		\insertframenumber
 	\end{beamercolorbox}%
 	%
-	\begin{beamercolorbox}[wd=.5cm, ht=.5cm, dp=.12cm]{footline number overall} 
+	\begin{beamercolorbox}[wd=.5cm, ht=.5cm]{footline number overall} 
 		\usebeamerfont{footline number overall}%
 		\iftoggle{option@totalpages}{/\insertmainframenumber}{}
 	\end{beamercolorbox}%
+}
+\defbeamertemplate{page number in head/foot}{small}
+{
+	\vbox%
+	{
+		\begin{beamercolorbox}[wd=1cm, ht=.2cm, dp=.1cm, right]{footline number current}
+			\usebeamerfont{footline number overall}
+			\insertframenumber
+		\end{beamercolorbox}
+		
+		\begin{beamercolorbox}[wd=1cm, ht=.2cm]{footline number current} 
+			% Just occupy space
+		\end{beamercolorbox}
+	}%
 	%
 	\vbox%
 	{%
-		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.1cm]{footline title} 
-			\usebeamerfont{footline title}
-			\ifdisplayablecontent{\insertshorttitle}{\insertshorttitle{} | }{}%
-			\insertcurrentspeaker{}
+		\begin{beamercolorbox}[wd=.5cm, ht=.2cm, dp=.1cm]{footline number overall}
+			\usebeamerfont{footline number overall}%
+			\iftoggle{option@totalpages}{/\insertmainframenumber}{}
 		\end{beamercolorbox}%
 		%
-		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.12cm]{footline date} 
-			\usebeamerfont{footline date}
-			\copyright{} \insertshortdate{} Hochschule Mittweida
+		\begin{beamercolorbox}[wd=.5cm, ht=.2cm]{footline number overall} 
+			% Just occupy space
+		\end{beamercolorbox}%
+	}%
+}
+
+\defbeamertemplate*{footline}{hsmw}
+{
+	% Raise the depth of the footline boxes depending on the existance of the progressbar (setting the depth for one box is sufficient to raise all others)
+	\iftoggle{option@progressbar}{\def\raiseDepth{.185cm}}{\def\raiseDepth{.235cm}}
+
+	\leavevmode%
+	\usebeamertemplate*{page number in head/foot}%
+	%TODO: Using parbox instead of vbox produces a small vertical gap...
+%	\parbox[b]{9.5cm}{%
+%		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.1cm]{footline title}%
+%			\usebeamerfont{footline title}%
+%			\ifdisplayablecontent{\insertshorttitle}{\insertshorttitle{} | }{}%
+%			\insertcurrentspeaker{}%
+%		\end{beamercolorbox}%
+%	%
+%		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.12cm,]{footline date} 
+%			\usebeamerfont{footline date}%
+%			\parbox[b][.2cm][t]{\linewidth}{\copyright{} \insertshortdate{} Hochschule Mittweida}
+%		\end{beamercolorbox}%
+%	}%
+	\vbox%
+	{%
+		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm, dp=.1cm]{footline title} %
+			\usebeamerfont{footline title}%
+			\ifdisplayablecontent{\insertshorttitle}{\insertshorttitle{} | }{}%
+			\insertcurrentspeaker{}%
+		\end{beamercolorbox}%
+		%
+		\begin{beamercolorbox}[wd=9.5cm, ht=.2cm]{footline date} 
+			\usebeamerfont{footline date}%
+			\parbox[b][.2cm][t]{\linewidth}{\copyright{} \insertshortdate{} Hochschule Mittweida}
 		\end{beamercolorbox}%
 	}%
 	%
-	\begin{beamercolorbox}[wd=5cm, ht=.5cm, dp=.12cm, right, rightskip=1cm]{footline faculty} % CD page 16 and 17
+	\begin{beamercolorbox}[wd=5cm, ht=.5cm, dp=\raiseDepth, right, rightskip=1cm]{footline faculty} % CD page 16 and 17
 		\usebeamerfont{footline faculty}
 		
 		\leavevmode%
@@ -147,9 +195,10 @@
 		\pgfmathsetmacro{\progressFactorCurrent}{1 / \progressValueTotal}%
 		\pgfmathsetmacro{\progressFactorFuture}{\progressValueFuture / \progressValueTotal}%
 		%
-		\usebeamercolor{progressbar past}\color{bg}\rule{\progressFactorPast\paperwidth}{.5mm}%
-		\usebeamercolor{progressbar current}\color{bg}\rule{\progressFactorCurrent\paperwidth}{.5mm}%
-		\usebeamercolor{progressbar future}\color{bg}\rule{\progressFactorFuture\paperwidth}{.5mm}%
+		\leavevmode%
+		\begin{beamercolorbox}[wd=\progressFactorPast\paperwidth, ht=.05cm]{progressbar past}\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=\progressFactorCurrent\paperwidth, ht=.05cm]{progressbar current}\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=\progressFactorFuture\paperwidth, ht=.05cm]{progressbar future}\end{beamercolorbox}%	
 	}{}
 }
 
