@@ -27,7 +27,7 @@
 	\DeclareOptionX{toc}{\AddToHook{begindocument/end}{\maketoc}}
 
 	% Insert a separate frame for each section heading (ignore \section*) (default: off)
-	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}<beamer>[plain]\sectionpage\end{frame}}}
+	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}[plain]\sectionpage\end{frame}}}
 	%TODO: Provide multiple styles for sectionslides (fully colored, minimalistic, with agenda, ...)
 
 	% Reduces the size of the page number
