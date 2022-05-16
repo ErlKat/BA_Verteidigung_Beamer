@@ -167,6 +167,40 @@
 %	\tableofcontents[currentsection]
 }
 
+\defbeamertemplate*{subsection page}{hsmw}
+{
+        %\usebeamertemplate{section page}% should be more explicit (?)
+        
+        
+        \begin{textblock}{16}(0, 0) % 10.67
+            \begin{beamercolorbox}[wd=\linewidth, ht=9cm]{subsection page} 
+			%Background only
+		\end{beamercolorbox}	
+	\end{textblock}
+
+	\begin{textblock}{14}(1, 1)	% 9.67
+		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{subsection page title} 
+			\usebeamerfont{section page title}%
+			\insertsection
+		\end{beamercolorbox}	
+	\end{textblock}
+        
+        \begin{textblock}{14}(1, 4.5)
+            \begin{beamercolorbox}[wd=\linewidth, dp=3cm]{subsection page subtitle} 
+                    \usebeamerfont{subsection page subtitle}%
+                    \insertsubsection
+            \end{beamercolorbox}	
+	\end{textblock}
+	
+	\begin{textblock}{2}(.5, 4.25)
+		\begin{beamercolorbox}[wd=\linewidth, ht=.05cm]{subsection page rule} 
+			%rule only
+		\end{beamercolorbox}	
+	\end{textblock}
+	
+
+}
+
 % Thank you page
 \defbeamertemplate*{thankyou page}{hsmw}
 {

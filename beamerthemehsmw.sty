@@ -29,6 +29,8 @@
 	% Insert a separate frame for each section heading (ignore \section*) (default: off)
 	\DeclareOptionX{sectionslide}{\AtBeginSection[]{\begin{frame}[plain]\sectionpage\end{frame}}}
 	%TODO: Provide multiple styles for sectionslides (fully colored, minimalistic, with agenda, ...)
+	\DeclareOptionX{subsectionslide}{\AtBeginSubsection[]{\begin{frame}[plain]\subsectionpage\end{frame}}}
+	%TODO: Provide the same styles for subssectionslide
 
 	% Reduces the size of the page number
 	\DeclareOptionX{smallpagenumber}{\AddToHook{begindocument/before}{\setbeamertemplate{page number in head/foot}[small]}}
