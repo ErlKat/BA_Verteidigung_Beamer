@@ -73,7 +73,16 @@
 	\AddToHook{enddocument/afterlastpage}{\immediate\write\@auxout{\string\gdef\string\progressbar@last@slide{\arabic{progressPage}}}} % \AtEndDocument
 	
 	% Retrieve the last progressed page from aux file or return 1 as intermediate (double run needed)
-	\newcommand{\GetProgressbarLastSlide}{
+	\newcommand{\GetProgressbarLastSlide}
+	{
+		\ifnum\Identify@Progressbar@LastSlide<1 % Possible result in draft mode (\stepcounter{progressPage} only called once): Division by zero is apparently not a good thing
+			1
+		\else
+			\Identify@Progressbar@LastSlide
+		\fi
+	}
+	\newcommand{\Identify@Progressbar@LastSlide}
+	{
 		\ifdefined\progressbar@last@slide
 			\ifdefined\progressbar@thankyou@slide % If thankyou is present, take it as last slide
 				\progressbar@thankyou@slide
