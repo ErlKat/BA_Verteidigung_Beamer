@@ -80,7 +80,7 @@
 					\vphantom{Ag}%
 				}%
 			}{}%
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 	
 	% Title
@@ -88,7 +88,7 @@
 		\begin{beamercolorbox}[wd=\linewidth, ht=\titleBoxHeight cm, dp=.2cm, leftskip = 0cm]{title page title} 
 			\usebeamerfont{title page title}%
 			\autofontscaledownbox{\linewidth}{\titleBoxHeight cm}{\inserttitle}
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 	
 	% Subtitle
@@ -99,7 +99,7 @@
 				\usebeamerfont{title page subtitle}%
 				\autofontscaledownbox{\linewidth}{1cm}{\insertsubtitle}%
 			}
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	% Author
@@ -108,7 +108,7 @@
 			\usebeamerfont{title page subsubtitle}%
 			\nohyphens
 			\insertauthor
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	% Date
@@ -119,7 +119,7 @@
 				\usebeamerfont{title page date}%
 				\iftoggle{option@titlepagedate}{\insertdate}{}%
 			}
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	% Background
@@ -148,20 +148,20 @@
 	\begin{textblock}{16}(0, 0) % 10.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=9cm]{section page} 
 			%Background only
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	\begin{textblock}{14}(1, 1)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{section page title} 
 			\usebeamerfont{section page title}%
 			\insertsection
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 	
 	\begin{textblock}{2}(.5, 4.25)
 		\begin{beamercolorbox}[wd=\linewidth, ht=.05cm]{section page rule} 
 			%rule only
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 %	\tableofcontents[currentsection]
@@ -169,36 +169,33 @@
 
 \defbeamertemplate*{subsection page}{hsmw}
 {
-        %\usebeamertemplate{section page}% should be more explicit (?)
-        
-        
-        \begin{textblock}{16}(0, 0) % 10.67
-            \begin{beamercolorbox}[wd=\linewidth, ht=9cm]{subsection page} 
+	%\usebeamertemplate{section page}% should be more explicit (?)
+
+	\begin{textblock}{16}(0, 0) % 10.67
+		\begin{beamercolorbox}[wd=\linewidth, ht=9cm]{subsection page} 
 			%Background only
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	\begin{textblock}{14}(1, 1)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{subsection page title} 
 			\usebeamerfont{section page title}%
 			\insertsection
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
-        
-        \begin{textblock}{14}(1, 4.5)
-            \begin{beamercolorbox}[wd=\linewidth, dp=3cm]{subsection page subtitle} 
-                    \usebeamerfont{subsection page subtitle}%
-                    \insertsubsection
-            \end{beamercolorbox}	
+
+	\begin{textblock}{14}(1, 4.5)
+		\begin{beamercolorbox}[wd=\linewidth, dp=3cm]{subsection page subtitle} 
+			\usebeamerfont{subsection page subtitle}%
+			\insertsubsection
+		\end{beamercolorbox}
 	\end{textblock}
 	
 	\begin{textblock}{2}(.5, 4.25)
 		\begin{beamercolorbox}[wd=\linewidth, ht=.05cm]{subsection page rule} 
 			%rule only
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
-	
-
 }
 
 % Thank you page
@@ -211,7 +208,7 @@
 				\usebeamerfont{thankyou page title}
 				\insertthankyoutitle
 			}
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	\begin{textblock}{8.5}(1, 4)
@@ -221,7 +218,7 @@
 				\raggedright
 				\insertthankyoutext
 			\end{minipage}
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	\begin{textblock}{5}(10.5, 4)
@@ -231,7 +228,7 @@
 				\raggedright
 				\insertthankyousidebartext
 			\end{minipage}
-		\end{beamercolorbox}	
+		\end{beamercolorbox}
 	\end{textblock}
 
 	\begin{tikzpicture}[remember picture, overlay]
