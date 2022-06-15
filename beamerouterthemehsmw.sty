@@ -25,14 +25,16 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newlength{\beamer@headheight}
+
 % Frame headline
 \defbeamertemplate*{headline}{hsmw}
 {
 	\iftoggle{option@framesubtitle}
-	{\def\headheight{2cm}}
-	{\def\headheight{1.5cm}}
+	{\setlength{\beamer@headheight}{2cm}}
+	{\setlength{\beamer@headheight}{1.5cm}}
 	
-	\begin{beamercolorbox}[wd=\paperwidth, ht=\headheight]{headline}
+	\begin{beamercolorbox}[wd=\paperwidth, ht=\beamer@headheight]{headline}
 		% Just occupy space, so the main text is properly aligned
 	\end{beamercolorbox}
 }
@@ -248,6 +250,8 @@
 		\end{scope}	
 	\end{tikzpicture}%
 }
+%TODO: titlepage sidebar footer text
+
 \defbeamertemplate*{footline logo}{hsmw}
 {%
 	\begin{tikzpicture}%

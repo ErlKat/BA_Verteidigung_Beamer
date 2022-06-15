@@ -52,8 +52,7 @@
 		\def\titleBoxStart{1.9}
 		\def\titleBoxHeight{3.5}
 		\def\bottomBoxWidth{6.75}
-	}
-	{
+	}{
 		\def\titleBoxWidth{14}
 		\def\titleBoxStart{3}
 		\def\titleBoxHeight{2.4}
@@ -154,6 +153,7 @@
 	\begin{textblock}{14}(1, 1)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{section page title} 
 			\usebeamerfont{section page title}%
+			\hypersetup{linkcolor=fg}
 			\insertsection
 		\end{beamercolorbox}
 	\end{textblock}
@@ -165,6 +165,16 @@
 	\end{textblock}
 
 %	\tableofcontents[currentsection]
+}
+\defbeamertemplate{section page}{hsmw-simple}
+{
+	%\beamer@headheight
+	\begin{textblock}{14}(1, 0)	% 9.67
+		\begin{beamercolorbox}[wd=\linewidth, ht=9cm]{frametitle} 
+			\usebeamerfont{frametitle}%
+			\parbox[b][9cm][c]{\textwidth}{\centering\insertsection\\\rule[.8\baselineskip]{\linewidth}{\arrayrulewidth}}
+		\end{beamercolorbox}
+	\end{textblock}
 }
 
 \defbeamertemplate*{subsection page}{hsmw}
@@ -180,6 +190,7 @@
 	\begin{textblock}{14}(1, 1)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{subsection page title} 
 			\usebeamerfont{section page title}%
+			\hypersetup{linkcolor=fg}
 			\insertsection
 		\end{beamercolorbox}
 	\end{textblock}
@@ -187,6 +198,7 @@
 	\begin{textblock}{14}(1, 4.5)
 		\begin{beamercolorbox}[wd=\linewidth, dp=3cm]{subsection page subtitle} 
 			\usebeamerfont{subsection page subtitle}%
+			\hypersetup{linkcolor=fg}
 			\insertsubsection
 		\end{beamercolorbox}
 	\end{textblock}
@@ -249,8 +261,12 @@
 \newlength{\autofontscaledownbox@boxHeight}
 \newsavebox{\autofontscaledown@box}
 
+%\usepackage{adjustbox}
+
+%TODO: Mit titleicon text ggf. länger als fenster und kein Umbruch... ebenfalls skalieren (z.B. "Verteidigungen" - bricht zeilenlänge, aber nicht höhe)
 \NewDocumentCommand{\autofontscaledownbox}{mmm} % width, height, text
 {%
+%	\adjustbox{minipage=[b]{6.75cm},max totalheight=3.5cm}{#3}%
 	\setlength{\autofontscaledownbox@maxHeight}{#2}%
 	%
 	\foreach \f in {1, 0.99, ..., 0.1}%

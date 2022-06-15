@@ -92,14 +92,13 @@
 % Pass specific options to the font package depending on the used compiler (pdfLaTeX, XeLaTeX, LuaLaTeX)
 \RequirePackage{iftex}
 \iftutex% True for XeTeX (\ifxetex) and LuaTeX (ifluatex)
-    \PassOptionsToPackage{defaultsans}{opensans}%make opensans default sans font
 \else% Probably PDFTeX
     \RequirePackage[T1]{fontenc} % Font-Encoding
     \RequirePackage[utf8]{inputenc} % Input-Encoding
 \fi
 
 \RequirePackage{lmodern} % Font tweaking to latin modern (less pixelated) as fallback font
-\RequirePackage[default,proportional]{opensans} % Use OpenSans as default font with proportional numbers
+\RequirePackage[default,defaultsans,proportional]{opensans} % Use OpenSans as default font with proportional numbers, set also as default sans
 
 \RequirePackage{babel} % Load babel package for language support (options passed by theme option "language")
 \RequirePackage{hyphenat} % Disables hyphenation by using a fake language (provides \nohyphens{})
