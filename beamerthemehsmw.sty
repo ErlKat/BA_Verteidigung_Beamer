@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemehsmw}[2022/05/11 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
+\ProvidesPackage{beamerthemehsmw}[2022/07/07 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
 % Please note: This template currently addresses primarily pdflatex (no active development with lualatex or xelatex, although compatibility is watched out for)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,8 +97,11 @@
     \RequirePackage[utf8]{inputenc} % Input-Encoding
 \fi
 
-\RequirePackage{lmodern} % Font tweaking to latin modern (less pixelated) as fallback font
-\RequirePackage[default,defaultsans,proportional]{opensans} % Use OpenSans as default font with proportional numbers, set also as default sans
+% Use Bera Type 1 fonts (Bitstream Vera family) for serif and typewriter (looks as a good match to Open Sans)
+\RequirePackage[scaled]{beraserif} % use as \rmdefault
+\RequirePackage[scaled]{beramono} % use as \ttdefault
+% Load OpenSans as sansserif and normalfont
+\RequirePackage[default,defaultsans]{opensans} % Sets OpenSans as familydefault and sfdefault
 
 \RequirePackage{babel} % Load babel package for language support (options passed by theme option "language")
 \RequirePackage{hyphenat} % Disables hyphenation by using a fake language (provides \nohyphens{})
@@ -296,6 +299,7 @@
 		\usebeamertemplate*{thankyou page}
 	\end{frame}
 }
+
 \newcommand{\insertthankyoutitle}{}
 \addto\captionsngerman{\renewcommand{\insertthankyoutitle}{Vielen Dank}}
 \addto\captionsenglish{\renewcommand{\insertthankyoutitle}{Thank You}}
