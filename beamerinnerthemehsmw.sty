@@ -59,6 +59,8 @@
 		\def\bottomBoxWidth{9}
 	}
 
+	\hypersetup{hidelinks}
+
 	% Faculty logo and text
 	\begin{textblock}{9}(1, 0.675)
 		\begin{beamercolorbox}[wd=\linewidth, ht=0.65cm, dp=0cm, leftskip = 0cm]{title page faculty}
@@ -144,6 +146,8 @@
 % Section page
 \defbeamertemplate*{section page}{hsmw}
 {
+	\hypersetup{hidelinks}
+	
 	\begin{textblock}{16}(0, 0) % 10.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=9cm]{section page} 
 			%Background only
@@ -153,7 +157,6 @@
 	\begin{textblock}{14}(1, 1)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{section page title} 
 			\usebeamerfont{section page title}%
-			\hypersetup{linkcolor=fg}
 			\insertsection
 		\end{beamercolorbox}
 	\end{textblock}
@@ -168,6 +171,8 @@
 }
 \defbeamertemplate{section page}{hsmw-simple}
 {
+	\hypersetup{hidelinks}
+	
 	%\beamer@headheight
 	\begin{textblock}{14}(1, 0)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=9cm]{frametitle} 
@@ -179,6 +184,7 @@
 
 \defbeamertemplate*{subsection page}{hsmw}
 {
+	\hypersetup{hidelinks}
 	%\usebeamertemplate{section page}% should be more explicit (?)
 
 	\begin{textblock}{16}(0, 0) % 10.67
@@ -190,7 +196,6 @@
 	\begin{textblock}{14}(1, 1)	% 9.67
 		\begin{beamercolorbox}[wd=\linewidth, ht=3cm]{subsection page title} 
 			\usebeamerfont{section page title}%
-			\hypersetup{linkcolor=fg}
 			\insertsection
 		\end{beamercolorbox}
 	\end{textblock}
@@ -198,7 +203,6 @@
 	\begin{textblock}{14}(1, 4.5)
 		\begin{beamercolorbox}[wd=\linewidth, dp=3cm]{subsection page subtitle} 
 			\usebeamerfont{subsection page subtitle}%
-			\hypersetup{linkcolor=fg}
 			\insertsubsection
 		\end{beamercolorbox}
 	\end{textblock}
@@ -213,6 +217,8 @@
 % Thank you page
 \defbeamertemplate*{thankyou page}{hsmw}
 {
+	\hypersetup{hidelinks}
+	
 	\begin{textblock}{8.5}(1, 2.5)
 		\begin{beamercolorbox}[wd=\linewidth, ht=.8cm, dp=.2cm]{thankyou page title}
 			\parbox[b][.8cm]{\linewidth}
