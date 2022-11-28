@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemehsmw}[2022/07/07 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
+\ProvidesPackage{beamerthemehsmw}[2022/11/28 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
 % Please note: This template currently addresses primarily pdflatex (no active development with lualatex or xelatex, although compatibility is watched out for)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -7,6 +7,8 @@
 
 % Allows options as key-value pairs (\DeclareOptionX instead of \DeclareOption)
 \RequirePackage{xkeyval} 
+% Allows continuous scaling of fonts (try to load as early as possible)
+\RequirePackage{fix-cm}
 
 \makeatletter
 	% Sets the default faculty to hs (responsible for color model, institute name and institute icon)
