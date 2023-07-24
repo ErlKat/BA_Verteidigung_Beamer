@@ -145,6 +145,40 @@
 	\usebeamertemplate*{sidebar}
 }
 
+% Table of contents
+\defbeamertemplate*{toc page}{hsmw}
+{
+	\hypersetup{hidelinks}
+	\frametitle{}
+		
+	\begin{textblock}{5}(0, 0)
+		\begin{beamercolorbox}[wd=\linewidth, ht=8cm]{toc page} 
+			%Background only
+		\end{beamercolorbox}
+	\end{textblock}
+
+	\begin{textblock}{3}(1, 0.5)
+		\begin{beamercolorbox}[wd=\linewidth, ht=.7cm, dp=.2cm]{toc page title} 
+			\usebeamerfont{toc page title}%
+			\autofontscaledownbox{\linewidth}{.7cm}{\contentsname}
+%			\parbox[b][7cm][t]{\linewidth}{\contentsname}
+		\end{beamercolorbox}
+	\end{textblock}
+				
+	\begin{textblock}{9}(6, 1)
+		\begin{beamercolorbox}[wd=\linewidth, ht=7cm]{toc page content} 
+			\usebeamerfont{toc page content}%
+			\parbox[b][7cm][t]{\linewidth}{%\vspace*{-\fill}
+			\tableofcontents}
+		\end{beamercolorbox}
+	\end{textblock}
+}
+\defbeamertemplate{toc page}{hsmw-simple}
+{
+	\frametitle{\contentsname}
+	\tableofcontents
+}
+
 % Section page
 \defbeamertemplate*{section page}{hsmw}
 {

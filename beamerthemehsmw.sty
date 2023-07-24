@@ -1,6 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemehsmw}[2022/11/28 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
+\ProvidesPackage{beamerthemehsmw}[2023/07/24 Beamer Vorlage der Hochschule Mittweida] % https://zip.hs-mittweida.de/intranet/corporate_design.php
 % Please note: This template currently addresses primarily pdflatex (no active development with lualatex or xelatex, although compatibility is watched out for)
+
+% Beamer source code repository
+% https://github.com/josephwright/beamer/tree/main/base
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Process theme options
@@ -262,10 +265,16 @@
 %  Defines the maketoc macro
 \NewDocumentCommand{\maketoc}{}
 {
-	\begin{frame}{\contentsname}
-		\tableofcontents
+	\begin{frame}
+		\usebeamertemplate*{toc page}
 	\end{frame}
 }
+
+%TODO Switch?
+%	\appto\captionsngerman{\renewcommand{\contentsname}{Inhaltsverzeichnis}}
+%	\appto\captionsenglish{\renewcommand{\contentsname}{Table of Contents}}
+\appto\captionsngerman{\renewcommand{\contentsname}{Agenda}}
+\appto\captionsenglish{\renewcommand{\contentsname}{Agenda}}
 
 %  Defines the makebibliography macro
 \NewDocumentCommand{\makebibliography}{}
