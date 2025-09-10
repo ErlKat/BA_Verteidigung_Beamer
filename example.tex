@@ -14,7 +14,7 @@ hs,					% Change default faculty color set and predefined faculty values: hs or 
 faculty=cb,
 %	language=english,	% Change language to english (default: ngerman), other languages are possible (see babel-package) but may need further adjustments 
 %	toc,				% Adds a ToC slide
-%	sectionslide,		% Display separate section slides
+	sectionslide,		% Display separate section slides
 %	subsectionslide,		% Display separate subsection slides containing section and subsection name
 %	smallpagenumber,	% Reduces the size of the page number
 %	nototalpages,		% Hides the total number of slide in footline
@@ -77,53 +77,112 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 
 % You can remove this package - it is only needed for the dummy content
 \usepackage{blindtext}
-\usepackage{pifont}
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
-% Folie 2 – Problemstellung & Motivation
-\begin{frame}[fragile]{Problemstellung \& Motivation (1/2)}{Problemstellung}
-	\begin{itemize}
-		\item Pentests sind etabliert, aber teuer \& aufwendig  
-		\begin{itemize}
-			\item hoher Zeitaufwand
-			\item Bedarf an Fachwissen
-			\item kostenintensiv
-		\end{itemize}
-		
-		\item Wachsende Angriffsflächen  
-		\begin{itemize}
-			\item Cloud
-			\item Microservices
-			\item DevOps erhöhen Komplexität und Angriffsrisiko
-		\end{itemize}
-		
-		\item Limitierungen klassischer Methoden  
-		\begin{itemize}
-			\item rein manuelle Tests skalieren nicht mehr
-			\item Ergebnisse abhängig von Erfahrung einzelner Tester
-		\end{itemize}
-	\end{itemize}
+	
+% Agenda-Folie (manuell gepflegt)
+\begin{frame}{Agenda}
+	\begin{enumerate}
+		\item Problem \& Motivation
+		\item Ziel der Arbeit
+		\item Grundlagen (KI, LLMs, Pentest-Phasen)
+		\item Getestete Tools (RamiGPT, PentestGPT CLI/Web)
+		\item Szenarien \& Demos
+		\item Ergebnisse \& Vergleich
+		\item Bewertungsmatrix
+		\item Stärken \& Schwächen
+		\item Fazit \& Ausblick
+	\end{enumerate}
 \end{frame}
 
 
 
 
-% Folie 2 – Fachkräftemangel als Motivation
-\begin{frame}{Fachkräftemangel als Motivation}
-	\centering
-	\includegraphics[width=0.65\textwidth]{figures/1.png}
-	\captionof{figure}{Bitkom: IT-Fachkräftelücke bis 2040}
-	\label{fig:bitkom}
+
+
+
+\section{Problem \& Motivation \& Ziel der Arbeit}
+	
+\begin{frame}{Problem \& Motivation}
+	\begin{columns}
+		\begin{column}{0.48\textwidth}
+			\textbf{Problem:}
+			\begin{itemize}
+				\item Pentests etabliert, aber teuer \& zeitaufwendig
+				\item Hoher Personalbedarf, Fachkräftemangel
+				\item Wachsende Angriffsflächen (Cloud, Microservices, DevOps)
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\textbf{Motivation:}
+			\begin{itemize}
+				\item Automatisierung \& Beschleunigung
+				\item Reduktion menschlicher Fehler
+				\item Schnellere Reaktionen auf Bedrohungen
+				\item Abfederung Fachkräftemangel
+			\end{itemize}
+		\end{column}
+	\end{columns}
 \end{frame}
+
+
+%% Folie 2 – Problemstellung & Motivation
+%\begin{frame}[fragile]{Problemstellung \& Motivation (1/2)}{Problemstellung}
+%	\begin{itemize}
+%		\item Pentests sind etabliert, aber teuer \& aufwendig  
+%		\begin{itemize}
+%			\item hoher Zeitaufwand
+%			\item Bedarf an Fachwissen
+%			\item kostenintensiv
+%		\end{itemize}
+%		
+%		\item Wachsende Angriffsflächen  
+%		\begin{itemize}
+%			\item Cloud
+%			\item Microservices
+%			\item DevOps erhöhen Komplexität und Angriffsrisiko
+%		\end{itemize}
+%		
+%		\item Limitierungen klassischer Methoden  
+%		\begin{itemize}
+%			\item rein manuelle Tests skalieren nicht mehr
+%			\item Ergebnisse abhängig von Erfahrung einzelner Tester
+%		\end{itemize}
+%	\end{itemize}
+%\end{frame}
+%
+%
+%\begin{frame}{Motivation}
+%	\begin{itemize}
+%		\item Automatisierung \& Beschleunigung von Analysen
+%		\item Reduktion menschlicher Fehler
+%		\item Schnellere Reaktion auf Bedrohungen
+%		\item Abfederung des Fachkräftemangels
+%	\end{itemize}
+%\end{frame}
+
+
+
+%% Folie 2 – Fachkräftemangel als Motivation
+%\begin{frame}{Fachkräftemangel als Motivation}
+%	\centering
+%	\includegraphics[width=0.65\textwidth]{figures/1.png}
+%	\captionof{figure}{Bitkom: IT-Fachkräftelücke bis 2040}
+%	\label{fig:bitkom}
+%\end{frame}
 
 
 
 % Folie 3 – Ziel der Arbeit
 \begin{frame}{Ziel der Arbeit}
 	\textbf{Forschungsfrage:}  
-	Wie können KI-Tools Sicherheitsexperten in Penetrationstests unterstützen und entlasten?	
+	Inwiefern können KI-gestützte Modelle typische Aufgaben im Pentest unterstützen, beschleunigen oder automatisieren?
 	
 	\textbf{Vorgehen:}
 	\begin{itemize}
@@ -134,16 +193,20 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 			\item PentestGPT Web (dialogorientierte Tests)
 		\end{itemize}
 	\end{itemize}
-	\textbf{Teilziele:}
+	\textbf{Ziele:}
 	\begin{itemize}
 		\item Entwicklung eines praxisnahen Bewertungsrahmens
-		\item Durchführung reproduzierbarer Praxistests
+		\item Durchführung realitätsnahe Praxistests
 		\item Vergleich: Stärken, Schwächen \& Einsatzpotenziale
 	\end{itemize}
 \end{frame}
 
+
+
+
+\section{Problem \& Motivation}
 % Folie – Grundlagen: Penetrationstests
-\begin{frame}{Grundlagen – Penetrationstests}
+\begin{frame}{Was sind Penetrationstests?}
 	\begin{itemize}
 		\item \textbf{Definition:} Gezielte Simulation von Angriffen auf IT-Systeme
 		\item \textbf{Zweck:} Schwachstellen frühzeitig finden \& Sicherheitsniveau bewerten
@@ -157,109 +220,99 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 	\end{itemize}
 \end{frame}
 
-% Folie – Grundlagen: Phasenmodell nach BSI
-\begin{frame}{Grundlagen – Phasenmodell nach BSI}
-	\begin{itemize}
-		\item \textbf{Vorbereitung:} Scope, Ziele \& Rahmenbedingungen definieren
-		\item \textbf{Informationsbeschaffung:} Scans, OSINT, Reconnaissance
-		\item \textbf{Analyse \& Bewertung:} Identifikation \& Bewertung möglicher Schwachstellen
-		\item \textbf{Exploitation:} Gezielte Ausnutzung, um Ausnutzbarkeit realistisch einzuschätzen
-		\item \textbf{Abschluss \& Reporting:} Ergebnisse dokumentieren \& Empfehlungen ableiten
-	\end{itemize}
+%% Folie – Grundlagen: Phasenmodell nach BSI
+%\begin{frame}{Grundlagen – Phasenmodell nach BSI}
+%	\begin{itemize}
+%		\item \textbf{Vorbereitung:} Scope, Ziele \& Rahmenbedingungen definieren
+%		\item \textbf{Informationsbeschaffung:} Scans, OSINT, Reconnaissance
+%		\item \textbf{Analyse \& Bewertung:} Identifikation \& Bewertung möglicher Schwachstellen
+%		\item \textbf{Exploitation:} Gezielte Ausnutzung, um Ausnutzbarkeit realistisch einzuschätzen
+%		\item \textbf{Abschluss \& Reporting:} Ergebnisse dokumentieren \& Empfehlungen ableiten
+%	\end{itemize}
+%\end{frame}
+
+% Folie 2 – Fachkräftemangel als Motivation
+\begin{frame}{Pentest-Phasen (BSI-Modell)}
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/Phase.png}
+	\label{fig:phase}
 \end{frame}
 
-% Folie 4 – Penetrationstests
-\begin{frame}{Grundlage (1/4)}{Penetrationstests}
-	\begin{columns}
-			% Linke Spalte: Text
-			\begin{column}[T]{.55\textwidth}
-				\begin{itemize}
-					\item Ziel: Schwachstellen finden, bevor Angreifer sie ausnutzen
-					\item BSI-Phasenmodell:
-					\begin{enumerate}
-						\item Vorbereitung
-						\item Informationsbeschaffung
-						\item Analyse \& Bewertung
-						\item Exploitation
-						\item Abschluss \& Reporting
-					\end{enumerate}
-				\end{itemize}
-		
-		\end{column}
-		\begin{column}[T]{.5\textwidth}
-			\centering
-			\includegraphics[width=\textwidth]{figures/thankyou.jpg}
-			\captionof{figure}{Das Bild der Danke-Seite}
-			\label{fig:thankyou}
-		\end{column}
-	\end{columns}
-\end{frame}
+%
+%% Folie – Grundlagen: Typische Schwachstellen (OWASP Top 10)
+%\begin{frame}{Grundlagen – Typische Schwachstellen (OWASP Top 10)}
+%	\begin{itemize}
+%		\item \textbf{A01 – Broken Access Control}  
+%		\begin{itemize}
+%			\item Fehlende oder fehlerhafte Zugriffsbeschränkungen
+%			\item z. B. Manipulation von JWT, IDOR
+%		\end{itemize}
+%		
+%		\item \textbf{A02 – Cryptographic Failures}  
+%		\begin{itemize}
+%			\item Unsichere oder falsch eingesetzte Verschlüsselung
+%			\item z. B. schwache Hashes, Klartextübertragung
+%		\end{itemize}
+%		
+%		\item \textbf{A03 – Injection}  
+%		\begin{itemize}
+%			\item Unsichere Eingabevalidierung $\rightarrow$ Angriffe möglich
+%			\item z. B. SQL Injection, Cross-Site Scripting (XSS)
+%		\end{itemize}
+%	\end{itemize}
+%\end{frame}
 
 
-% Folie – Grundlagen: Typische Schwachstellen (OWASP Top 10)
-\begin{frame}{Grundlagen – Typische Schwachstellen (OWASP Top 10)}
-	\begin{itemize}
-		\item \textbf{A01 – Broken Access Control}  
-		\begin{itemize}
-			\item Fehlende oder fehlerhafte Zugriffsbeschränkungen
-			\item z. B. Manipulation von JWT, IDOR
-		\end{itemize}
-		
-		\item \textbf{A02 – Cryptographic Failures}  
-		\begin{itemize}
-			\item Unsichere oder falsch eingesetzte Verschlüsselung
-			\item z. B. schwache Hashes, Klartextübertragung
-		\end{itemize}
-		
-		\item \textbf{A03 – Injection}  
-		\begin{itemize}
-			\item Unsichere Eingabevalidierung $\rightarrow$ Angriffe möglich
-			\item z. B. SQL Injection, Cross-Site Scripting (XSS)
-		\end{itemize}
-	\end{itemize}
-\end{frame}
 
 
-% Folie – Grundlagen: Privilege Escalation
-\begin{frame}{Grundlagen – Privilege Escalation}
-	\begin{itemize}
-		\item \textbf{Ziel:} unberechtigter Zugriff auf höhere Rechte (Admin/Root)
-		\item Häufig in Post-Exploitation-Phase
-		\item \textbf{Typische Techniken (nach MITRE ATT\&CK):}
-		\begin{itemize}
-			\item Exploitation von Systemschwachstellen (T1068)
-			\item Missbrauch von Sudo/SetUID (T1548)
-			\item Manipulation von Zugriffstokens (T1134)
-			\item Nutzung gültiger, privilegierter Accounts (T1078)
-		\end{itemize}
-	\end{itemize}
-\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 % Folie – Grundlagen: Künstliche Intelligenz & LLMs
 \begin{frame}{Grundlagen – Künstliche Intelligenz \& LLMs}
 	\begin{itemize}
-		\item \textbf{KI:} Mustererkennung, Automatisierung, Entscheidungsunterstützung
-		\item \textbf{Maschinelles Lernen (ML):}
-		\begin{itemize}
-			\item Überwachtes Lernen (z. B. Klassifikation)
-			\item Unüberwachtes Lernen (z. B. Anomalieerkennung)
-			\item Bestärkendes Lernen (adaptives Verhalten)
-		\end{itemize}
-		\item \textbf{Large Language Models (LLMs):}
+		\item \textbf{KI:} Mustererkennung, Automatisierung, Entscheidungsunterstützung \\
+	    \textbf{Large Language Models (LLMs):}
 		\begin{itemize}
 			\item Zerlegen komplexer Aufgaben in Schritte
-			\item Generieren von Exploit-Vorschlägen \& Payloads
+			\item Exploit-Vorschläge \& Payload-Generierung
 			\item Automatisierte Dokumentation
+		\end{itemize}
+	    \textbf{Maschinelles Lernen (ML):}
+		\begin{itemize}
+			\item Überwachtes Lernen (Klassifikation)
+			\item Unüberwachtes Lernen (Anomalien)
+			\item Bestärkendes Lernen (adaptives Verhalten)
 		\end{itemize}
 		\item \textbf{Schwächen:} Halluzinationen, begrenztes Kontextfenster, fehlende Security-Spezialisierung
 	\end{itemize}
 \end{frame}
 
-
+\section{Methodik}
 % Folie – Methodik: Toolauswahl
-\begin{frame}{Methodik – Toolauswahl}
+\begin{frame}{Welche Tools wurden getestet?}
 	\begin{itemize}
 		\item \textbf{RamiGPT}
 		\begin{itemize}
@@ -282,26 +335,27 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \end{frame}
 
 
-% Folie 9 – Testumgebungen
-\begin{frame}{Testumgebungen}
-	\begin{itemize}
-		\item 3 VMs (Kali, Parrot, Ubuntu)
-		\item OWASP Juice Shop (Web-Testumgebung)
-		\item Isoliert \& reproduzierbar
-	\end{itemize}
-\end{frame}
+%% Folie 9 – Testumgebungen
+%\begin{frame}{Testumgebungen}
+%	\begin{itemize}
+%		\item 3 VMs (Kali, Parrot, Ubuntu)
+%		\item OWASP Juice Shop (Web-Testumgebung)
+%		\item Isoliert \& reproduzierbar
+%	\end{itemize}
+%\end{frame}
 
-% Folie 10 – Bewertungsmatrix
-\begin{frame}{Bewertungsmatrix}
+\section{Rami-Privilege Escalation}
+% Folie – Grundlagen: Privilege Escalation
+\begin{frame}{Grundlagen – Privilege Escalation}
 	\begin{itemize}
-		\item 6 Kriterien:
+		\item \textbf{Ziel:} unberechtigter Zugriff auf höhere Rechte (Admin/Root)
+		\item Häufig in Post-Exploitation-Phase
+		\item \textbf{Typische Techniken (nach MITRE ATT\&CK):}
 		\begin{itemize}
-			\item Schwachstellenabdeckung
-			\item Exploit-Vorschläge
-			\item Automatisierungsgrad
-			\item Kontextverständnis
-			\item Reporting
-			\item Kosten-Nutzen
+			\item Exploitation von Systemschwachstellen (T1068)
+			\item Missbrauch von Sudo/SetUID (T1548)
+			\item Manipulation von Zugriffstokens (T1134)
+			\item Nutzung gültiger, privilegierter Accounts (T1078)
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -319,24 +373,155 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 	\end{itemize}
 \end{frame}
 
-% Folie – RamiGPT: Ergebnisse
-\begin{frame}{RamiGPT – Ergebnisse}
+
+
+
+
+
+
+
+\begin{frame}{PentestGPT (CLI) – Testszenario}
+	\begin{columns}
+		\begin{column}[T]{.45\textwidth}
+			\begin{itemize}
+				\item Zielsystem: \textbf{OWASP Juice Shop} (verwundbare Web-App)
+				\item Getestete Schwachstellen (OWASP Top 10):
+				\begin{itemize}
+					\item A01 Broken Access Control 
+					\item A02 Cryptographic Failures 
+					\item A03 Injection 
+				\end{itemize}
+				\item Interaktion über CLI: strukturierte Workflows 
+				(\texttt{next}, \texttt{more}, \texttt{discuss})
+			\end{itemize}
+		\end{column}
+		\begin{column}[T]{.55\textwidth}
+			\centering
+			\vspace{-4mm}
+			\includegraphics[width=0.9\textwidth]{figures/14.png}
+			\label{fig:14}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\begin{frame}{RamiGPT – Full-AI-Modus (Fehlschlag)}
+	\begin{columns}
+		\begin{column}[T]{.45\textwidth}
+				\begin{itemize}
+				\item Automatisierte Befehle gestartet
+				\item Mehrere \texttt{sudo}-Varianten ausprobiert
+				\begin{itemize}
+					\item z. B. \texttt{sudo -l}, \texttt{sudo su -l root}
+				\end{itemize}
+				\item Alle Befehle blockieren bei Passwortabfrage
+				\item Kein Fortschritt, \texttt{rootbash} wird nicht erkannt
+			\end{itemize}
+			\textbf{Ergebnis:} Full-AI-Modus scheitert in der Praxis
+		\end{column}
+	\begin{column}[T]{.55\textwidth}
+		\centering
+		\vspace{-7mm}
+		\includegraphics[width=0.9\textwidth]{figures/6.png}
+		\label{fig:6}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}{Halb-automatischer Ablauf (1/2)}
+	\begin{columns}
+		\begin{column}[T]{.45\textwidth}
+			\begin{itemize}
+				\item Nutzer gibt manuell \texttt{ls} ein $\rightarrow$ Kontext für KI
+				\item RamiGPT schlägt \texttt{find / -perm /4000 2>/dev/null} vor
+				\item Ausgabe: mehrere SetUID-Dateien inkl. \texttt{/home/user2/rootbash}
+				\item Aber: Tool führt \texttt{rootbash} nicht selbst aus
+			\end{itemize}
+		\end{column}
+		\begin{column}[T]{.55\textwidth}
+			\centering
+			\vspace{-8mm}
+			\includegraphics[width=0.9\textwidth]{figures/11.png}
+			\label{fig:11}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\begin{frame}{Halb-automatischer Ablauf (2/2)}
 	\begin{itemize}
-		\item \textbf{Full-AI-Modus:}
-		\begin{itemize}
-			\item scheiterte an sudo-Passwortabfrage
-			\item erkannte \enquote{rootbash} nicht eigenständig
-		\end{itemize}
-		
-		\item \textbf{Halb-automatischer Modus:}
-		\begin{itemize}
-			\item mit manuellen Eingaben erfolgreich
-			\item Privilege Escalation durch rootbash möglich
-		\end{itemize}
-		
-		\item \textbf{Fazit:}  
-		Nur mit Benutzerhilfe nutzbar, geringe Automatisierung
+		\item Nach manuellem \texttt{ls -la} erkennt RamiGPT die Datei als auffällig
+		\item Führt anschließend \texttt{./rootbash} automatisch aus
+		\item Ergebnis: Root-Rechte erlangt (\texttt{uid=0/root})
+		\item Fazit: Erfolg nur mit Benutzerhilfe – User2 $\rightarrow$ Root
 	\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{PentestGPT (CLI)}
+
+% Folie 4 – Penetrationstests
+\begin{frame}{Grundlagen – Typische Schwachstellen (OWASP Top 10)}
+	\begin{columns}
+		% Linke Spalte: Text
+		\begin{column}[T]{.65\textwidth}
+			\begin{itemize}
+				\item \textbf{A01 – Broken Access Control}  
+				\begin{itemize}
+					\item Fehlende oder fehlerhafte Zugriffsbeschränkungen
+					\item z. B. Manipulation von JWT, IDOR
+				\end{itemize}
+				
+				\item \textbf{A02 – Cryptographic Failures}  
+				\begin{itemize}
+					\item Unsichere oder falsch eingesetzte Verschlüsselung
+					\item z. B. schwache Hashes, Klartextübertragung
+				\end{itemize}
+				
+				\item \textbf{A03 – Injection}  
+				\begin{itemize}
+					\item Unsichere Eingabevalidierung $\rightarrow$ Angriffe möglich
+					\item z. B. SQL Injection, Cross-Site Scripting (XSS)
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		\begin{column}[T]{.3\textwidth}
+			\vspace*{-4mm}
+			\centering
+			\includegraphics[width=\textwidth]{figures/4.png}
+			\label{fig:4}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 
@@ -344,14 +529,11 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \begin{frame}{PentestGPT (CLI) – Szenarien}
 	\begin{itemize}
 		\item \textbf{Zielsystem:} OWASP Juice Shop (verwundbare Web-App)
-		
-		\item \textbf{Testschwerpunkte (OWASP Top 10):}
-		\begin{itemize}
-			\item Broken Access Control → JWT-Manipulation, IDOR
-			\item Cryptographic Failures → unsichere Hashes, \enquote{Weird Crypto}-Challenge
-			\item Injection → SQLi, DOM-basiertes XSS
-		\end{itemize}
-		
+		 \begin{itemize}
+			\item A01 Broken Access Control $\rightarrow$ JWT-Manipulation, IDOR
+			\item A02 Cryptographic Failures $\rightarrow$ unsichere Hashes, „Weird Crypto“
+			\item A03 Injection $\rightarrow$ SQLi, XSS
+		\end{itemize}	
 		\item \textbf{Interaktion:}
 		\begin{itemize}
 			\item Strukturierte Workflows über CLI-Befehle (\texttt{next}, \texttt{more}, \texttt{discuss})
@@ -361,13 +543,52 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \end{frame}
 
 
+
+
+
+
+
+
+
+
+
+\begin{frame}{PentestGPT (CLI) – Exploit-Vorschlag}
+	\begin{columns}
+		\begin{column}[T]{.4\textwidth}
+			\begin{itemize}
+				\item Tool schlägt konkrete Exploit-Optionen vor 
+				(z. B. SQL Injection)
+				\item Liefert Payloads wie \texttt{' OR '1'='1}
+			\end{itemize}
+		\end{column}
+		\begin{column}[T]{.6\textwidth}
+			\centering
+			
+			\includegraphics[width=0.9\textwidth]{figures/13.png}
+			\label{fig:13}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
 % Folie – PentestGPT (CLI): Ergebnisse
 \begin{frame}{PentestGPT (CLI) – Ergebnisse}
 	\begin{itemize}
 		\item \textbf{Stärken:}
 		\begin{itemize}
-			\item Liefern valider Payloads (z. B. \texttt{' OR '1'='1} $\rightarrow$ Login-Bypass, Admin-Zugriff)
-			\item Systematische Struktur → didaktisch wertvoll (Ausbildung, Training)
+			\item Liefern valider Payloads (z. B. SQLi-Bypass $\rightarrow$  Admin-Login)
+			\item Systematische Struktur $\rightarrow$ didaktisch wertvoll (Ausbildung, Training)
 			\item Gute Unterstützung bei IDOR \& XSS durch Payload-Beispiele
 		\end{itemize}
 		
@@ -394,6 +615,7 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 
 
 
+\section{PentestGPT (WEB)}
 
 % Folie – PentestGPT (Web): Szenarien
 \begin{frame}{PentestGPT (Web) – Szenarien}
@@ -460,6 +682,44 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 		\end{itemize}
 	\end{itemize}
 \end{frame}
+
+
+% Folie 10 – Bewertungsmatrix
+\begin{frame}{Bewertungsmatrix}
+	\begin{itemize}
+		\item 6 Kriterien:
+		\begin{itemize}
+			\item Schwachstellenabdeckung
+			\item Exploit-Vorschläge
+			\item Automatisierungsgrad
+			\item Kontextverständnis
+			\item Reporting
+			\item Kosten-Nutzen
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 % Folie – Stärken & Schwächen der KI-Tools
 \begin{frame}{Stärken \& Schwächen der KI-Tools}
