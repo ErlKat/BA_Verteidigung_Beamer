@@ -83,39 +83,30 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 	
-% Agenda-Folie (manuell gepflegt)
 \begin{frame}{Agenda}
 	\begin{enumerate}
-		\item Problem \& Motivation
-		\item Ziel der Arbeit
-		\item Grundlagen (KI, LLMs, Pentest-Phasen)
-		\item Getestete Tools (RamiGPT, PentestGPT CLI/Web)
-		\item Szenarien \& Demos
-		\item Ergebnisse \& Vergleich
-		\item Bewertungsmatrix
-		\item Stärken \& Schwächen
+		\item Problem \& Motivation \& Ziel der Arbeit
+		\item Grundlagen
+		\item Methodik
+		\item Praxistests \& Ergebnisse
+		\item Vergleich \& Bewertung
 		\item Fazit \& Ausblick
 	\end{enumerate}
 \end{frame}
 
 
-
-
-
-
-
-\section{Problem \& Motivation \& Ziel der Arbeit}
-	
+\section{1. Problem \& Motivation \& Ziel der Arbeit}
 \begin{frame}{Problem \& Motivation}
 	\begin{columns}
 		\begin{column}{0.48\textwidth}
 			\textbf{Problem:}
 			\begin{itemize}
 				\item Pentests etabliert, aber teuer \& zeitaufwendig
-				\item Hoher Personalbedarf, Fachkräftemangel
+				\item Fachkräftemangel in IT-Security
 				\item Wachsende Angriffsflächen (Cloud, Microservices, DevOps)
 			\end{itemize}
 		\end{column}
@@ -132,85 +123,27 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \end{frame}
 
 
-%% Folie 2 – Problemstellung & Motivation
-%\begin{frame}[fragile]{Problemstellung \& Motivation (1/2)}{Problemstellung}
-%	\begin{itemize}
-%		\item Pentests sind etabliert, aber teuer \& aufwendig  
-%		\begin{itemize}
-%			\item hoher Zeitaufwand
-%			\item Bedarf an Fachwissen
-%			\item kostenintensiv
-%		\end{itemize}
-%		
-%		\item Wachsende Angriffsflächen  
-%		\begin{itemize}
-%			\item Cloud
-%			\item Microservices
-%			\item DevOps erhöhen Komplexität und Angriffsrisiko
-%		\end{itemize}
-%		
-%		\item Limitierungen klassischer Methoden  
-%		\begin{itemize}
-%			\item rein manuelle Tests skalieren nicht mehr
-%			\item Ergebnisse abhängig von Erfahrung einzelner Tester
-%		\end{itemize}
-%	\end{itemize}
-%\end{frame}
-%
-%
-%\begin{frame}{Motivation}
-%	\begin{itemize}
-%		\item Automatisierung \& Beschleunigung von Analysen
-%		\item Reduktion menschlicher Fehler
-%		\item Schnellere Reaktion auf Bedrohungen
-%		\item Abfederung des Fachkräftemangels
-%	\end{itemize}
-%\end{frame}
 
 
-
-%% Folie 2 – Fachkräftemangel als Motivation
-%\begin{frame}{Fachkräftemangel als Motivation}
-%	\centering
-%	\includegraphics[width=0.65\textwidth]{figures/1.png}
-%	\captionof{figure}{Bitkom: IT-Fachkräftelücke bis 2040}
-%	\label{fig:bitkom}
-%\end{frame}
-
-
-
-% Folie 3 – Ziel der Arbeit
 \begin{frame}{Ziel der Arbeit}
 	\textbf{Forschungsfrage:}  
 	Inwiefern können KI-gestützte Modelle typische Aufgaben im Pentest unterstützen, beschleunigen oder automatisieren?
 	
-	\textbf{Vorgehen:}
-	\begin{itemize}
-		\item Untersuchung von drei Tools:
-		\begin{itemize}
-			\item RamiGPT (Privilege Escalation)
-			\item PentestGPT CLI (strukturierte Webtests)
-			\item PentestGPT Web (dialogorientierte Tests)
-		\end{itemize}
-	\end{itemize}
+
 	\textbf{Ziele:}
 	\begin{itemize}
-		\item Entwicklung eines praxisnahen Bewertungsrahmens
+		\item Praxisnaher Bewertungsrahmen
 		\item Durchführung realitätsnahe Praxistests
-		\item Vergleich: Stärken, Schwächen \& Einsatzpotenziale
+		\item Vergleich von Stärken \& Schwächen
 	\end{itemize}
 \end{frame}
 
 
-
-
-\section{Problem \& Motivation}
-% Folie – Grundlagen: Penetrationstests
-\begin{frame}{Was sind Penetrationstests?}
+\section{2. Grundlage}
+\begin{frame}{Grundlage 1/3}{Was sind Penetrationstests?}
 	\begin{itemize}
-		\item \textbf{Definition:} Gezielte Simulation von Angriffen auf IT-Systeme
-		\item \textbf{Zweck:} Schwachstellen frühzeitig finden \& Sicherheitsniveau bewerten
-		\item \textbf{Abgrenzung:} Unterschied zu reinen Scans $\rightarrow$ kreatives, manuelles Vorgehen
+		\item \textbf{Definition:} Simulation realer Angriffe auf IT-Systeme
+		\item \textbf{Zweck:} Schwachstellen frühzeitig finden \&  bewerten
 		\item \textbf{Arten:}
 		\begin{itemize}
 			\item Black-Box (keine Vorkenntnisse)
@@ -220,136 +153,75 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 	\end{itemize}
 \end{frame}
 
-%% Folie – Grundlagen: Phasenmodell nach BSI
-%\begin{frame}{Grundlagen – Phasenmodell nach BSI}
-%	\begin{itemize}
-%		\item \textbf{Vorbereitung:} Scope, Ziele \& Rahmenbedingungen definieren
-%		\item \textbf{Informationsbeschaffung:} Scans, OSINT, Reconnaissance
-%		\item \textbf{Analyse \& Bewertung:} Identifikation \& Bewertung möglicher Schwachstellen
-%		\item \textbf{Exploitation:} Gezielte Ausnutzung, um Ausnutzbarkeit realistisch einzuschätzen
-%		\item \textbf{Abschluss \& Reporting:} Ergebnisse dokumentieren \& Empfehlungen ableiten
-%	\end{itemize}
-%\end{frame}
 
-% Folie 2 – Fachkräftemangel als Motivation
-\begin{frame}{Pentest-Phasen (BSI-Modell)}
+\begin{frame}{Grundlage 2/3}{Pentest-Phasen (BSI-Modell)}
 	\centering
 	\includegraphics[width=0.85\textwidth]{figures/Phase.png}
 	\label{fig:phase}
 \end{frame}
 
-%
-%% Folie – Grundlagen: Typische Schwachstellen (OWASP Top 10)
-%\begin{frame}{Grundlagen – Typische Schwachstellen (OWASP Top 10)}
-%	\begin{itemize}
-%		\item \textbf{A01 – Broken Access Control}  
-%		\begin{itemize}
-%			\item Fehlende oder fehlerhafte Zugriffsbeschränkungen
-%			\item z. B. Manipulation von JWT, IDOR
-%		\end{itemize}
-%		
-%		\item \textbf{A02 – Cryptographic Failures}  
-%		\begin{itemize}
-%			\item Unsichere oder falsch eingesetzte Verschlüsselung
-%			\item z. B. schwache Hashes, Klartextübertragung
-%		\end{itemize}
-%		
-%		\item \textbf{A03 – Injection}  
-%		\begin{itemize}
-%			\item Unsichere Eingabevalidierung $\rightarrow$ Angriffe möglich
-%			\item z. B. SQL Injection, Cross-Site Scripting (XSS)
-%		\end{itemize}
-%	\end{itemize}
-%\end{frame}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% Folie – Grundlagen: Künstliche Intelligenz & LLMs
-\begin{frame}{Grundlagen – Künstliche Intelligenz \& LLMs}
+\begin{frame}{Grundlage 3/3}{KI im Pentest-Kontext}
 	\begin{itemize}
-		\item \textbf{KI:} Mustererkennung, Automatisierung, Entscheidungsunterstützung \\
-	    \textbf{Large Language Models (LLMs):}
+		\item \textbf{Künstliche Intelligenz (KI)}
 		\begin{itemize}
-			\item Zerlegen komplexer Aufgaben in Schritte
-			\item Exploit-Vorschläge \& Payload-Generierung
+			\item Muster erkennen \& Prozesse automatisieren
+			\item Unterstützung bei Entscheidungen
+		\end{itemize}
+		
+		\vspace{2mm}
+		\item \textbf{Large Language Models (LLMs)}
+		\begin{itemize}
+			\item Zerlegen komplexer Aufgaben in Einzelschritte
+			\item Exploit-Ideen \& Payloads generieren
 			\item Automatisierte Dokumentation
 		\end{itemize}
-	    \textbf{Maschinelles Lernen (ML):}
+		
+		\vspace{2mm}
+		\item \textbf{Schwächen}
 		\begin{itemize}
-			\item Überwachtes Lernen (Klassifikation)
-			\item Unüberwachtes Lernen (Anomalien)
-			\item Bestärkendes Lernen (adaptives Verhalten)
+			\item Halluzinationen (falsche, aber plausible Antworten)
+			\item Begrenztes Kontextfenster
 		\end{itemize}
-		\item \textbf{Schwächen:} Halluzinationen, begrenztes Kontextfenster, fehlende Security-Spezialisierung
 	\end{itemize}
 \end{frame}
 
-\section{Methodik}
-% Folie – Methodik: Toolauswahl
+
+\section{3. Methodik}
+
 \begin{frame}{Welche Tools wurden getestet?}
+	
 	\begin{itemize}
 		\item \textbf{RamiGPT}
 		\begin{itemize}
-			\item Speziell für Privilege Escalation (Linux/Windows)
-			\item Kombination von KI-Logik \& Tools wie LinPEAS, BeRoot
+			\item Fokus: Privilege Escalation (Linux/Windows)
+			\item Kombination von KI-Logik \& klassischen Tools (LinPEAS, BeRoot)
 		\end{itemize}
 		
 		\item \textbf{PentestGPT (CLI)}
 		\begin{itemize}
-			\item Open-Source, textbasiert, strukturierte Workflows
-			\item Unterstützt systematische Web-Pentest-Phasen
+			\item Open Source (Projekt GreyDGL)
+			\item Strukturierte Workflows, textbasiert in der Konsole
 		\end{itemize}
 		
 		\item \textbf{PentestGPT (Web)}
 		\begin{itemize}
-			\item Kommerziell, dialogorientiert, direkte Nutzung im Browser
-			\item Eignet sich für schnelle Ad-hoc-Analysen
+			\item Kommerziell, anderer Anbieter als CLI-Version
+			\item Dialogorientiert, direkt im Browser nutzbar
 		\end{itemize}
 	\end{itemize}
+	\textbf{Alle getesteten Tools nutzen GPT-LLMs}
+	
 \end{frame}
 
 
-%% Folie 9 – Testumgebungen
-%\begin{frame}{Testumgebungen}
-%	\begin{itemize}
-%		\item 3 VMs (Kali, Parrot, Ubuntu)
-%		\item OWASP Juice Shop (Web-Testumgebung)
-%		\item Isoliert \& reproduzierbar
-%	\end{itemize}
-%\end{frame}
 
-\section{Rami-Privilege Escalation}
+\section{4. Praxistests: RamiGPT-Privilege Escalation}
 % Folie – Grundlagen: Privilege Escalation
-\begin{frame}{Grundlagen – Privilege Escalation}
+\begin{frame}{Was ist Privilege Escalation?}
 	\begin{itemize}
-		\item \textbf{Ziel:} unberechtigter Zugriff auf höhere Rechte (Admin/Root)
-		\item Häufig in Post-Exploitation-Phase
+		\item \textbf{Ziel:} Unberechtigter Root/Admin-Zugriff
+		\item Post-Exploitation-Phase
 		\item \textbf{Typische Techniken (nach MITRE ATT\&CK):}
 		\begin{itemize}
 			\item Exploitation von Systemschwachstellen (T1068)
@@ -360,39 +232,13 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 	\end{itemize}
 \end{frame}
 
-% Folie – RamiGPT: Szenario
 \begin{frame}{RamiGPT – Szenario}
-	\begin{itemize}
-		\item \textbf{Ziel:} Privilege Escalation unter Linux (Root-Rechte erlangen)
-		\item \textbf{Setup:} Ubuntu-VM mit absichtlich fehlerhafter SetUID-Konfiguration (\enquote{rootbash})
-		\item \textbf{Testmodus:}
-		\begin{itemize}
-			\item Full-AI (komplett automatisch)
-			\item Halb-automatisch (mit manueller Unterstützung)
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-
-
-
-
-
-
-
-\begin{frame}{PentestGPT (CLI) – Testszenario}
 	\begin{columns}
 		\begin{column}[T]{.45\textwidth}
 			\begin{itemize}
-				\item Zielsystem: \textbf{OWASP Juice Shop} (verwundbare Web-App)
-				\item Getestete Schwachstellen (OWASP Top 10):
-				\begin{itemize}
-					\item A01 Broken Access Control 
-					\item A02 Cryptographic Failures 
-					\item A03 Injection 
-				\end{itemize}
-				\item Interaktion über CLI: strukturierte Workflows 
-				(\texttt{next}, \texttt{more}, \texttt{discuss})
+				\item \textbf{Ziel:} Root-Rechte über \texttt{rootbash}
+				\item \textbf{Setup:} Ubuntu-VM mit absichtlich fehlerhafter SetUID
+				\item \textbf{Testmodi:} Full-AI vs. Halb-automatisch
 			\end{itemize}
 		\end{column}
 		\begin{column}[T]{.55\textwidth}
@@ -406,59 +252,39 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 
 
 
-
-
-
-
-
-
-\begin{frame}{RamiGPT – Full-AI-Modus (Fehlschlag)}
+\begin{frame}{Full-AI-Modus (Fehlschlag)}
 	\begin{columns}
 		\begin{column}[T]{.45\textwidth}
-				\begin{itemize}
-				\item Automatisierte Befehle gestartet
-				\item Mehrere \texttt{sudo}-Varianten ausprobiert
-				\begin{itemize}
-					\item z. B. \texttt{sudo -l}, \texttt{sudo su -l root}
-				\end{itemize}
-				\item Alle Befehle blockieren bei Passwortabfrage
-				\item Kein Fortschritt, \texttt{rootbash} wird nicht erkannt
+			\begin{itemize}
+				\item Startet \texttt{sudo}-Befehle
+				\item Bleibt bei Passwort hängen
+				\item \texttt{rootbash} nicht erkannt
 			\end{itemize}
-			\textbf{Ergebnis:} Full-AI-Modus scheitert in der Praxis
+			\textbf{Ergebnis:} Full-AI scheitert
 		\end{column}
 	\begin{column}[T]{.55\textwidth}
 		\centering
 		\vspace{-7mm}
-		\includegraphics[width=0.9\textwidth]{figures/6.png}
+		\includegraphics[width=0.8\textwidth]{figures/6.png}
 		\label{fig:6}
 		\end{column}
 	\end{columns}
 \end{frame}
 
 
-
-
-
-
-
-
-
-
-
 \begin{frame}{Halb-automatischer Ablauf (1/2)}
 	\begin{columns}
 		\begin{column}[T]{.45\textwidth}
 			\begin{itemize}
-				\item Nutzer gibt manuell \texttt{ls} ein $\rightarrow$ Kontext für KI
-				\item RamiGPT schlägt \texttt{find / -perm /4000 2>/dev/null} vor
-				\item Ausgabe: mehrere SetUID-Dateien inkl. \texttt{/home/user2/rootbash}
-				\item Aber: Tool führt \texttt{rootbash} nicht selbst aus
+				\item Nutzerhilfe: \texttt{ls} $\rightarrow$ Kontext
+				\item RamiGPT findet \texttt{rootbash}
+				\item Führt aber nicht selbst aus
 			\end{itemize}
 		\end{column}
 		\begin{column}[T]{.55\textwidth}
 			\centering
 			\vspace{-8mm}
-			\includegraphics[width=0.9\textwidth]{figures/11.png}
+			\includegraphics[width=0.8\textwidth]{figures/11.png}
 			\label{fig:11}
 		\end{column}
 	\end{columns}
@@ -467,53 +293,28 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 
 \begin{frame}{Halb-automatischer Ablauf (2/2)}
 	\begin{itemize}
-		\item Nach manuellem \texttt{ls -la} erkennt RamiGPT die Datei als auffällig
-		\item Führt anschließend \texttt{./rootbash} automatisch aus
-		\item Ergebnis: Root-Rechte erlangt (\texttt{uid=0/root})
-		\item Fazit: Erfolg nur mit Benutzerhilfe – User2 $\rightarrow$ Root
+			\item Nutzer: \texttt{ls -la} $\rightarrow$ Datei erkannt
+			\item Tool startet \texttt{./rootbash}
+			\item Ergebnis: Root-Rechte (\texttt{uid=0/root})
 	\end{itemize}
+	\textbf{Fazit:} Erfolg nur mit Nutzerhilfe
 \end{frame}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-\section{PentestGPT (CLI)}
+\section{4. Praxistests: PentestGPT (CLI)}
 
 % Folie 4 – Penetrationstests
-\begin{frame}{Grundlagen – Typische Schwachstellen (OWASP Top 10)}
+\begin{frame}{Grundlagen OWASP Top 10 (A01–A03)}
 	\begin{columns}
 		% Linke Spalte: Text
 		\begin{column}[T]{.65\textwidth}
 			\begin{itemize}
-				\item \textbf{A01 – Broken Access Control}  
-				\begin{itemize}
-					\item Fehlende oder fehlerhafte Zugriffsbeschränkungen
-					\item z. B. Manipulation von JWT, IDOR
-				\end{itemize}
-				
-				\item \textbf{A02 – Cryptographic Failures}  
-				\begin{itemize}
-					\item Unsichere oder falsch eingesetzte Verschlüsselung
-					\item z. B. schwache Hashes, Klartextübertragung
-				\end{itemize}
-				
-				\item \textbf{A03 – Injection}  
-				\begin{itemize}
-					\item Unsichere Eingabevalidierung $\rightarrow$ Angriffe möglich
-					\item z. B. SQL Injection, Cross-Site Scripting (XSS)
-				\end{itemize}
-			\end{itemize}
-			
+				\item \textbf{A01:} Zugriffskontrollen umgehen  
+				(JWT, IDOR)
+				\item \textbf{A02:} Schwache / unsichere Kryptografie
+				\item \textbf{A03:} Unsichere Eingaben  
+				(SQLi, XSS)
+			\end{itemize}		
 		\end{column}
 		\begin{column}[T]{.3\textwidth}
 			\vspace*{-4mm}
@@ -525,40 +326,61 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \end{frame}
 
 
-% Folie – PentestGPT (CLI): Szenarien
 \begin{frame}{PentestGPT (CLI) – Szenarien}
 	\begin{itemize}
-		\item \textbf{Zielsystem:} OWASP Juice Shop (verwundbare Web-App)
-		 \begin{itemize}
-			\item A01 Broken Access Control $\rightarrow$ JWT-Manipulation, IDOR
-			\item A02 Cryptographic Failures $\rightarrow$ unsichere Hashes, „Weird Crypto“
-			\item A03 Injection $\rightarrow$ SQLi, XSS
-		\end{itemize}	
+		\item \textbf{Zielsystem:}  
+		OWASP Juice Shop (verwundbare Web-App)
+		
+		\vspace{2mm}
+		\item \textbf{Schwachstellen:}  
+		A01–A03 OWASP Top 10
+		
+		\vspace{2mm}
 		\item \textbf{Interaktion:}
 		\begin{itemize}
-			\item Strukturierte Workflows über CLI-Befehle (\texttt{next}, \texttt{more}, \texttt{discuss})
-			\item GPT-gestützte Vorschläge, manuelle Ausführung durch Nutzer
+			\item Strukturierte Workflows über CLI-Befehle 
+			(\texttt{next}, \texttt{more}, \texttt{discuss})
+			\item GPT-gestützte Vorschläge, Ausführung durch Nutzer
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 
-
-
-
-
-
-
-
-
-
-\begin{frame}{PentestGPT (CLI) – Exploit-Vorschlag}
+\begin{frame}{PentestGPT (CLI) – Szenarien}
 	\begin{columns}
 		\begin{column}[T]{.4\textwidth}
 			\begin{itemize}
-				\item Tool schlägt konkrete Exploit-Optionen vor 
-				(z. B. SQL Injection)
-				\item Liefert Payloads wie \texttt{' OR '1'='1}
+				\item \textbf{Zielsystem:}  
+				OWASP Juice Shop 
+				
+				\item \textbf{Schwachstellen:}  
+				A01–A03 
+				
+				\item \textbf{Interaktion:}
+				\begin{itemize}
+					\item Strukturierte Workflows über CLI-Befehle \\
+					(\texttt{next}, \texttt{more}, \texttt{discuss})\\
+					\item GPT-gestützte Vorschläge, Ausführung durch Nutzer
+				\end{itemize}
+			\end{itemize}
+		\end{column}
+		\begin{column}[T]{.6\textwidth}
+			\centering
+			\vspace{-4mm}
+			\includegraphics[width=0.75\textwidth]{figures/23.png}
+			\label{fig:23}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Test – Exploit-Vorschlag}
+	\begin{columns}
+		\begin{column}[T]{.4\textwidth}
+			\begin{itemize}
+				\item Vorschläge für konkrete Exploits (z. B. SQLi)
+				\item Liefert fertige Payloads wie \textbf{\texttt{' OR '1'='1}}
 			\end{itemize}
 		\end{column}
 		\begin{column}[T]{.6\textwidth}
@@ -571,188 +393,100 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \end{frame}
 
 
-
-
-
-
-
-
-
-
-
-
-
-% Folie – PentestGPT (CLI): Ergebnisse
 \begin{frame}{PentestGPT (CLI) – Ergebnisse}
 	\begin{itemize}
 		\item \textbf{Stärken:}
 		\begin{itemize}
-			\item Liefern valider Payloads (z. B. SQLi-Bypass $\rightarrow$  Admin-Login)
-			\item Systematische Struktur $\rightarrow$ didaktisch wertvoll (Ausbildung, Training)
-			\item Gute Unterstützung bei IDOR \& XSS durch Payload-Beispiele
+			\item valide Payloads
+			\item strukturierte Tests
 		\end{itemize}
 		
 		\item \textbf{Schwächen:}
 		\begin{itemize}
-			\item Keine echte Automatisierung $\rightarrow$  alles manuell auszuführen
-			\item Teilweise generische Antworten, Detailtiefe nur mit Nachfragen
+			\item keine Automatisierung
 			\item Kein Reporting-Export, nur Logfiles
 		\end{itemize}
 		
 		\item \textbf{Fazit:}  
-		Hilfreiches Assistenztool, besonders für strukturierte Tests und Ausbildung
+		gutes Assistenztool für Ausbildung \& strukturierte Tests
 	\end{itemize}
 \end{frame}
 
 
-
-
-
-
-
-
-
-
-
-
-\section{PentestGPT (WEB)}
-
-% Folie – PentestGPT (Web): Szenarien
+\section{4. Praxistests: PentestGPT (WEB)}
 \begin{frame}{PentestGPT (Web) – Szenarien}
-	\begin{itemize}
-		\item \textbf{Zielsystem:} OWASP Juice Shop (wie CLI-Version)
-		
-		\item \textbf{Testschwerpunkte:}
-		\begin{itemize}
-			\item Broken Access Control (z. B. JWT-Manipulation, IDOR)
-			\item Cryptographic Failures (\enquote{Weird Crypto})
-			\item Injection (SQLi, XSS)
-		\end{itemize}
-		
-		\item \textbf{Interaktion:}
-		\begin{itemize}
-			\item Dialogorientiert, ähnlich wie ChatGPT
-			\item Prompts in natürlicher Sprache (DE \& EN)
-			\item Schnelle Ad-hoc-Analysen im Browser
-		\end{itemize}
-	\end{itemize}
-
+	\begin{columns}
+		\begin{column}[T]{.4\textwidth}
+			\begin{itemize}
+				\item \textbf{Zielsystem:} OWASP Juice Shop
+				\item \textbf{Schwachstellen:} A01–A03 
+				\item \textbf{Interaktion:}
+				\begin{itemize}
+					\item Dialogorientiert (ähnlich ChatGPT)
+					\item Prompts in natürlicher Sprache (DE/EN)
+					\item Ad-hoc-Analysen direkt im Browser
+				\end{itemize}
+			\end{itemize}
+		\end{column}
+		\begin{column}[T]{.6\textwidth}
+			\centering
+			\includegraphics[width=0.9\textwidth]{figures/22.png}
+			\label{fig:22}
+		\end{column}
+	\end{columns}
 \end{frame}
+
 
 % Folie – PentestGPT (Web): Ergebnisse
 \begin{frame}{PentestGPT (Web) – Ergebnisse}
 	\begin{itemize}
 		\item \textbf{Stärken:}
 		\begin{itemize}
-			\item Schnelle \& präzise Antworten $\rightarrow$ sofort Exploit-Beispiele
-			\item Einfache Bedienung, keine Installation notwendig
-			\item Kontextsensitiv (Deutsch/Englisch kein Unterschied)
+			\item Schnelle \& präzise Antworten (inkl. Exploits)
+			\item Keine Installation, einfache Bedienung
+			\item Kontextsensitiv (Deutsch/Englisch)
 		\end{itemize}
 		
 		\item \textbf{Schwächen:}
 		\begin{itemize}
-			\item Keine Automatisierung $\rightarrow$ alles manuell auszuführen
-			\item Kein Reporting-Export, Ergebnisse nur im Chat
-			\item Volle Funktionen nur in kostenpflichtiger Version
+			\item Keine Automatisierung
+			\item Kein Reporting (nur Chat)
+			\item Voller Funktionsumfang kostenpflichtig
 		\end{itemize}
 		
 		\item \textbf{Fazit:}  
-		Praktisch für schnelle Analysen \& Proof-of-Concepts, weniger für strukturierte Tests
+		Praktisch für schnelle Analysen, weniger für strukturierte Tests
 	\end{itemize}
 \end{frame}
 
-% Folie – Vergleich der Tools
+
+
+\section{Vergleich \& Evaluierung der Tools}
 \begin{frame}{Vergleich der Tools}
+	\centering
+	\textbf{Bewertung nach 6 Kriterien (0–2 Punkte, max. 12):}
+	
+	\vspace{5mm}
+	\includegraphics[width=\textwidth]{figures/20.png}
+	\label{fig:20}
+\end{frame}
+
+		
+\begin{frame}{Zusammenfassen}
 	\begin{itemize}
-		\item \textbf{Bewertungskriterien:}  
-		Schwachstellenabdeckung, Exploit-Vorschläge, Automatisierung, Kontextverständnis, Reporting, Kosten-Nutzen
-		
-		\item \textbf{Gesamtpunkte (max. 12):}
-		\begin{itemize}
-			\item RamiGPT: 5/12
-			\item PentestGPT (CLI): 8/12
-			\item PentestGPT (Web): 7/12
-		\end{itemize}
-		
-		\item \textbf{Stärken \& Schwächen:}
-		\begin{itemize}
-			\item RamiGPT: interessant für Privilege Escalation, aber unreif, wenig Automatisierung
-			\item CLI: methodisch klar, gute Payloads, aber langsamer \& manuell
-			\item Web: schnell \& flexibel, aber limitiert ohne Automatisierung/Reporting
-		\end{itemize}
+		\item \textbf{RamiGPT} $\rightarrow$ unreif, nur für Privilege Escalation interessant
+		\item \textbf{PentestGPT (CLI)} $\rightarrow$ methodisch klar, gute Payloads, aber rein manuell
+		\item \textbf{PentestGPT (Web)} $\rightarrow$ schnell \& flexibel, aber limitiert ohne Automatisierung
 	\end{itemize}
 \end{frame}
 
 
-% Folie 10 – Bewertungsmatrix
-\begin{frame}{Bewertungsmatrix}
-	\begin{itemize}
-		\item 6 Kriterien:
-		\begin{itemize}
-			\item Schwachstellenabdeckung
-			\item Exploit-Vorschläge
-			\item Automatisierungsgrad
-			\item Kontextverständnis
-			\item Reporting
-			\item Kosten-Nutzen
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% Folie – Stärken & Schwächen der KI-Tools
-\begin{frame}{Stärken \& Schwächen der KI-Tools}
-	\begin{columns}[T,onlytextwidth]
-		% Linke Spalte: Stärken
-		\begin{column}{0.48\textwidth}
-			\textbf{Stärken}
-			\begin{itemize}
-				\item Unterstützung bei Routineaufgaben (z. B. Payload-Generierung)
-				\item Nützliche Exploit-Vorschläge und Erklärungen
-				\item Methodische Unterstützung (CLI) bzw. schnelle Ad-hoc-Analysen (Web)
-				\item Niedrige Einstiegshürden für Einsteiger \& Ausbildung
-			\end{itemize}
-		\end{column}
-		
-		% Rechte Spalte: Schwächen
-		\begin{column}{0.48\textwidth}
-			\textbf{Schwächen}
-			\begin{itemize}
-				\item Geringe Automatisierung $\rightarrow$  keine End-to-End-Pentests
-				\item Schwaches Kontextverständnis (z. B. RamiGPT bei Passwortabfragen)
-				\item Ergebnisse oft nicht reproduzierbar
-				\item Fehlende Reporting-/Exportfunktionen
-			\end{itemize}
-		\end{column}
-	\end{columns}
-\end{frame}
-
+\section{Fazit \& Ausblick}
 % Folie – Fazit
 \begin{frame}{Fazit}
 	\begin{itemize}
 		\item \textbf{KI = Unterstützung, kein Ersatz}  
-		→ menschliche Expertise bleibt unverzichtbar
+		$\rightarrow$  menschliche Expertise bleibt unverzichtbar
 		
 		\item \textbf{Nutzen:}
 		\begin{itemize}
@@ -771,23 +505,26 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 \end{frame}
 
 
+
+
+
 % Folie – Ausblick
 \begin{frame}{Ausblick}
 	\begin{itemize}
 		\item \textbf{Integration in DevSecOps}  
-		→ KI-gestützte Tools als Teil kontinuierlicher Sicherheitsprozesse
+		$\rightarrow$  KI-gestützte Tools als Teil kontinuierlicher Sicherheitsprozesse
 		
 		\item \textbf{Technische Weiterentwicklung}  
-		→ Größere Kontextfenster \& verbesserte Modelle  
-		→ Retrieval-Augmented Generation (RAG) für aktuelles Wissen
+		$\rightarrow$  Größere Kontextfenster \& verbesserte Modelle  
+		$\rightarrow$  Retrieval-Augmented Generation (RAG) für aktuelles Wissen
 		
 		\item \textbf{Anwendung in der Ausbildung}  
-		→ KI als interaktiver Trainingspartner  
-		→ Unterstützung beim Erlernen von Angriffstechniken \& Abwehrmaßnahmen
+		$\rightarrow$  KI als interaktiver Trainingspartner  
+		$\rightarrow$  Unterstützung beim Erlernen von Angriffstechniken \& Abwehrmaßnahmen
 		
 		\item \textbf{Langfristige Perspektive}  
-		→ KI erweitert klassische Pentests  
-		→ Richtung: skalierbare \& adaptive Sicherheitsprüfungen
+		$\rightarrow$  KI erweitert klassische Pentests  
+		$\rightarrow$  Richtung: skalierbare \& adaptive Sicherheitsprüfungen
 	\end{itemize}
 \end{frame}
 
@@ -798,307 +535,6 @@ colormath=nottext,	% Enables coloring of math text: off or <empty>, full, nottex
 
 
 
-
-
-
-
-
-
-
-
-
-
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\section{Grundlegende Verwendung}
-%
-%	\begin{frame}[fragile]{Allgemeines zur Verwendung}{Minimalbeispiel}
-%		Der folgende Ausschnitt erzeugt Ihnen eine neue, leere Präsentation im Stil der Hochschule (ohne spezifische Fakultät) mit den Standardoptionen:
-%
-%		\scriptsize
-%		\begin{verbatim}
-%		\documentclass[aspectratio=169,onlytextwidth,t]{beamer}
-%		\usetheme{hsmw}
-%
-%		\title[Kurztitel für Fußzeile]{Titel der Präsentation für Titelseite}
-%		\subtitle{Untertitel für Titelseite}
-%		\author{Name Vortragende(r)}
-%		\date{Datum der Präsentation}
-%
-%		\begin{document}
-%			\begin{frame}{Erste Folie}
-%				Inhalt
-%			\end{frame}	
-%		\end{document}
-%		\end{verbatim}
-%	\end{frame}
-%
-%	\begin{frame}[fragile]{Mögliche Optionen (1/3)}{Grundlegende Stilelemente beeinflussen}
-%		Sie können grundlegende Stilelemente über die Angabe von Optionen beim Laden des \textit{Beamer-Themes} (\texttt{\textbackslash{}usetheme[\textcolor{hsmw}{optionen}]\{hsmw\}}) beeinflussen:
-%		\begin{itemize}
-%			\item Allgemeine Anpassungen (Farben und Texte):
-%			\begin{itemize}
-%				\item Farbschema:
-%				\begin{itemize}
-%					\item Standardeinstellung Hochschul-Blau: \textcolor{hsmw}{hs}, \textcolor{hsmw}{inst} oder \textit{<leer>}
-%					\item Fakultäts-Farben: \textcolor{hsmw}{inw}, \textcolor{hsmw}{cb}, \textcolor{hsmw}{me}, \textcolor{hsmw}{sw}, \textcolor{hsmw}{wi}
-%					\item Alternative Schreibweise: \textcolor{hsmw}{faculty=inw}, \textcolor{hsmw}{faculty=cb}, \dots
-%				\end{itemize}
-%
-%				\item Sprache (Ändert einige Bezeichner, z.\,B. Fakultätsnamen, Datumsformat, \dots): 
-%				\begin{itemize}
-%					\item Standardeinstellung Deutsch: \textcolor{hsmw}{language=ngerman} oder \textit{<leer>}
-%					\item Englisch: \textcolor{hsmw}{language=english}
-%					\item Andere Sprachen sind möglich, aber noch nicht implementiert (bei Interesse melden!)
-%				\end{itemize}
-%			\end{itemize}
-%
-%			\item Individuelle Anpassungen an den eigenen Geschmack:
-%			\begin{itemize}
-%				\item \textcolor{hsmw}{toc} fügt ein Inhaltsverzeichnis nach der Titelseite ein
-%				\item \textcolor{hsmw}{sectionslide} fügt eine zusätzliche Seite für jede \verb!\section! ein
-%			\end{itemize}
-%		\end{itemize}
-%	\end{frame}
-%
-%	\begin{frame}[fragile]{Mögliche Optionen (2/3)}{Grundlegende Stilelemente beeinflussen}
-%		\begin{itemize}
-%			\item[] \textcolor{hsmwLightGray}{Individuelle Anpassungen an den eigenen Geschmack (Fortsetzung):}
-%			\begin{itemize}
-%				\item \textcolor{hsmw}{subsectionslide} fügt eine zusätzliche Seite für jede \verb!\subsection! ein.\newline
-%					(kombinierbar mit \textcolor{hsmw}{sectionslide})
-%				\item \textcolor{hsmw}{smallpagenumber} reduziert die Größe der Foliennummer
-%				\item \textcolor{hsmw}{nototalpages} verbirgt die Gesamtzahl der Folien neben der Foliennummer
-%				\item \textcolor{hsmw}{nofacultyicon} verbirgt das Fakultäts-Icon auf der Titelseite
-%				\item \textcolor{hsmw}{colormath} hebt mathematische Formeln farbig ab
-%				\begin{itemize}
-%					\item Keine Hervorhebung: \textcolor{hsmw}{colormath=off} oder \textit{<leer>}
-%					\item Formeln sind hervorgehoben, aber Text in Formeln mittels \verb!\text{...}! wird wie normaler Text dargestellt: \textcolor{hsmw}{colormath=nottext} oder \textcolor{hsmw}{colormath}
-%					z.\,B.
-%					\[\sum^n_{k=0} k = \frac{n(n+1)}2 \qquad \text{ für }  n \in\mathbb N\]
-%					\item Vollständige Hervorhebung: \textcolor{hsmw}{colormath=full}
-%				\end{itemize}
-%			\end{itemize}
-%		\end{itemize}
-%	\end{frame}
-%	
-%	\begin{frame}[fragile]{Mögliche Optionen (3/3)}{Grundlegende Stilelemente beeinflussen}
-%		\begin{itemize}
-%			\item[] \textcolor{hsmwLightGray}{Individuelle Anpassungen an den eigenen Geschmack (Fortsetzung):}
-%			\begin{itemize}
-%				\item \textcolor{hsmw}{printhandout} setzt zwei Folien pro A4-Seite (Klassenoption \textit{handout} notwendig)
-%				\item \textcolor{hsmw}{noframesubtitle} deaktiviert alle Untertitel der Folien (vergrößert Textbereich)
-%			\end{itemize}
-%			\item Zusätzliche Optionen (nicht ganz konform mit dem Corporate Design):
-%			\begin{itemize}
-%				\item \textcolor{hsmw}{titlepagedate} zeigt das Datum auf der Titelseite
-%				\item \textcolor{hsmw}{fancystyle} aktiviert einige Farbanpassungen
-%				\item \textcolor{hsmw}{progressbar} zeigt einen Fortschrittsbalken am unteren Rand der Folien
-%			\end{itemize}
-%		\end{itemize}
-%
-%		\vspace*{\baselineskip}
-%		\textbf{Beispiele:}
-%		\begin{itemize}
-%			\item \verb!\usetheme[toc, sectionslide, nofacultyicon]{hsmw}!
-%			\item \verb!\usetheme[cb, colormath, progressbar]{hsmw}!
-%			\item \verb!\usetheme[faculty=wi, colormath]{hsmw}!
-%		\end{itemize}
-%	\end{frame}
-%
-%
-%	
-%	\begin{frame}[fragile]{Erweitertes Beispiel (Stil: Fakultät CB)}{Mit ein paar zusätzlichen Optionen und Befehlen}
-%		\scriptsize
-%		\begin{verbatim}
-%			\documentclass[aspectratio=169,onlytextwidth,t]{beamer}
-%			\usetheme[cb, colormath]{hsmw}
-%			
-%			\title[Kurztitel für Fußzeile]{Titel der Präsentation für Titelseite}
-%			\subtitle{Untertitel für Titelseite}
-%			\author{Name Vortragende(r)}
-%			\email{E-Mail}
-%			\titlegraphic{figures/thankyou.jpg}
-%
-%			\begin{document}
-%				\begin{frame}{Erste Folie}{Mit Untertitel}
-%					Inhalt
-%				\end{frame}	
-%
-%				\appendix
-%				\makethankyou
-%			\end{document}
-%		\end{verbatim}
-%	\end{frame}
-%
-%	\begin{frame}{Anwendungshinweise}{Was es zu beachten gilt}
-%		\begin{itemize}
-%			\item Für die Verwendung in lokalen TeX-Distributionen oder auch Overleaf geeignet
-%
-%			\item Verzeichnisstruktur für das Auffinden der Dateien notwendig
-%			\begin{itemize}
-%				\item Funktionen und Aufbau auf mehrere Quelldateien verteilt
-%				\begin{itemize}
-%					\item beamerthemehsmw.sty: Optionen, Pakete und Macros (lädt die restlichen Dateien)
-%					\item beamerouterthemehsmw.sty: Allgemeine Layout-Einstellungen (Folientitel, Fußzeilen, ...)
-%					\item beamerinnerthemehsmw.sty: Inhaltsbezogene Layout-Einstellungen (Titelseite, Aufzählungen, ...)
-%					\item beamerfontthemehsmw.sty: Die verwendeten Schriftstile und -größen
-%					\item beamercolorthemehsmw*.sty: Das spezifische Farbschema für die einzelnen Elemente (inkl. Fakultätsfarben)
-%				\end{itemize}
-%
-%				\item Unterverzeichnis für zusätzliches Bildmaterial: ./figures/*
-%			\end{itemize}
-%		\end{itemize}
-%	\end{frame}
-%
-%	\begin{frame}{Besonderheiten}{Eventuelle Probleme, die gar keine sind}
-%		\begin{itemize}
-%			\item Bei überlangen (Unter-)Titeln auf der Titelseite und auf den Folien wird bei Bedarf die Schriftgröße heruntergesetzt
-%			\item Sie erhalten dafür eine Paket-Warnung in der Logdatei, die Sie darauf hinweist:
-%			\newline
-%			\resizebox{\linewidth}{!}{\enquote{Package beamerinnerthemehsmw Warning: Font of text '\textit{<text>}' is scaled down by a factor of \textit{<factor>}}}
-%			\item Sie können diese Texte ggf. anpassen, damit sie nicht skaliert werden müssen
-%			\item Sie können den Warnhinweis allerdings auch einfach ignorieren
-%		\end{itemize}
-%	\end{frame}
-%
-%	\section{Inhalte gestalten}
-%
-%	\begin{frame}{Eine normale Folie mit Fließtext}{... und einem Untertitel}
-%		\blindmathtrue
-%		\blindtext
-%	\end{frame}
-%
-%	\begin{frame}[c]{Eine normale Folie vertikal zentriert}{Unter Verwendung der Folien-Option: \texttt{\textbackslash{}begin\{frame\}[c] ... \textbackslash{}end\{frame\}}}
-%		\blindmathtrue
-%		\blindtext
-%	\end{frame}
-%
-%	\begin{frame}[b]{Eine normale Folie unten ausgerichtet}{Unter Verwendung der Folien-Option: \texttt{\textbackslash{}begin\{frame\}[b] ... \textbackslash{}end\{frame\}}}
-%		\blindmathtrue
-%		\blindtext
-%	\end{frame}
-%	
-%	\begin{frame}{Eine Folie mit zwei Spalten}{Einfache Mathematik: Mehr Spalten = mehr Platz}
-%		\begin{columns}
-%			\begin{column}[T]{.5\textwidth}
-%				\blindlistlist[3]{itemize}[3]
-%			\end{column}
-%			\begin{column}[T]{.5\textwidth}
-%				\blindlistlist[2]{itemize}[4]
-%			\end{column}
-%		\end{columns}
-%	\end{frame}
-%
-%	\begin{frame}{Eine Folie mit zwei Spalten}{Auch passend für Abbildungen}
-%		\begin{columns}
-%			\begin{column}[T]{.5\textwidth}
-%				\blindlistlist[3]{itemize}[3]
-%			\end{column}
-%			\begin{column}[T]{.5\textwidth}
-%				\centering
-%				\includegraphics[width=\textwidth]{figures/thankyou.jpg}
-%				\captionof{figure}{Das Bild der Danke-Seite}
-%				\label{fig:thankyouq}
-%			\end{column}
-%		\end{columns}
-%	\end{frame}
-%
-%	\begin{frame}[fragile]{Inhalte absolut positionieren}
-%		\begin{itemize}
-%			\item Der Koordinatenursprung für ist die obere linke Ecke
-%			\item Koordinatensystem in Zentimetern, an Seitenverhältnis 16:9 ausgerichtet
-%			\begin{itemize}
-%				\item $ 0 \le x \le 16 $
-%				\item $ 0 \le y \le 9 $
-%			\end{itemize}
-%
-%			\item Verwendung von \verb!begin{textblock}{breite}(x-pos, y-pos)!...
-%		\end{itemize}
-%
-%		\begin{textblock}{5}(10, 4.5)
-%			\scriptsize
-%			\begin{verbatim}
-%				\begin{textblock}{5}(10, 4.5)
-%					Inhalt
-%				\end{textblock}
-%			\end{verbatim}
-%		\end{textblock}
-%
-%		\begin{textblock}{15}(0.5, 6)
-%			\hrule
-%			\scriptsize
-%			\begin{verbatim}
-%				\begin{textblock}{15}(0.5, 6)
-%					\hrule
-%				\end{textblock}
-%			\end{verbatim}
-%		\end{textblock}
-%	\end{frame}
-%
-%	\begin{frame} 
-%		\frametitle{Mehrere Folien mittels \textit{Overlays}} 
-%		\begin{theorem}
-%			Es gibt keine \enquote{größte} Primzahl.
-%		\end{theorem} 
-%		\begin{enumerate} 
-%			\item<1-| alert@1> Angenommen $p$ wäre die größte Primzahl.
-%			\item<2-> Sei $q$ das Produkt der ersten $p$ Zahlen. 
-%			\item<3-> Dann ist $q+1$ durch keine davon teilbar.
-%			\item<4-> Aber $q + 1$ ist größer als $1$ und daher durch eine Primzahl teilbar, die nicht in den ersten $p$ Zahlen liegt.
-%		\end{enumerate}
-%
-%		\uncover<3->{\scriptsize Hinweis: Mathe ist super kompliziert!}
-%
-%		\vfill
-%		\only<2,4>{\centering\textbf{Achtung}: Besonders wichtiger Schritt!}
-%		\vfill
-%	\end{frame}
-%
-%	\section{Benutzerdefinierte Anpassungen}
-%
-%	\newcommand{\rgb}[1]{\textcolor{hsmw80}{#1}}
-%	\newcommand{\cmd}[1]{\rgb{\textbackslash{}#1}}
-%	\newcommand{\textto}{\hspace*{0.2ex}\tikz[baseline=-.33em] \draw[-latex] (0,0) to ++(2ex, 0);\hspace*{0.2ex}}
-%	\begin{frame}{Zusätzliche, beeinflussbare Macros}{... und deren Abhängigkeiten (zur Feinabstimmung der eigenen Präsentation)}
-%		\begin{itemize}
-%			\item Option \rgb{hs}, \rgb{cb}, ... oder \rgb{faculty=cb, me, ...} (Farbschema)
-%			\begin{itemize}
-%				\item \cmd{insertfacultyicon} (Titelseite)
-%				\item \cmd{insertfacultyname} (Option \rgb{language}) \textto{} \cmd{institute\{\cmd{insertfacultyname}\}}
-%			\end{itemize}
-%			\item \cmd{insertthankyoutitle}, \cmd{insertthankyoutext}, \cmd{insertthankyousidebartext}
-%			\begin{itemize}
-%				\item \cmd{email} \textto{} \cmd{insertemail}
-%				\item \cmd{phone} \textto{} \cmd{insertmobilephone}, \cmd{inserttelephone}
-%				\item \cmd{office} \textto{} \cmd{insertoffice}
-%				\item \cmd{courseofstudies} \textto{} \cmd{insertcourseofstudies}
-%				\item \cmd{additional} \textto{} \cmd{insertadditionalsidebar}, \cmd{insertadditional}
-%			\end{itemize}
-%			\item \cmd{setcurrentspeaker}, \cmd{resetcurrentspeaker} (\cmd{insertshortauthor})
-%			\begin{itemize}
-%				\item Stern-Version (\cmd{setcurrentspeaker*}) setzt zusätzlich Label (Option \rgb{language})
-%				\item \cmd{currentspeaker} (\cmd{currentspeakerlabel}) \textto{} \cmd{insertcurrentspeaker}
-%			\end{itemize}
-%		\end{itemize}
-%	\end{frame}
-%
-%	\section{FAQ}
-%
-%	\begin{frame}[c]{FAQ: Häufig gestellte Fragen}{Hier ist noch Platz für Anwendungsfälle oder Antworten auf häufig gestellte Fragen}
-%		Es sind alle zum Testen und zur Übermittlung von konstruktivem Feedback eingeladen!
-%		\\[\baselineskip]
-%		Bei Ideen, Wünschen, Anregungen, Fragen und auch Problemen:
-%		\begin{itemize}
-%			\item Offizielle LaTeX-GitLab-Gruppe der Hochschule Mittweida:
-%			\newline
-%			\href{https://git.hs-mittweida.de/hsmw-latex}{git.hs-mittweida.de/hsmw-latex}
-%
-%			\item Kontaktieren Sie mich gern per E-Mail \href{mailto:schildba@hs-mittweida.de?subject=[LaTeX] Beamer-Vorlage}{schildba@hs-mittweida.de}
-%
-%			\item Nutzen Sie einen der anderen verfügbaren Kommunikationskanäle
-%		\end{itemize}
-%	\end{frame}
 %
 	\appendix
 	\appendix
